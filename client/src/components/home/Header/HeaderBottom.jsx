@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { FaCaretDown, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
-import Flex from "../../designLayouts/Flex";
-import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { paginationItems } from "../../../constants";
+import Flex from "../../designLayouts/Flex";
 
 const HeaderBottom = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.madamBoutiqueReducer.products);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();

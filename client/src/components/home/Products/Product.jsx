@@ -5,7 +5,7 @@ import { GiReturnArrow } from "react-icons/gi";
 import { MdOutlineLabelImportant } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToCart } from "../../../redux/orebiSlice";
+import { addProductsFavorite, addToCart } from "../../../redux/madamBoutiqueSlice";
 import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 
@@ -73,8 +73,20 @@ const Product = (props) => {
                 <MdOutlineLabelImportant />
               </span>
             </li>
-            <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
-              Add to Wish List
+            <li
+              onClick={() => dispatch(
+                addProductsFavorite({
+                  _id: props._id,
+                  name: props.productName,
+                  quantity: 1,
+                  image: props.img,
+                  badge: props.badge,
+                  price: props.price,
+                  colors: props.color,
+                })
+              )}
+              className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
+              Add to Favorite List
               <span>
                 <BsSuitHeartFill />
               </span>

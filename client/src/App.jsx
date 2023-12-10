@@ -21,6 +21,7 @@ import Home from "./pages/Home/Home";
 import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
 
 const Layout = () => {
@@ -49,6 +50,7 @@ const router = createBrowserRouter(
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
+        <Route path="/favorite" element={<ProductFavorite />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
       </Route>

@@ -1,17 +1,22 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import { resetCart } from "../../redux/orebiSlice";
+import Swal from 'sweetalert2';
 import { emptyCart } from "../../assets/images/index";
+import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
+import { resetCart } from "../../redux/madamBoutiqueSlice";
+// import './Cart.scss';
+import { ToastContainer } from 'react-toastify';
 import ItemCard from "./ItemCard";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.madamBoutiqueReducer.products);
   const [totalAmt, setTotalAmt] = useState("");
   const [shippingCharge, setShippingCharge] = useState("");
+
   useEffect(() => {
     let price = 0;
     products.map((item) => {
@@ -20,6 +25,7 @@ const Cart = () => {
     });
     setTotalAmt(price);
   }, [products]);
+
   useEffect(() => {
     if (totalAmt <= 200) {
       setShippingCharge(30);
@@ -29,8 +35,44 @@ const Cart = () => {
       setShippingCharge(20);
     }
   }, [totalAmt]);
+
+  function handleResetCart() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(resetCart());
+        swalWithBootstrapButtons.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+      }
+    });
+  }
+
   return (
     <div className="max-w-container mx-auto px-4">
+      <ToastContainer />
       <Breadcrumbs title="Cart" />
       {products.length > 0 ? (
         <div className="pb-20">
@@ -49,7 +91,7 @@ const Cart = () => {
           </div>
 
           <button
-            onClick={() => dispatch(resetCart())}
+            onClick={() => handleResetCart()}
             className="py-2 px-10 bg-red-500 text-white font-semibold uppercase mb-4 hover:bg-red-700 duration-300"
           >
             Reset cart
