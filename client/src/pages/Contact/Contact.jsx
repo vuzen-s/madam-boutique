@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import { AddressMap } from "../../components/Map/map";
+import './contact.css';
 const Contact = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
@@ -69,6 +70,7 @@ const Contact = () => {
       {successMsg ? (
         <p className="pb-20 w-96 font-medium text-green-500">{successMsg}</p>
       ) : (
+      <div className="contact-layout">
         <form className="pb-20">
           <h1 className="font-titleFont font-semibold text-3xl">
             Điền thông tin vào form
@@ -136,12 +138,15 @@ const Contact = () => {
             </button>
           </div>
         </form>
-      )}
-      <div>
         
+        <div>
         <h2>Bản đồ của shop</h2>
-        <AddressMap/>
+        <AddressMap />
       </div>
+        </div>
+      )}
+      
+      
     </div>
   );
 };
