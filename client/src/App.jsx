@@ -14,6 +14,7 @@ import HeaderBottom from "./components/home/Header/HeaderBottom";
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
+import ApiMigration from "./pages/ApiMigration";
 import Blog from "./pages/Blog/Blog";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
@@ -57,6 +58,7 @@ const router = createBrowserRouter(
       {/* // */}
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
+      <Route path="/apiMigration" element={<ApiMigration />}></Route>
     </Route>
   )
 );
