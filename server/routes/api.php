@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\ApiProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('/get-products', [ApiProductController::class, 'index']);
+// Lấy danh sách sản phẩm
+Route::get('products', [ProductController::class, 'index'])->name('products.index');
 
+// Lấy thông tin sản phẩm theo id
+Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 
