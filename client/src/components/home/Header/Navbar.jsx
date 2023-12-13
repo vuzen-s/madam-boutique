@@ -89,7 +89,7 @@ const Navbar = () => {
 
           {searchQuery && (
             <div
-              className={`mx-auto mt-2.5 h-96 bg-white top-12 right-40 absolute z-50 overflow-y-scroll shadow-2xl scrollbar-hide cursor-pointer`}
+              className={` mt-2.5 h-96 bg-white top-12 md:right-40 absolute z-50 overflow-y-scroll shadow-2xl scrollbar-hide cursor-pointer`}
             >
               {searchQuery &&
                 filteredProducts.map((item) => (
