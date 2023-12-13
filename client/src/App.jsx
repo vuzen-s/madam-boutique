@@ -14,7 +14,7 @@ import HeaderBottom from "./components/home/Header/HeaderBottom";
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
-import Blog from "./pages/Blog/Blog";
+// import Blog from "./pages/Blog/Blog";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
 import Home from "./pages/Home/Home";
@@ -23,6 +23,7 @@ import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
+import BlogList from "./components/BlogList/BlogList";
 
 const Layout = () => {
   return (
@@ -46,7 +47,7 @@ const router = createBrowserRouter(
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/blog" element={<Blog />}></Route>
+        <Route path="/blog" element={<BlogList />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
