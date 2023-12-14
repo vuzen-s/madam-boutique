@@ -23,7 +23,7 @@ import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import { ColorModeContext, useMode } from "./theme";
 
-function TestDashboardApp() {
+function DashboardApp() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
@@ -62,4 +62,4 @@ function TestDashboardApp() {
   );
 }
 
-export default TestDashboardApp;
+export default DashboardApp;
