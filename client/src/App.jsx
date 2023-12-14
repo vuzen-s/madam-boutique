@@ -9,8 +9,14 @@ import {
 import SpecialCase from "./components/SpecialCase/SpecialCase";
 import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
+
+
 import Header from "./components/home/Header/Header";
 import HeaderBottom from "./components/home/Header/HeaderBottom";
+
+import Navbar from "./components/home/Header/Navbar";
+// import NavbarBottom from "./components/home/Header/NavbarBottom";
+
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
@@ -24,12 +30,17 @@ import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
+import NavbarBottom2 from "./components/home/Header/NavbarBottom2";
 
 const Layout = () => {
   return (
     <div>
-      <Header />
-      <HeaderBottom />
+      {/* <Header /> */}
+      {/* <HeaderBottom /> */}
+      <Navbar />
+      {/* <NavbarBottom /> */}
+      <NavbarBottom2 />
+      
       <SpecialCase />
       <ScrollRestoration />
       <Outlet />
