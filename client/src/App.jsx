@@ -17,13 +17,13 @@ import SignUp from "./pages/Account/SignUp";
 import Blog from "./pages/Blog/Blog";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
-import DashboardApp from "./pages/Dashboard/admindash/src/DashboardApp";
 import Home from "./pages/Home/Home";
 import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
+import TestDashboardApp from "./pages/TestDashBoard/DashboardApp";
 
 const Layout = () => {
   return (
@@ -58,7 +58,8 @@ const router = createBrowserRouter(
       {/* // */}
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
-      <Route path="/dashboard/*" element={<DashboardApp />}></Route>
+      {/* <Route path="/dashboard/*" element={<DashboardApp />}></Route> */}
+      <Route path="/dashboard/*" element={<TestDashboardApp />}></Route>
     </Route>
   )
 );
