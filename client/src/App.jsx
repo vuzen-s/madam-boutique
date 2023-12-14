@@ -11,8 +11,6 @@ import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
 
 
-import Header from "./components/home/Header/Header";
-import HeaderBottom from "./components/home/Header/HeaderBottom";
 
 import Navbar from "./components/home/Header/Navbar";
 // import NavbarBottom from "./components/home/Header/NavbarBottom";
@@ -20,7 +18,9 @@ import Navbar from "./components/home/Header/Navbar";
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
-import Blog from "./pages/Blog/Blog";
+// import Blog from "./pages/Blog/Blog";
+import BlogList from "./components/BlogList/BlogList";
+import NavbarBottom2 from "./components/home/Header/NavbarBottom2";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
 import DashboardApp from "./pages/Dashboard/DashboardApp";
@@ -30,7 +30,6 @@ import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
-import NavbarBottom2 from "./components/home/Header/NavbarBottom2";
 
 const Layout = () => {
   return (
@@ -58,7 +57,7 @@ const router = createBrowserRouter(
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/blog" element={<Blog />}></Route>
+        <Route path="/blog" element={<BlogList />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
