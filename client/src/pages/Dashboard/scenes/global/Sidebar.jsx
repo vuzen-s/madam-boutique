@@ -213,7 +213,7 @@ const Sidebar = () => {
                   />
                   {/*  */}
                   <Item
-                    title="Create Users"
+                    title="Create Collections"
                     to="/dashboard/collection/create"
                     icon={<StarBorder />}
                     selected={selected}
@@ -221,7 +221,7 @@ const Sidebar = () => {
                   />
                   {/*  */}
                   <Item
-                    title="Edit Users"
+                    title="Edit Collections"
                     to="/dashboard/collection/edit"
                     icon={<StarBorder />}
                     selected={selected}
@@ -283,7 +283,7 @@ const Sidebar = () => {
                   />
                   {/*  */}
                   <Item
-                    title="Create Categories"
+                    title="Create Products"
                     to="/dashboard/product/create"
                     icon={<StarBorder />}
                     selected={selected}
@@ -291,7 +291,7 @@ const Sidebar = () => {
                   />
                   {/*  */}
                   <Item
-                    title="Edit Categories"
+                    title="Edit Products"
                     to="/dashboard/product/edit"
                     icon={<StarBorder />}
                     selected={selected}
