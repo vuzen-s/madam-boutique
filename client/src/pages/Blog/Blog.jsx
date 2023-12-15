@@ -2,7 +2,7 @@
 import React from "react";
 import BlogList from "../../components/BlogList/BlogList";
 
-import DataBlog from "../../components/Blog_List/DataBlog";
+// import DataBlog from "../../components/Blog_List/DataBlog";
 
 const Blog = () => {
 
@@ -15,16 +15,9 @@ const Blog = () => {
             <h2 class="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">Fashion Blog</h2>
             <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Latest Fashion Trends</h1>
           </div>
-          <BlogList></BlogList>
-        </div>
 
-        </section >
-    </div>
-
-      return (
-    
-
-    <d iv className="max-w-container mx-auto px-4">
+           
+<div iv className="max-w-container mx-auto px-4">
       <section className="text-gray-600 body-font">
   <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
     <img className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="fashion" src="/blog_image/fashioni.png" />
@@ -106,14 +99,18 @@ const Blog = () => {
     </div>
   </div>
 </section>
-      <BlogList />
+    
     </div>
-  </div>
-</section>
-        
-      </d>
 
-  );)
+        </div>
+
+        </section >
+        <BlogList></BlogList>
+    </div>
+
+  
+
+  );
 };
 
 export default Blog;
