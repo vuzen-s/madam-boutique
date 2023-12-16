@@ -1,14 +1,62 @@
+import { UploadOutlined } from '@ant-design/icons';
 import { Box, Button, TextField } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Form, Upload } from 'antd';
 import { Formik } from "formik";
+import { useEffect, useState } from "react";
+import Select from 'react-select';
 import * as yup from "yup";
 import Header from "../../components/Header";
 
 const ProductCreate = () => {
+  const [dataProduct, setDataProduct] = useState({
+    name: '',
+    desc: '',
+    price: '',
+    avatar: '',
+    status: '',
+    feature: '',
+    collection_id: '',
+    brand_id: '',
+    designer_id: '',
+    category_id: '',
+  });
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [errors, setErrors] = useState({});
 
   const handleFormSubmit = (values) => {
     console.log(values);
+  };
+
+  const optionStatus = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+
+  const optionDesigner = [
+    { value: 'designer1', label: 'Designer 1' },
+    { value: 'designer2', label: 'Designer 2' },
+  ]
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products', {
+      method: "GET",
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data);
+        // dataProduct(data.migrations);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
   };
 
   return (
@@ -41,11 +89,11 @@ const ProductCreate = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Tên sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
+                value={values.name}
+                name="name"
                 error={!!touched.firstName && !!errors.firstName}
                 helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
@@ -54,11 +102,11 @@ const ProductCreate = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Mô tả"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
+                value={values.desc}
+                name="desc"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
@@ -67,11 +115,11 @@ const ProductCreate = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="Giá"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
+                value={values.price}
+                name="price"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
@@ -80,15 +128,35 @@ const ProductCreate = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
+                label="Ảnh sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
+                value={values.avatar}
+                name="avatar"
                 error={!!touched.contact && !!errors.contact}
                 helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
+
+              <Form.Item
+                name="upload"
+                label="Upload"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                extra="longgggggggggggggggggggggggggggggggggg"
+              >
+                <Upload name="logo" action="/upload.do" listType="picture">
+                  <Button icon={<UploadOutlined />}>Click to upload</Button>
+                </Upload>
+              </Form.Item>
+
+              <label>Status: </label>
+              <Select options={optionStatus} name="" />
+
+
+              <label style={{ width: "12px" }}>Deginer: </label>
+              <Select options={optionDesigner} name="" />
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -142,6 +210,7 @@ const checkoutSchema = yup.object().shape({
   address1: yup.string().required("required"),
   address2: yup.string().required("required"),
 });
+
 const initialValues = {
   firstName: "",
   lastName: "",

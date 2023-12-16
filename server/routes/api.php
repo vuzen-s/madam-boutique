@@ -27,3 +27,6 @@ Route::get('products', [ProductController::class, 'index'])->name('products.inde
 // Lấy thông tin sản phẩm theo id
 Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+// Thêm sản phẩm 
+Route::post('products/{id}', [ProductController::class, 'store'])->name('products.show');
+

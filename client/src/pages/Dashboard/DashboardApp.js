@@ -14,13 +14,9 @@ import ProductList from "./scenes/Products/ProductList";
 import UserCreate from "./scenes/Users/UserCreate";
 import UserEdit from "./scenes/Users/UserEdit";
 import UserList from "./scenes/Users/UserList";
-import Bar from "./scenes/bar";
 import Dashboard from "./scenes/dashboard";
-import Geography from "./scenes/geography";
 import Sidebar from "./scenes/global/Sidebar";
 import Topbar from "./scenes/global/Topbar";
-import Line from "./scenes/line";
-import Pie from "./scenes/pie";
 import { ColorModeContext, useMode } from "./theme";
 
 function DashboardApp() {
@@ -49,11 +45,10 @@ function DashboardApp() {
               <Route path="product" element={<ProductList />} />
               <Route path="product/create" element={<ProductCreate />} />
               <Route path="product/edit" element={<ProductEdit />} />
-              {/* // */}
-              <Route path="bar" element={<Bar />} />
+              {/* <Route path="bar" element={<Bar />} />
               <Route path="pie" element={<Pie />} />
               <Route path="line" element={<Line />} />
-              <Route path="geography" element={<Geography />} />
+              <Route path="geography" element={<Geography />} /> */}
             </Routes>
           </main>
         </div>
