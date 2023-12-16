@@ -1,154 +1,164 @@
-import { Box, Button, TextField } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Formik } from "formik";
-import * as yup from "yup";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box, Button, TextField, useTheme } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
+import { tokens } from "../../theme";
 
-const CollectionEdit = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+const CollectionList = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [collections, setCollections] = useState([]);
+  const [selectedRow, setSelectedRow] = useState(null);
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  useEffect(() => {
+    // Gọi API khi component được render
+    axios.get('http://127.0.0.1:8000/api/collections')
+      .then(response => {
+        // In dữ liệu vào console để kiểm tra
+        console.log(response.data);
+        setCollections(response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
+
+  const handleEditClick = (id) => {
+    // Tìm dòng dựa trên ID
+    const selected = collections.find((row) => row.id === id);
+    setSelectedRow(selected);
   };
+
+  const handleUpdate = () => {
+    // Gửi yêu cầu cập nhật đến API sử dụng selectedRow
+    if (selectedRow) {
+      axios.put(`http://127.0.0.1:8000/api/collections/${selectedRow.id}/update`, selectedRow)
+        .then(response => {
+          console.log('Update successful:', response.data);
+          // Cập nhật lại dữ liệu sau khi cập nhật thành công
+          // setCollections(updatedCollections);
+          // Đặt lại selectedRow về null để ẩn giao diện chỉnh sửa
+          setSelectedRow(null);
+        })
+        .catch(error => {
+          console.error('Update failed:', error);
+        });
+    }
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", flex: 2 },
+    { field: "registrarId", headerName: "Registrar ID" },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 4,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "name_design",
+      headerName: "Name_design",
+      flex: 4,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "edit",
+      headerName: "Edit",
+      flex: 2,
+      sortable: false,
+      renderCell: (params) => (
+        <Box>
+          <Button
+            onClick={() => handleEditClick(params.row.id)}
+            color="secondary"
+            variant="outlined"
+          >
+            Edit
+          </Button>
+        </Box>
+      ),
+    },
+  ];
 
   return (
     <Box m="20px">
-      <Header title="EDIT COLLECTION" subtitle="Edit a Collection" />
-
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
+      <Header
+        title="LIST COLLECTIONS"
+        subtitle="List of Collection for Future Reference"
+      />
+      <Box
+        m="40px 0 0 0"
+        height="75vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          "& .name-column--cell": {
+            color: colors.greenAccent[300],
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: colors.primary[400],
+          },
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
+            backgroundColor: colors.blueAccent[700],
+          },
+          "& .MuiCheckbox-root": {
+            color: `${colors.greenAccent[200]} !important`,
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
+        <DataGrid
+          rows={collections}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+        />
+      </Box>
+      {selectedRow && (
+        <Box mt="20px">
+          <h2>Edit Collection</h2>
+          <form>
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Name"
+              value={selectedRow.name}
+              onChange={(e) => setSelectedRow({ ...selectedRow, name: e.target.value })}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="text"
+              label="Name Design"
+              value={selectedRow.name_design}
+              onChange={(e) => setSelectedRow({ ...selectedRow, name_design: e.target.value })}
+              sx={{ mb: 2 }}
+            />
+            <Button
+              onClick={handleUpdate}
+              color="secondary"
+              variant="contained"
             >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
-              </Button>
-            </Box>
+              Update
+            </Button>
           </form>
-        )}
-      </Formik>
+        </Box>
+      )}
     </Box>
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
-};
-
-export default CollectionEdit;
+export default CollectionList;

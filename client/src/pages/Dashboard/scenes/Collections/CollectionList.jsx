@@ -1,55 +1,46 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import { mockDataContacts } from "../../data/mockData";
 import { tokens } from "../../theme";
 
 const CollectionList = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [collections, setCollections] = useState([]);
+
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "id", headerName: "ID", flex: 2 },
     { field: "registrarId", headerName: "Registrar ID" },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      flex: 4,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
+      field: "name_design",
+      headerName: "Name_design",
+      flex: 4,
+      cellClassName: "name-column--cell",
     },
   ];
+
+  useEffect(() => {
+    // Gọi API khi component được render
+    axios.get('http://127.0.0.1:8000/api/collections')
+      .then(response => {
+        // In dữ liệu vào console để kiểm tra
+        console.log( response.data);
+        setCollections(response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   return (
     <Box m="20px">
@@ -90,7 +81,7 @@ const CollectionList = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={collections}  // Sử dụng dữ liệu từ API thay vì mockDataContacts
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
