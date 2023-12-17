@@ -44,7 +44,7 @@ function DashboardApp() {
               <Route path="category/edit" element={<CategoryEdit />} />
               <Route path="product" element={<ProductList />} />
               <Route path="product/create" element={<ProductCreate />} />
-              <Route path="product/edit" element={<ProductEdit />} />
+              <Route path="product/edit/:id" element={<ProductEdit />} />
               {/* <Route path="bar" element={<Bar />} />
               <Route path="pie" element={<Pie />} />
               <Route path="line" element={<Line />} />

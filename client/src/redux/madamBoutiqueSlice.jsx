@@ -5,12 +5,22 @@ const initialState = {
   userInfo: [],
   products: [],
   productsFavorite: [],
+  csrfToken: null,
 };
 
 export const madamBoutiqueSlice = createSlice({
   name: "madamBoutique",
   initialState,
   reducers: {
+    csrfTokenReducer: (state, action) => {
+      switch (action.type) {
+        case 'SET_AUTH_TOKEN':
+          state.csrfToken = action.payload;
+          break;
+        default:
+          return state;
+      }
+    },
     addToCart: (state, action) => {
       const item = state.products.find(
         (item) => item._id === action.payload._id
@@ -88,6 +98,7 @@ export const madamBoutiqueSlice = createSlice({
 });
 
 export const {
+  csrfTokenReducer,
   addToCart,
   increaseQuantity,
   drecreaseQuantity,

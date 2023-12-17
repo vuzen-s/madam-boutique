@@ -285,14 +285,6 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {/*  */}
-                  <Item
-                    title="Edit Products"
-                    to="/dashboard/product/edit"
-                    icon={<StarBorder />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
                 </List>
               </Collapse>
             </List>
