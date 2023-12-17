@@ -27,6 +27,19 @@ Route::get('products', [ProductController::class, 'index'])->name('products.inde
 // Lấy thông tin sản phẩm theo id
 Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+// lấy data từ bảng khác
+Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
+
 // Thêm sản phẩm 
-Route::post('products/{id}', [ProductController::class, 'store'])->name('products.show');
+Route::post('products-store', [ProductController::class, 'store'])->name('products.products-store');
+
+// Xóa sản phẩm
+Route::delete('products-destroy/{id}', [ProductController::class, 'destroy'])->name('products.product-destroy');
+
+// Update sản phẩm
+Route::get('products-edit/{id}', [ProductController::class, 'edit'])->name('products.product-edit');
+
+Route::patch('products-update/{id}', [ProductController::class, 'update'])->name('products.product-update');
+
+
 
