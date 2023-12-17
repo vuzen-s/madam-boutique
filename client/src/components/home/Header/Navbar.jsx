@@ -5,7 +5,6 @@ import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
 import { BsSuitHeartFill } from "react-icons/bs";
-
 import { NavLink, useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('gender', ['Male', 'Female']);
             $table->string('confirm_password')->nullable();
-            $table->integer('level');
+            $table->tinyInteger('level')->default(4)->comment('1: Admin Master, 2: Admin Manager, 3: Admin Editor, 4: Member');
             $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
