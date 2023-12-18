@@ -81,7 +81,7 @@ const CollectionList = () => {
         }}
       >
         <DataGrid
-          rows={collections}  // Sử dụng dữ liệu từ API thay vì mockDataContacts
+          rows={collections}  // Sử dụng dữ liệu từ API 
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
