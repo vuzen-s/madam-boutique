@@ -1,154 +1,106 @@
-import { Box, Button, TextField } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Formik } from "formik";
-import * as yup from "yup";
-import Header from "../../components/Header";
+import Button from "@mui/material/Button";
+import { Breadcrumb, Input, Select } from "antd";
+
+const { Option } = Select;
 
 const UserCreate = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
-  };
-
   return (
-    <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
-
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
+    <div>
+      <div className="bg-white rounded-md p-2 shadow-md">
+        <Breadcrumb
+          style={{ margin: "5px 0", fontSize: "20px", fontWeight: "500" }}
+        >
+          <Breadcrumb.Item>User</Breadcrumb.Item>
+          <Breadcrumb.Item>User Create</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="max-w-full h-[520px] mt-2 mx-auto p-4 flex-wrap flex-col md:flex-row bg-white rounded-md shadow-lg relative">
+        <div className="w-full h-full mt-2 mx-auto p-4 flex justify-evenly ">
+          <div className="w-50 pr-10">
+            <div className="mb-4">
+              <label htmlFor="fullName" className="block mb-1 font-medium">
+                Full Name *
+              </label>
+              <Input
+                id="fullname"
+                name="fullname"
+                className="w-full bg-slate-200"
+                placeholder="Eg. Le Van Truong Anh"
+                style={{ width: "100%", height: "40px" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block mb-1 font-medium">
+                Email *
+              </label>
+              <Input
+                id="email"
                 name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
+                className="w-full  bg-slate-200"
+                placeholder="Eg. truonganh@gmail.com"
+                style={{ width: "100%", height: "40px" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block mb-1 font-medium">
+                Password *
+              </label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                className="w-full  bg-slate-200"
+                placeholder="Password"
+                style={{ width: "100%", height: "40px" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="confirmPassword"
+                className="block mb-1 font-medium"
+              >
+                Confirm Password *
+              </label>
+              <Input
+                type="password_confirmation"
+                id="passwordConfirmation"
+                name="confirmation_password"
+                className="w-full  bg-slate-200"
+                placeholder="Confirm Password"
+                style={{ width: "100%", height: "40px" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
-    </Box>
+            </div>
+          </div>
+          {/* -------------------------------- */}
+          <div className="w-60 pr-5">
+            <div className="mb-4">
+              <label htmlFor="gender" className="block mb-1 font-medium">
+                Gender 
+              </label>
+              <Select id="level" className="w-full" style={{ width: "100%", height: "40px" }}>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+              </Select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="level" className="block mb-1 font-medium">
+                Level *
+              </label>
+              <Select id="level" className="w-full" style={{ width: "100%", height: "40px" }}>
+                <Option value="adminMaster">Admin Master</Option>
+                <Option value="adminManager">Admin Manager</Option>
+                <Option value="adminEditor">Admin Editor</Option>
+                <Option value="member">Member</Option>
+              </Select>
+            </div>
+          </div>
+        </div>
+        <div style={{ position: "absolute", bottom: 20, right: 20 }}>
+            <Button variant="contained" color="success" style={{ width: "150px", height: "45px" }}>Create</Button>
+        </div>
+      </div>
+    </div>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default UserCreate;

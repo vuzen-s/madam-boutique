@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
@@ -73,3 +74,14 @@ Route::patch('categories-update/{id}', [CategoryController::class, 'update'])->n
 
 // Xóa collection
 Route::delete('categories-destroy/{id}', [CategoryController::class, 'destroy'])->name('categories-destroy');
+
+
+// =================== USERS ===================
+// Lấy danh sách user
+Route::get('users', [UserController::class, 'index']);
+// Tạo user
+Route::post('user/create', [UserController::class, 'store']);
+// Show thông tin user edit
+Route::get('user/edit/{id}', [UserController::class, 'edit']);
+// Update thông tin user edit
+Route::put('user/edit/{id}', [UserController::class, 'update']);
