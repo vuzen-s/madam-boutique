@@ -4,7 +4,7 @@ import MainLayout from "./scenes/MainLayout/MainLayout";
 const Dashboard2App = () => {
     return (
         <Routes>
-            <Route path="/*" element={<MainLayout />} />
+            <Route path="/admin/*" element={<MainLayout />} />
         </Routes>
     )
 }

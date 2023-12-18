@@ -33,20 +33,17 @@ const items = [
 
   getItem("User", "selectedUser", <UserOutlined />, [
     getItem(<Link to={"users"}>User List</Link>, "3"),
-    getItem(<Link to={"user/create"}>User Create</Link>, "4"),
-    getItem(<Link to={"user/edit"}>User Edit</Link>, "5"),
+    getItem(<Link to={"users/create"}>User Create</Link>, "4"),
   ]),
 
   getItem("Product", "selectedProduct", <UnorderedListOutlined />, [
     getItem(<Link to={"products"}>Product List</Link>, "7"),
-    getItem(<Link to={"product/create"}>Product Create</Link>, "8"),
-    getItem(<Link to={"product/edit"}>Product Edit</Link>, "9"),
+    getItem(<Link to={"products/create"}>Product Create</Link>, "8"),
   ]),
 
   getItem("Category", "selectedCategory", <AppstoreOutlined />, [
     getItem(<Link to={"categories"}>Category List</Link>, "11"),
-    getItem(<Link to={"category/create"}>Category Create</Link>, "12"),
-    getItem(<Link to={"category/edit"}>Category Edit</Link>, "13"),
+    getItem(<Link to={"categories/create"}>Category Create</Link>, "12"),
   ]),
 
   getItem("Team", "15", <TeamOutlined />),
@@ -94,14 +91,18 @@ const MainLayout = () => {
         >
           <Routes>
             <Route path="users" element={<UserList />} />
-            <Route path="user/create" element={<UserCreate />} />
-            <Route path="user/edit" element={<UserEdit />} />
+            <Route path="users/create" element={<UserCreate />} />
+            <Route path="users/edit/:id" element={<UserEdit />} />
+          </Routes>
+          <Routes>
             <Route path="products" element={<ProductList />} />
-            <Route path="product/create" element={<ProductCreate />} />
-            <Route path="product/edit" element={<ProductEdit />} />
-            <Route path="categories" element={<CategoryList />} />
-            <Route path="category/create" element={<CategoryCreate />} />
-            <Route path="category/edit" element={<CategoryEdit />} />
+            <Route path="products/create" element={<ProductCreate />} />
+            <Route path="products/edit/:id" element={<ProductEdit />} />
+          </Routes>
+          <Routes>
+            <Route path="categories" element={<CategoryList />}/>
+            <Route path="categories/create" element={<CategoryCreate />} />
+            <Route path="categories/edit/:id" element={<CategoryEdit />} />
           </Routes>
         </Content>
       </Layout>

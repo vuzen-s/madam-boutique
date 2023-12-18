@@ -1,17 +1,28 @@
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Breadcrumb } from "antd";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { colums } from './colums/columsUserList'
+import { colums } from './colums/columsUserList';
 import Button from "@mui/material/Button";
-
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+  const handleCreateUser = () => {
+    navigate("../users/create");
+  };
+
+  const handleEditUser = (id) => {
+    navigate(`../users/edit/${id}`);
+  }
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/users`).then((res) => {
@@ -22,16 +33,22 @@ const UserList = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-md p-2 flex items-center shadow-md">
+      <div className="bg-white rounded-md p-2 flex justify-between items-center shadow-md">
         <Breadcrumb
           style={{ margin: "2px 0", fontSize: "20px", fontWeight: "500" }}
         >
           <Breadcrumb.Item>User</Breadcrumb.Item>
           <Breadcrumb.Item>User list</Breadcrumb.Item>
         </Breadcrumb>
-       
-          {/* <Button type="primary">Create User</Button> */}
-        
+
+        <Button
+          variant="contained"
+          color="success"
+          onClick={handleCreateUser}
+          style={{ width: "150px", height: "40px" }}
+        >
+          Create User
+        </Button>
       </div>
       <div className="bg-white rounded-md shadow-lg">
         <Box>
@@ -67,7 +84,52 @@ const UserList = () => {
               },
             }}
           >
-            <DataGrid rows={users} columns={colums} />
+            <DataGrid
+
+              rows={users}
+
+              columns={colums.map((column) => ({
+
+                ...column,
+
+                renderCell: (params) => {
+                  if (column.field === "edit") {
+                    return (
+                      <Button
+                        onClick={() => handleEditUser(params.id)}
+                        sx={{
+                          bgcolor: "#2b8b57",
+                          color: "white",
+                          "&:hover": { bgcolor: "#3cb371" },
+                          width: "80px",
+                        }}
+                        startIcon={<EditIcon />}
+                      >
+                        Edit
+                      </Button>
+                    );
+                  } else if (column.field === 'delete') {
+                    return (
+                      <Button
+                        // onClick={() => handleDeleteUser(params.id)}
+                        sx={{
+                          bgcolor: "#d32f2f",
+                          color: "white",
+                          "&:hover": { bgcolor: "#f44336" },
+                          width: "100px",
+                        }}
+                        startIcon={<DeleteIcon />}
+                      >
+                        Delete
+                      </Button>
+                    );
+                  }
+                  return column.renderCell
+                    ? column.renderCell(params)
+                    : params.value;
+                },
+              }))}
+            />
           </Box>
         </Box>
       </div>
