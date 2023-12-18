@@ -180,14 +180,6 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {/*  */}
-                  <Item
-                    title="Edit Users"
-                    to="/dashboard/user/edit"
-                    icon={<StarBorder />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
                 </List>
               </Collapse>
               {/* Collections module */}
@@ -215,14 +207,6 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {/*  */}
-                  <Item
-                    title="Edit Collections"
-                    to="/dashboard/collection/edit"
-                    icon={<StarBorder />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
                 </List>
               </Collapse>
               {/* Categories module */}
@@ -246,14 +230,6 @@ const Sidebar = () => {
                   <Item
                     title="Create Categories"
                     to="/dashboard/category/create"
-                    icon={<StarBorder />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  {/*  */}
-                  <Item
-                    title="Edit Categories"
-                    to="/dashboard/category/edit"
                     icon={<StarBorder />}
                     selected={selected}
                     setSelected={setSelected}

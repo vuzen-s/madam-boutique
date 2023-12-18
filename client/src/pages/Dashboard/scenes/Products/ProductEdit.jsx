@@ -73,8 +73,7 @@ const ProductEdit = () => {
       .catch((error) => console.log(error));
   }, [id]);
 
-  const handleFormSubmit = async () => {
-
+  const handleFormUpdate = async () => {
     try {
       await fetch('http://127.0.0.1:8000/api/products-update/' + id, {
         method: "PATCH",
@@ -116,11 +115,11 @@ const ProductEdit = () => {
     console.log(event.target)
     const { name, value } = event.target;
     setDataProductEdit({ ...dataProductEdit, [name]: value });
-    let avatar = event.target.files;
-    if (avatar) {
-      dataProductEdit.avatar = avatar[0];
-      setDataProductEdit(dataProductEdit);
-    }
+    // let avatar = event.target.files;
+    // if (avatar) {
+    //   dataProductEdit.avatar = avatar[0];
+    //   setDataProductEdit(dataProductEdit);
+    // }
   };
 
   // back
@@ -133,7 +132,7 @@ const ProductEdit = () => {
       <Header title="EDIT PRODUCT" subtitle="Edit a Product" />
 
       <Formik
-        onSubmit={handleFormSubmit}
+        onSubmit={handleFormUpdate}
         initialValues={initialValues}
         onChange={handleChangeInput}
       >
@@ -179,8 +178,8 @@ const ProductEdit = () => {
               </div>
 
               <div class="mb-3">
-                <label for="avatar" class="form-label">Ảnh hiện tại:</label>
-                <img src={dataProductEdit.avatar} alt={dataProductEdit.name} width="50px"/>
+                <label class="form-label">Ảnh hiện tại:</label>
+                <img src={dataProductEdit.avatar} alt={dataProductEdit.name} width="50px" />
               </div>
 
               <div class="mb-3">

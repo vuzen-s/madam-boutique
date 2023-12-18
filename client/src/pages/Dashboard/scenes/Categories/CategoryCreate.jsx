@@ -1,31 +1,102 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Formik } from "formik";
-import * as yup from "yup";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { csrfTokenReducer } from "../../../../redux/madamBoutiqueSlice";
 import Header from "../../components/Header";
 
-const CategoryCreate = () => {
+const CollectionCreate = () => {
+  const [dataCategory, setDataCategory] = useState({
+    name: '',
+    status: 0,
+    parent_id: '',
+  });
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  dispatch(csrfTokenReducer());
+  const csrfToken = useSelector((state) => state.madamBoutiqueReducer.csrfToken);
+
+  const [errorsField, setErrorsField] = useState({});
+  const [message, setMessage] = useState('');
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const showToastMessage = () => {
+    toast.success('Thêm Danh mục thành công!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
+
+  const handleFormSubmit = async () => {
+
+    try {
+      await fetch('http://127.0.0.1:8000/api/categories-store', {
+        method: "POST",
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataCategory), // Chuyển đổi FormData thành đối tượng JSON
+      })
+        .then((respon) => respon.json())
+        .then((data) => {
+          console.log(dataCategory);
+          // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+          console.log(data.errors);
+          setErrorsField(data.errors);
+          // message
+          console.log(data.message);
+          setMessage(data.message);
+          // Xử lý dữ liệu thành công nếu cần
+          if (data.errors === undefined) {
+            navigate('/dashboard/category/')
+            showToastMessage();
+          }
+        })
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+        console.log(error);
+      } else {
+        // Xử lý lỗi khác nếu có
+        console.error('Error:', error);
+      }
+    }
+  };
+
+  // Hàm xử lý khi giá trị của trường form thay đổi
+  const handleChangeInput = (event) => {
+    console.log(event.target)
+    const { name, value } = event.target;
+    setDataCategory({ ...dataCategory, [name]: value });
   };
 
   return (
     <Box m="20px">
       <Header title="CREATE CATEGORY" subtitle="Create a New Category" />
-
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        onChange={handleChangeInput}
       >
         {({
           values,
           errors,
           touched,
           handleBlur,
-          handleChange,
           handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
@@ -37,89 +108,33 @@ const CategoryCreate = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
+              <div class="mb-4">
+                <label for="name" class="form-label">Tên danh mục:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" onChange={handleChangeInput} />
+                <p style={{ color: "red" }}>
+                  {errorsField && errorsField.name}
+                </p>
+              </div>
+              <div className="mb-4">
+                <label for="status" class="form-label">Trạng thái danh mục:</label>
+                <select className="form-select" name="status" value={dataCategory.status} onChange={handleChangeInput} >
+                  <option value={0}> Hiển thị </option>
+                  <option value={1}> Ẩn </option>
+                </select>
+                <p style={{ color: "red" }}>
+                  {errorsField && errorsField.status}
+                </p>
+              </div>
+              <div class="mb-4">
+                <label for="parent_id" class="form-label">Danh mục cha:</label>
+                <input type="text" class="form-control" id="parent_id" placeholder="Enter parent_id" name="parent_id" onChange={handleChangeInput} />
+                <p style={{ color: "red" }}>
+                  {errorsField && errorsField.parent_id}
+                </p>
+              </div>
             </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
-              </Button>
+            <Box mt="10px">
+              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Thêm danh mục mới</button>
             </Box>
           </form>
         )}
@@ -128,27 +143,10 @@ const CategoryCreate = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  name: '',
+  status: 0,
+  parent_id: '',
 };
 
-export default CategoryCreate;
+export default CollectionCreate;

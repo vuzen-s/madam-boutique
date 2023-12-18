@@ -112,11 +112,11 @@ const ProductCreate = () => {
     console.log(event.target)
     const { name, value } = event.target;
     setDataProduct({ ...dataProduct, [name]: value });
-    let avatar = event.target.files;
-    if (avatar) {
-      dataProduct.avatar = avatar[0];
-      setDataProduct(dataProduct);
-    }
+    // let avatar = event.target.files;
+    // if (avatar) {
+    //   dataProduct.avatar = avatar[0];
+    //   setDataProduct(dataProduct);
+    // }
   };
 
   return (

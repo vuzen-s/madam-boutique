@@ -133,8 +133,9 @@ class ProductController extends Controller
             }
             // thay thế nó bằng file avatar mới được cập nhật
             $avatar = $request->avatar;
-            $dataNew['avatar'] = time() . $avatar->getClientOriginalName();
-            $avatar->move(public_path('uploads/'), $dataNew['avatar']);
+            $dataNew['avatar'] = $avatar;
+            // $dataNew['avatar'] = time() . $avatar->getClientOriginalName();
+            // $avatar->move(public_path('uploads/'), $dataNew['avatar']);
         }
 
         DB::table('products')->where('id', $id)->update($dataNew);

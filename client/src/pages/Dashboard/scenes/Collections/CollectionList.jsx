@@ -1,53 +1,97 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import Swal from 'sweetalert2';
 import Header from "../../components/Header";
-import { mockDataContacts } from "../../data/mockData";
 import { tokens } from "../../theme";
 
 const CollectionList = () => {
+  const [collectionsList, setCollectionsList] = useState([]);
+
+  // Get data products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/collections', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.collections);
+        setCollectionsList(data.collections);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleEditItem = (idCollection) => {
+    // navigate
+    navigate('/dashboard/collection/edit/' + idCollection);
+  }
+
+  const handleDeleteItem = (idCollection) => {
+    Swal.fire({
+      title: "Bạn chắc chắn muốn xóa bộ sưu tập này?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        await fetch('http://127.0.0.1:8000/api/collections-destroy/' + idCollection, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+          .then((respon) => respon.json())
+          .then((data) => {
+            console.log(data);
+            console.log(idCollection);
+            // handle event
+            Swal.fire("Đã xóa!", "", "success");
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error)
+            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+          });
+      }
+    });
+  }
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Name",
-      flex: 1,
+      headerName: "Tên Bộ sưu tập",
+      headerAlign: "center",
+      align: "center",
+      flex: 0.5,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
+      headerName: "Actions",
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => (
+        <div style={{ display: 'flex', columnGap: '4px' }}>
+          <button type="button" class="btn btn-warning" style={{ background: '#ffc107' }} onClick={() => handleEditItem(params.row.id)}>
+            Sửa
+          </button>
+          <button type="button" class="btn btn-danger" style={{ background: '#dc3545' }} onClick={() => handleDeleteItem(params.row.id)}>
+            Xóa
+          </button>
+        </div>
+      ),
+      flex: 0.5,
     },
   ];
 
@@ -71,7 +115,7 @@ const CollectionList = () => {
             color: colors.greenAccent[300],
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.redAccent[700],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -79,7 +123,7 @@ const CollectionList = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.redAccent[700],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
@@ -90,11 +134,11 @@ const CollectionList = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={collectionsList}
           columns={columns}
-          components={{ Toolbar: GridToolbar }}
         />
       </Box>
+      <ToastContainer />
     </Box>
   );
 };

@@ -35,20 +35,16 @@ function DashboardApp() {
             <Route path="/" element={<Dashboard />} />
               <Route path="user" element={<UserList />} />
               <Route path="user/create" element={<UserCreate />} />
-              <Route path="user/edit" element={<UserEdit />} />
+              <Route path="user/edit/:id" element={<UserEdit />} />
               <Route path="collection" element={<CollectionList />} />
               <Route path="collection/create" element={<CollectionCreate />} />
-              <Route path="collection/edit" element={<CollectionEdit />} />
+              <Route path="collection/edit/:id" element={<CollectionEdit />} />
               <Route path="category" element={<CategoryList />} />
               <Route path="category/create" element={<CategoryCreate />} />
-              <Route path="category/edit" element={<CategoryEdit />} />
+              <Route path="category/edit/:id" element={<CategoryEdit />} />
               <Route path="product" element={<ProductList />} />
               <Route path="product/create" element={<ProductCreate />} />
               <Route path="product/edit/:id" element={<ProductEdit />} />
-              {/* <Route path="bar" element={<Bar />} />
-              <Route path="pie" element={<Pie />} />
-              <Route path="line" element={<Line />} />
-              <Route path="geography" element={<Geography />} /> */}
             </Routes>
           </main>
         </div>
