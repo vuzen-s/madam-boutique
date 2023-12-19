@@ -51,9 +51,9 @@ class UserController extends Controller
 
         if($validate->fails()) {
             return response()->json([
-                'status' => 400,
+                'status' => 422,
                 'error'=> $validate->messages()
-            ], 400);
+            ], 422);
         } else {
             $user = User::create([
                 'fullname' => $request['fullname'],

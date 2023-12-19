@@ -80,8 +80,8 @@ Route::delete('categories-destroy/{id}', [CategoryController::class, 'destroy'])
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
 // Tạo user
-Route::post('user/create', [UserController::class, 'store']);
+Route::post('users/create', [UserController::class, 'store']);
 // Show thông tin user edit
-Route::get('user/edit/{id}', [UserController::class, 'edit']);
+Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
-Route::put('user/edit/{id}', [UserController::class, 'update']);
+Route::put('users/edit/{id}', [UserController::class, 'update']);
