@@ -51,9 +51,8 @@ class UserController extends Controller
 
         if($validate->fails()) {
             return response()->json([
-                'status' => 400,
                 'error'=> $validate->messages()
-            ], 400);
+            ]);
         } else {
             $user = User::create([
                 'fullname' => $request['fullname'],
@@ -70,9 +69,8 @@ class UserController extends Controller
                 ], 200);
             } else {
                 return response()->json([
-                    'status' => 500,
                     'messages' => 'Failed to Create User'
-                ], 500);
+                ]);
             }
         }
     }
@@ -114,14 +112,13 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
-                'status' => 404,
                 'message' => "User Not Found"
-            ], 404);
+            ]);
         }
 
         $validate = Validator::make($request->all(), [
-            'fullname' => 'string|max:50',
-            'email' => 'string|email|max:50|unique:users,email,'.$id,
+            'fullname' => 'required|string|max:50',
+            'email' => 'required|string|email|max:50|unique:users,email,'.$id,
         ]);
 
         if(!empty($request->password)){
@@ -131,9 +128,8 @@ class UserController extends Controller
     
             if ($passwordValidator->fails()) {
                 return response()->json([
-                    'status' => 400,
                     'error'=> $passwordValidator->messages()
-                ], 400);
+                ]);
             }
 
             $user->password = bcrypt($request['password']);
@@ -141,9 +137,8 @@ class UserController extends Controller
 
         if ($validate->fails()) {
             return response()->json([
-                'status' => 400,
                 'error'=> $validate->messages()
-            ], 400);
+            ]);
         } else {
             $user->fullname = $request['fullname'];
             $user->email = strtolower($request['email']);

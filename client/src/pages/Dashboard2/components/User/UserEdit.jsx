@@ -1,13 +1,16 @@
-import { Breadcrumb, Input, Select } from "antd";
+import { Breadcrumb, Input } from "antd";
 import Button from "@mui/material/Button";
+// import Select from "@mui/material/Select";
+// import MenuItem from "@mui/material/MenuItem";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const UserEdit = () => {
   const [users, setUsers] = useState({});
+  // const [inputs, setInput] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -19,8 +22,9 @@ const UserEdit = () => {
   }, [id]);
 
   const handleInputValue = (e) => {
-    const { name, value } = e.target;
-    setUsers({ ...users, [name]: value });
+    const name = e.target?.name;
+    const value = e.target?.value;
+    setUsers((values) => ({ ...values, [name]: value }));
   };
 
   const handleUpdateUser = (e) => {
@@ -29,7 +33,7 @@ const UserEdit = () => {
     const data = {
       fullname: users.fullname,
       email: users.email,
-      lelvel: users.level,
+      level: users.level,
       gender: users.gender,
       password: users.password,
       password_confirmation: users.password_confirmation,
@@ -39,22 +43,22 @@ const UserEdit = () => {
       .put(`http://localhost:8000/api/users/edit/${id}`, data)
       .then((res) => {
         alert(res.data.message);
-      })
-
-      .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 400) {
-            //setError
-            // loading
-          }
-          if (err.response.status === 404) {
-            // set page
-          }
-          if (err.response.status === 500) {
-            // set page
-          }
-        }
       });
+
+    // .catch((err) => {
+    //   if (err.response) {
+    //     if (err.response.status === 400) {
+    //       //setError
+    //       // loading
+    //     }
+    //     if (err.response.status === 404) {
+    //       // set page
+    //     }
+    //     if (err.response.status === 500) {
+    //       // set page
+    //     }
+    //   }
+    // });
   };
 
   const handleBackToList = () => {
@@ -105,7 +109,7 @@ const UserEdit = () => {
                   id="email"
                   name="email"
                   value={users.email}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Eg. truonganh@gmail.com"
                   style={{ width: "100%", height: "40px" }}
@@ -120,7 +124,7 @@ const UserEdit = () => {
                   id="password"
                   name="password"
                   value={users.password}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Password"
                   style={{ width: "100%", height: "40px" }}
@@ -138,7 +142,7 @@ const UserEdit = () => {
                   id="passwordConfirmation"
                   name="password_confirmation"
                   value={users.password_confirmation}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Confirm Password"
                   style={{ width: "100%", height: "40px" }}
@@ -151,35 +155,33 @@ const UserEdit = () => {
                 <label htmlFor="gender" className="block mb-1 font-medium">
                   Gender
                 </label>
-                <Select
+                <select
                   id="level"
                   name="gender"
                   value={users.gender}
-                  // onChange={handleInputValue}
-                  className="w-full"
-                  style={{ width: "100%", height: "40px" }}
+                  onChange={handleInputValue}
+                  className="w-full h-10 bg-slate-200 rounded-md pl-3"
                 >
-                  <Option value="Male">Male</Option>
-                  <Option value="Female">Female</Option>
-                </Select>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
               </div>
               <div className="mb-4">
                 <label htmlFor="level" className="block mb-1 font-medium">
                   Level
                 </label>
-                <Select
+                <select
                   id="level"
                   name="level"
                   value={users.level}
-                  // onChange={handleInputValue}
-                  className="w-full"
-                  style={{ width: "100%", height: "40px" }}
+                  onChange={handleInputValue}
+                  className="w-full h-10 bg-slate-200 rounded-md pl-3 "
                 >
-                  <Option value="adminMaster">Admin Master</Option>
-                  <Option value="adminManager">Admin Manager</Option>
-                  <Option value="adminEditor">Admin Editor</Option>
-                  <Option value="member">Member</Option>
-                </Select>
+                  <option value="1">Admin Master</option>
+                  <option value="2">Admin Manager</option>
+                  <option value="3">Admin Editor</option>
+                  <option value="4">Member</option>
+                </select>
               </div>
             </div>
           </div>
