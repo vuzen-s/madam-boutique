@@ -19,9 +19,11 @@ const UserEdit = () => {
   }, [id]);
 
   const handleInputValue = (e) => {
-    const { name, value } = e.target;
+  const { name, value } = e.target || {};
+  if (name) {
     setUsers({ ...users, [name]: value });
-  };
+  }
+};
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
@@ -105,7 +107,7 @@ const UserEdit = () => {
                   id="email"
                   name="email"
                   value={users.email}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Eg. truonganh@gmail.com"
                   style={{ width: "100%", height: "40px" }}
@@ -120,7 +122,7 @@ const UserEdit = () => {
                   id="password"
                   name="password"
                   value={users.password}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Password"
                   style={{ width: "100%", height: "40px" }}
@@ -138,7 +140,7 @@ const UserEdit = () => {
                   id="passwordConfirmation"
                   name="password_confirmation"
                   value={users.password_confirmation}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full  bg-slate-200"
                   placeholder="Confirm Password"
                   style={{ width: "100%", height: "40px" }}
@@ -155,7 +157,7 @@ const UserEdit = () => {
                   id="level"
                   name="gender"
                   value={users.gender}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full"
                   style={{ width: "100%", height: "40px" }}
                 >
@@ -171,7 +173,7 @@ const UserEdit = () => {
                   id="level"
                   name="level"
                   value={users.level}
-                  // onChange={handleInputValue}
+                  onChange={handleInputValue}
                   className="w-full"
                   style={{ width: "100%", height: "40px" }}
                 >
