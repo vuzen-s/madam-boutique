@@ -32,7 +32,7 @@ function DashboardApp() {
           <main className="content-dashboard">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-            <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="user" element={<UserList />} />
               <Route path="user/create" element={<UserCreate />} />
               <Route path="user/edit/:id" element={<UserEdit />} />

@@ -23,7 +23,8 @@ import BlogList from "./components/BlogList/BlogList";
 import NavbarBottom2 from "./components/home/Header/NavbarBottom2";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
-import DashboardApp from "./pages/Dashboard/DashboardApp";
+// import DashboardApp from "./pages/Dashboard/DashboardApp";
+import DashBoardMain from './pages/DashBoardMain/DashBoardMain';
 import Home from "./pages/Home/Home";
 import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/Payment/Payment";
@@ -68,7 +69,7 @@ const router = createBrowserRouter(
       {/* // */}
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
-      <Route path="/dashboard/*" element={<DashboardApp />}></Route>
+      <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
     </Route>
   )
 );

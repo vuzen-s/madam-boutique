@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import Swal from 'sweetalert2';
 
 const initialState = {
+  sidebarShow: true,
   userInfo: [],
   products: [],
   productsFavorite: [],
@@ -19,6 +20,14 @@ export const madamBoutiqueSlice = createSlice({
           break;
         default:
           return state;
+      }
+    },
+    changeState: (state = initialState, { type, ...rest }) => {
+      switch (type) {
+        case 'set':
+          return { ...state, ...rest }
+        default:
+          return state
       }
     },
     addToCart: (state, action) => {
@@ -99,6 +108,7 @@ export const madamBoutiqueSlice = createSlice({
 
 export const {
   csrfTokenReducer,
+  changeState,
   addToCart,
   increaseQuantity,
   drecreaseQuantity,

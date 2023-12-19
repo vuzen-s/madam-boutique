@@ -43,6 +43,15 @@ const BestSellers = () => {
           badge={false}
           des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
         />
+                <Product
+          _id="1014"
+          img="https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
+          productName="Travel Bag"
+          price="220.00"
+          color="Black"
+          badge={false}
+          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+        />
       </div>
     </div>
   );
