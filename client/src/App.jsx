@@ -1,6 +1,7 @@
 import {
   Outlet,
   Route,
+  Routes,
   RouterProvider,
   ScrollRestoration,
   createBrowserRouter,
@@ -33,27 +34,13 @@ import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
+import Page404 from "./pages/Dashboard2/components/Page404/Page404";
+import Layout from "./Layout";
 
-const Layout = () => {
+const App = () => {
   return (
     <div>
-      {/* <Header /> */}
-      {/* <HeaderBottom /> */}
-      <Navbar />
-      {/* <NavbarBottom /> */}
-      <NavbarBottom2 />
-      
-      <SpecialCase />
-      <ScrollRestoration />
-      <Outlet />
-      <Footer />
-      <FooterBottom />
-    </div>
-  );
-};
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
+    <Routes>
       <Route path="/" element={<Layout />}>
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<Home />}></Route>
@@ -72,16 +59,10 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/dashboard/*" element={<Dashboard2App />}></Route>
-    </Route>
-  )
-);
-
-function App() {
-  return (
-    <div className="font-bodyFont">
-      <RouterProvider router={router} />
+    </Routes>
     </div>
-  );
-}
+ );
+};
 
 export default App;
+

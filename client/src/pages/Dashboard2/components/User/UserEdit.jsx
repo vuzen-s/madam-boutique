@@ -1,16 +1,13 @@
 import { Breadcrumb, Input } from "antd";
 import Button from "@mui/material/Button";
-// import Select from "@mui/material/Select";
-// import MenuItem from "@mui/material/MenuItem";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// const { Option } = Select;
 
 const UserEdit = () => {
   const [users, setUsers] = useState({});
-  // const [inputs, setInput] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -42,6 +39,7 @@ const UserEdit = () => {
     axios
       .put(`http://localhost:8000/api/users/edit/${id}`, data)
       .then((res) => {
+        console.log(res.data.error);
         alert(res.data.message);
       });
 

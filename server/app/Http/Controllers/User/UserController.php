@@ -46,13 +46,13 @@ class UserController extends Controller
             'email' => 'required|string|email||max:50|unique:users,email',
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
-            'gender' => 'required',
+            'gender' => 'required'
         ]);
 
         if($validate->fails()) {
             return response()->json([
                 'error'=> $validate->messages()
-            ]);
+            ], 400);
         } else {
             $user = User::create([
                 'fullname' => $request['fullname'],
@@ -118,7 +118,7 @@ class UserController extends Controller
 
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email|max:50|unique:users,email,'.$id,
+            'email' => 'required|string|email|max:100|unique:users,email,'.$id,
         ]);
 
         if(!empty($request->password)){
