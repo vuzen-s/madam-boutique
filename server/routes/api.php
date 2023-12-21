@@ -79,6 +79,8 @@ Route::delete('categories-destroy/{id}', [CategoryController::class, 'destroy'])
 // =================== USERS ===================
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
+// show user
+Route::get('api/user/{id}', [UserController::class, 'show']);
 // Tạo user
 Route::post('user/create', [UserController::class, 'store']);
 // Show thông tin user edit
