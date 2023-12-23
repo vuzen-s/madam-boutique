@@ -34,7 +34,8 @@ export const AuthProvider = ({ children }) => {
     const login = async ({email, password}) => {
         // await csrf();
         try {
-            const response = await axios.post('http://localhost:8000/api/auth/login', {email, password})
+            const response = await axios.post('http://localhost:8000/api/auth/login', {email, password});
+            console.log(response);
             const { access_token, user } = response.data;
 
             sessionStorage.setItem('token', access_token);
