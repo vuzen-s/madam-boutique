@@ -45,11 +45,11 @@ const ProductFavoriteItem = ({ item }) => {
                 <div className="flex w-1/3 items-center text-lg">
                     <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300"
                         onClick={() => dispatch(addToCart({
-                            _id: item.id,
-                            name: item.productName,
+                            _id: item._id,
+                            name: item.name,
                             quantity: 1,
-                            image: item.img,
-                            badge: item.badge,
+                            image: item.image,
+                            // badge: item.badge,
                             price: item.price,
                             colors: item.color,
                         }))}>

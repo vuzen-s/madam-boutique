@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
-import { paginationItems } from "../../../constants";
 
-const items = paginationItems;
 function Items({ currentItems }) {
+
   return (
     <>
       {currentItems &&
         currentItems.map((item) => (
-          <div key={item._id} className="w-full">
+          <div key={item.id} className="w-full">
             <Product
-              _id={item._id}
-              img={item.img}
-              productName={item.productName}
+              id={item.id}
+              avatar={item.avatar}
+              name={item.name}
               price={item.price}
               color={item.color}
-              badge={item.badge}
-              des={item.des}
+              // badge={item.badge}
+              desc={item.desc}
             />
           </div>
         ))}
@@ -26,6 +25,24 @@ function Items({ currentItems }) {
 }
 
 const Pagination = ({ itemsPerPage }) => {
+  const [items, setItems] = useState(0);
+
+  // Get items products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.products);
+        setItems(data.products);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -36,7 +53,7 @@ const Pagination = ({ itemsPerPage }) => {
   // from an API endpoint with useEffect and useState)
   const endOffset = itemOffset + itemsPerPage;
   //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
+  const currentItems = items && items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
   // Invoke when user click to request another page.

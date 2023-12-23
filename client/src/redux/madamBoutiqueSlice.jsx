@@ -100,8 +100,8 @@ export const madamBoutiqueSlice = createSlice({
     },
     addAllToCart: (state, action) => {
       state.productsFavorite.map((item) => (
-        state.products.push(item)
-      ))
+        item._id === action.payload._id ? item.quantity++ : state.products.push(item)
+      ));
     }
   }
 });

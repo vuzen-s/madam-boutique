@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { emptyCart } from "../../assets/images/index";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import { addAllToCart, resetFavoriteList } from "../../redux/madamBoutiqueSlice";
+import { addToCart, resetFavoriteList } from "../../redux/madamBoutiqueSlice";
 import ProductFavoriteItem from './ProductFavoriteItem';
 
 const ProductFavorite = () => {
@@ -48,6 +48,20 @@ const ProductFavorite = () => {
     });
   }
 
+  function handleAddAllToCart() {
+    productsFavorite.map((item) => (
+      dispatch(addToCart({
+        _id: item._id,
+        name: item.name,
+        quantity: 1,
+        image: item.image,
+        // badge: item.badge,
+        price: item.price,
+        colors: item.color,
+      }))
+    ))
+  }
+
   return (
     <div className="max-w-container mx-auto px-4">
       <ToastContainer />
@@ -77,7 +91,7 @@ const ProductFavorite = () => {
 
             <div className="flex justify-end">
               <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300"
-                onClick={() => dispatch(addAllToCart())}>
+                onClick={() => handleAddAllToCart()}>
                 Add all to Cart
               </button>
             </div>

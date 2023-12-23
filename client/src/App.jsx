@@ -61,7 +61,7 @@ const router = createBrowserRouter(
         <Route path="/blog" element={<BlogList />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
-        <Route path="/product/:_id" element={<ProductDetails />}></Route>
+        <Route path="/product/:id" element={<ProductDetails />}></Route>
         <Route path="/favorite" element={<ProductFavorite />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Comment from "./Comment";
+import './Comment.scss';
 
-const Comments = ({ selectedUserId }) => {
+const Comments = ({ selectedUserId, idProduct }) => {
   const [comments, setComments] = useState([]);
   const [input, setInput] = useState("");
 
   async function sendComment() {
-    const result = await fetch("http://localhost:4000/comments", {
+    const result = await fetch("http://localhost:8000/comments-store", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ body: input, authorId: selectedUserId }),
@@ -15,20 +16,25 @@ const Comments = ({ selectedUserId }) => {
     setComments((comments) => [...comments, comment]);
   }
 
-  async function fetchComments() {
-    const result = await fetch("http://localhost:4000/comments");
-    const comments = await result.json();
-    setComments(comments);
-  }
-
   useEffect(() => {
-    fetchComments();
-  }, []);
+    fetch('http://127.0.0.1:8000/api/comments-show/' + idProduct, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data);
+        setComments(data.comments);
+      })
+      .catch((error) => console.log(error));
+  }, [idProduct]);
 
   return (
     <div className="Comments">
       <h3 className="Comments-title">
-        {comments.length === 1 ? `1 comment` : `${comments.length} comments`}
+        {(comments.length === 1) ? `1 comment` : `${comments.length} comments`}
       </h3>
 
       <div className="Comments-list">
@@ -36,7 +42,7 @@ const Comments = ({ selectedUserId }) => {
           <Comment
             key={comment.id}
             comment={comment}
-            isYou={selectedUserId === comment.authorId}
+            isYou={selectedUserId === comment.user.id}
           />
         ))}
       </div>

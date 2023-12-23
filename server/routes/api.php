@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
@@ -95,3 +96,17 @@ Route::get('brands-edit/{id}', [BrandController::class, 'edit'])->name('brands.e
 Route::patch('brands-update/{id}', [BrandController::class, 'update'])->name('brands.update');
 // Xóa designers
 Route::delete('brands-destroy/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
+
+
+// =================== COMMENTS ===================
+// List data comments
+Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+// Đẩy data lên table comment
+Route::post('comments-store', [CommentController::class, 'store'])->name('comments.store');
+// show comment theo id product
+Route::get('comments-show/{product_id}', [CommentController::class, 'show'])->name('comments.show');
+// Update comment
+Route::get('comments-edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
+Route::patch('comments-update/{id}', [CommentController::class, 'update'])->name('comments-update');
+// Xóa comment
+Route::delete('comments-destroy/{id}', [CommentController::class, 'destroy'])->name('comments-destroy');
