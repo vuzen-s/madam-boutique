@@ -20,28 +20,50 @@ const CheckoutForm = () => {
       });
   }, [id]);
 
-  const Step1 = () => (
+ 
+const Step1 = () => {
+  const [form] = Form.useForm();
+  const [name, setName] = useState(userData.fullname);
+  const [phone, setPhone] = useState(userData.phone);
+  const [address, setAddress] = useState(userData.address);
+
+  const handleSaveFormData = () => {
+    // Xử lý lưu dữ liệu ở đây, bạn có thể sử dụng useState hoặc context để lưu trữ dữ liệu
+    console.log('Name:', name);
+    console.log('Phone:', phone);
+    console.log('Address:', address);
+  };
+
+  return (
     <Form
+      form={form}
       labelCol={{ span: 3 }}
       wrapperCol={{ span: 18 }}
       layout="horizontal"
       initialValues={{
-        Name: userData.fullname,
-        Phone: userData.phone,
-        Address: userData.address,
+        Name: name,
+        Phone: phone,
+        Address: address,
       }}
     >
       <Form.Item label="Name" name="Name">
-        <Input />
+        <Input onChange={(e) => setName(e.target.value)} />
       </Form.Item>
       <Form.Item label="Phone" name="Phone">
-        <Input />
+        <Input onChange={(e) => setPhone(e.target.value)} />
       </Form.Item>
       <Form.Item label="Address" name="Address">
-        <Input.TextArea rows={4} />
+        <Input.TextArea rows={4} onChange={(e) => setAddress(e.target.value)} />
       </Form.Item>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+        <Button style={{ marginRight: '6px' }} onClick={handleSaveFormData}>
+          Save
+        </Button>
+        
+      </div>
     </Form>
   );
+};
 
   const Step2 = () => (
     <Descriptions layout="horizontal" column={1} bordered>
@@ -159,6 +181,7 @@ const CheckoutForm = () => {
           <Button onClick={handleNext}>
             Next
           </Button>
+          
         )}
         {currentStep === steps.length - 1 && (
           <Button style={{ margin: '0 8px' }} onClick={handlePrev}>
