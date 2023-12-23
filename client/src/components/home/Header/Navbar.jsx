@@ -174,7 +174,7 @@ const Navbar = () => {
           <Link to="/favorite">
             <div class="mr-5 hover:text-gray-900 cursor-pointer relative">
               <BsSuitHeartFill />
-              <span className="absolute font-titleFont bottom-3 -right-3.5 text-xs w-4 h-4 flex items-center justify-center  rounded-full bg-primeColor text-white">
+              <span style={{background: "#bf0606"}} className="absolute font-titleFont bottom-3 -right-3.5 text-xs w-4 h-4 flex items-center justify-center  rounded-full text-white">
                 {productsFavorite.length > 0 ? productsFavorite.length : 0}
               </span>
             </div>
@@ -183,7 +183,7 @@ const Navbar = () => {
           <Link to="/cart">
             <div class="mr-5 hover:text-gray-900 cursor-pointer relative">
               <FaShoppingCart />
-              <span className="absolute font-titleFont bottom-3 -right-3.5 text-xs w-4 h-4 flex items-center justify-center  rounded-full bg-primeColor text-white">
+              <span style={{background: "#bf0606"}} className="absolute font-titleFont bottom-3 -right-3.5 text-xs w-4 h-4 flex items-center justify-center  rounded-full text-white">
                 {products.length > 0 ? products.length : 0}
               </span>
             </div>
