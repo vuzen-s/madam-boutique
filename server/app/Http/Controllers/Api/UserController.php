@@ -43,27 +43,31 @@ class UserController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
+            'phone' => 'required|string', // thêm
+            'address' => 'required|string', // thêm
             'email' => 'required|string|email||max:50|unique:users,email',
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'required',
         ]);
-
-        if($validate->fails()) {
+    
+        if ($validate->fails()) {
             return response()->json([
                 'status' => 400,
-                'error'=> $validate->messages()
+                'error' => $validate->messages()
             ], 400);
         } else {
             $user = User::create([
                 'fullname' => $request['fullname'],
+                'phone' => $request['phone'], // thêm
+                'address' => $request['address'], // thêm
                 'email' => strtolower($request['email']),
                 'password' => bcrypt($request['password']),
                 'level' => $request['level'],
                 'gender' => $request['gender'],
             ]);
-
-            if($user){
+    
+            if ($user) {
                 return response()->json([
                     'status' => 200,
                     'messages' => 'User Created Successfully'
@@ -76,6 +80,7 @@ class UserController extends Controller
             }
         }
     }
+    
 
     /**
      * Display the specified resource.
@@ -84,6 +89,20 @@ class UserController extends Controller
     {
         // Viết view lịch sử thanh toán
         // HasMany table payment
+        $user = User::findOrFail($id);
+
+        if ($user) {
+            return response()->json([
+                'status' => 200,
+                
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => "User Not Found"
+            ], 404);
+        }
     }
 
     /**
