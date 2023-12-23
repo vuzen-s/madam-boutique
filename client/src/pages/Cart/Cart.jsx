@@ -1,21 +1,21 @@
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { emptyCart } from "../../assets/images/index";
-import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import { resetCart } from "../../redux/madamBoutiqueSlice";
-// import './Cart.scss';
+import { resetCart } from '../../redux/madamBoutiqueSlice';
+import Breadcrumbs from '../../components/pageProps/Breadcrumbs';
 import { ToastContainer } from 'react-toastify';
+import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.madamBoutiqueReducer.products);
-  const [totalAmt, setTotalAmt] = useState("");
-  const [shippingCharge, setShippingCharge] = useState("");
+  const [totalAmt, setTotalAmt] = useState('');
+  const [shippingCharge, setShippingCharge] = useState('');
 
   useEffect(() => {
     let price = 0;
@@ -39,35 +39,37 @@ const Cart = () => {
   function handleResetCart() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
-        confirmButton: "btn btn-success",
-        cancelButton: "btn btn-danger"
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
       },
-      buttonsStyling: false
+      buttonsStyling: false,
     });
-    swalWithBootstrapButtons.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(resetCart());
-        swalWithBootstrapButtons.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error"
-        });
-      }
-    });
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          dispatch(resetCart());
+          swalWithBootstrapButtons.fire({
+            title: 'Deleted!',
+            text: 'Your file has been deleted.',
+            icon: 'success',
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: 'Cancelled',
+            text: 'Your imaginary file is safe :)',
+            icon: 'error',
+          });
+        }
+      });
   }
 
   return (
@@ -104,9 +106,7 @@ const Cart = () => {
                 type="text"
                 placeholder="Coupon Number"
               />
-              <p className="text-sm mdl:text-base font-semibold">
-                Apply Coupon
-              </p>
+              <p className="text-sm mdl:text-base font-semibold">Apply Coupon</p>
             </div>
             <p className="text-lg font-semibold">Update Cart</p>
           </div>
@@ -116,25 +116,27 @@ const Cart = () => {
               <div>
                 <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Subtotal
-                  <span className="font-semibold tracking-wide font-titleFont">
-                    ${totalAmt}
-                  </span>
+                  <span className="font-semibold tracking-wide font-titleFont">${totalAmt}</span>
                 </p>
                 <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Shipping Charge
-                  <span className="font-semibold tracking-wide font-titleFont">
-                    ${shippingCharge}
-                  </span>
+                  <span className="font-semibold tracking-wide font-titleFont">${shippingCharge}</span>
                 </p>
                 <p className="flex items-center justify-between border-[1px] border-gray-400 py-1.5 text-lg px-4 font-medium">
                   Total
-                  <span className="font-bold tracking-wide text-lg font-titleFont">
-                    ${totalAmt + shippingCharge}
-                  </span>
+                  <span className="font-bold tracking-wide text-lg font-titleFont">${totalAmt + shippingCharge}</span>
                 </p>
               </div>
               <div className="flex justify-end">
-                <Link to="/paymentgateway">
+                <Link
+                  to={{
+                    pathname: '/paymentgateway',
+                    state: {
+                      products: products,
+                      totalAmount: totalAmt + shippingCharge,
+                    },
+                  }}
+                >
                   <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
                     Proceed to Checkout
                   </button>
@@ -151,19 +153,12 @@ const Cart = () => {
           className="flex flex-col mdl:flex-row justify-center items-center gap-4 pb-20"
         >
           <div>
-            <img
-              className="w-80 rounded-lg p-4 mx-auto"
-              src={emptyCart}
-              alt="emptyCart"
-            />
+            <img className="w-80 rounded-lg p-4 mx-auto" src={emptyCart} alt="emptyCart" />
           </div>
           <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
-            <h1 className="font-titleFont text-xl font-bold uppercase">
-              Your Cart feels lonely.
-            </h1>
+            <h1 className="font-titleFont text-xl font-bold uppercase">Your Cart feels lonely.</h1>
             <p className="text-sm text-center px-10 -mt-2">
-              Your Shopping cart lives to serve. Give it purpose - fill it with
-              books, electronics, videos, etc. and make it happy.
+              Your Shopping cart lives to serve. Give it purpose - fill it with books, electronics, videos, etc. and make it happy.
             </p>
             <Link to="/shop">
               <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">

@@ -21,7 +21,7 @@ const CategoryList = () => {
       .then((respon) => respon.json())
       .then((data) => {
         console.log(data.categories);
-        setCollectionsList(data.categories);
+        setCollectionsList(data.categories); 
       })
       .catch((error) => console.log(error));
   }, []);

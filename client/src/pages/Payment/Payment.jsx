@@ -1,24 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, Input, Button, Steps, message ,Descriptions, Flex} from 'antd';
-import axios from 'axios'; // Import thư viện axios để gọi API
+import { Form, Input, Button, Steps, Descriptions } from 'antd';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 const { Step } = Steps;
 
 const CheckoutForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [userData, setUserData] = useState({}); //lưu trữ dữ liệu khách hàng
-  
+  const [userData, setUserData] = useState({});
+  const { id } = useParams();
+
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/user/${id}`) // không biết sai chổ nào
+    axios.get(`http://localhost:8000/api/user/1`)
       .then((res) => {
         setUserData(res.data.user);
       })
       .catch((error) => {
         console.error('Error fetching user data:', error);
       });
-  }, [id]); // Bạn nên đặt id làm phụ thuộc để useEffect chạy lại khi id thay đổi
+  }, [id]);
 
-
-  const YourComponentForStep1 = () => (
+  const Step1 = () => (
     <Form
       labelCol={{ span: 3 }}
       wrapperCol={{ span: 18 }}
@@ -41,38 +43,37 @@ const CheckoutForm = () => {
     </Form>
   );
 
-
-  const YourComponentForStep2 = () => (
+  const Step2 = () => (
     <Descriptions layout="horizontal" column={1} bordered>
       <Descriptions.Item label="Name">
-       
+        {userData.Name}
       </Descriptions.Item>
       <Descriptions.Item label="Phone">
-       
+        {userData.Phone}
       </Descriptions.Item>
       <Descriptions.Item label="Address">
-      
+        {userData.Address}
       </Descriptions.Item>
       <Descriptions.Item label="Product">
-  
+       
       </Descriptions.Item>
       <Descriptions.Item label="Quantity">
-     
+    
       </Descriptions.Item>
       <Descriptions.Item label="Total">
-
+        
       </Descriptions.Item>
     </Descriptions>
   );
 
-  const YourComponentForStep3 = () => {
+  const Step3 = () => {
     const paypalButtonRef = useRef();
 
     useEffect(() => {
       const script = document.createElement('script');
       script.src = 'https://www.paypal.com/sdk/js?client-id=Af17VKFbPaxzjq4BeurracfmK2uRzc4wfwgkFdhkaxvyCmUFNenmt4-JsbbHN3-7Ehmrzoa4QnL3_KWn';
       script.async = true;
-      
+
       script.onload = () => {
         if (window.paypal) {
           window.paypal
@@ -112,14 +113,14 @@ const CheckoutForm = () => {
 
     return (
       <Form labelCol={{ span: 3 }} wrapperCol={{ span: 18 }} layout="horizontal">
-       <Button   style={{width:'100%',height:'50px', marginBottom: '20px',padding:'0px',background:'yellow'}}  >
-        Cash on Delivery - COD
-       </Button>
-        <div ref={paypalButtonRef} ></div>
+        <Button style={{ width: '100%', height: '50px', marginBottom: '20px', padding: '0px', background: 'yellow' }}>
+          Cash on Delivery - COD
+        </Button>
+        <div ref={paypalButtonRef}></div>
       </Form>
     );
   };
- 
+
   const handleNext = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -128,22 +129,18 @@ const CheckoutForm = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleDone = () => {
-    message.success('Processing complete!');
-  };
-
   const steps = [
     {
       title: 'Customer information',
-      content: <YourComponentForStep1 />,
+      content: <Step1 />,
     },
     {
       title: 'Confirm information',
-      content: <YourComponentForStep2 />,
+      content: <Step2 />,
     },
     {
       title: 'Payment',
-      content: <YourComponentForStep3 />,
+      content: <Step3 />,
     },
   ];
 
@@ -163,10 +160,7 @@ const CheckoutForm = () => {
             Next
           </Button>
         )}
-        {currentStep === steps.length - 1 
-         
-        }
-        {currentStep > 0 && (
+        {currentStep === steps.length - 1 && (
           <Button style={{ margin: '0 8px' }} onClick={handlePrev}>
             Previous
           </Button>
