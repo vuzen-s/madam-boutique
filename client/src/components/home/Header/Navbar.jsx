@@ -1,17 +1,34 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { paginationItems } from "../../../constants";
+import { useEffect, useState } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
+import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import { NavLink, useLocation } from "react-router-dom";
-import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
+import { MdClose } from "react-icons/md";
+import { NavLink, useLocation } from "react-router-dom";
 import { navBarList } from "../../../constants";
 
 const Navbar = () => {
+  const [productsList, setProductsList] = useState([]);
+
+  // Get data products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.products);
+        setProductsList(data.products);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+  
   const products = useSelector((state) => state.madamBoutiqueReducer.products);
   const productsFavorite = useSelector(
     (state) => state.madamBoutiqueReducer.productsFavorite
@@ -30,11 +47,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const filtered = paginationItems.filter((item) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = productsList.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(filtered);
-  }, [searchQuery]);
+  }, [searchQuery, productsList]);
 
   useEffect(() => {
     let hiddenLogo = () => {
@@ -96,10 +113,7 @@ const Navbar = () => {
                   <div
                     onClick={() =>
                       navigate(
-                        `/product/${item.productName
-                          .toLowerCase()
-                          .split(" ")
-                          .join("")}`,
+                        `/product/${item.id}`,
                         {
                           state: {
                             item: item,
@@ -110,12 +124,12 @@ const Navbar = () => {
                     key={item._id}
                     className="max-w-[500px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                   >
-                    <img className="w-24" src={item.img} alt="productImg" />
+                    <img className="w-24" src={item.avatar} alt="productImg" />
                     <div className="flex flex-col gap-1">
                       <p className="font-semibold text-lg">
-                        {item.productName}
+                        {item.name}
                       </p>
-                      <p className="text-xs">{item.des}</p>
+                      <p className="text-xs">{item.desc}</p>
                       <p className="text-sm">
                         Price:{" "}
                         <span className="text-primeColor font-semibold">
