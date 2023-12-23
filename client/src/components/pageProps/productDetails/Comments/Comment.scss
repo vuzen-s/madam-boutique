@@ -1,105 +1,132 @@
 .Comments {
-    width: 390px;
-    margin-left: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #20222b;
-  }
-  
-  .Comments-title {
-    color: #fff;
-    margin: 16px;
-    font-size: 16px;
-    font-weight: normal;
-  }
-  
-  .Comments-list {
-    overflow-y: auto;
-    border-top: 1px solid #0f1014;
-  }
-  
-  .Comments-box {
-    margin-top: auto;
-    border-top: 1px solid #0f1014;
-    padding: 16px;
-  }
-  
-  .Comments-box__input {
-    background-color: rgb(15 16 20);
-    border: 1px solid transparent;
-    font-family: inherit;
-    font-size: 16px;
-    color: #fff;
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    height: 72px;
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 8px;
-  }
-  
-  .Comments-box__input:focus,
-  .Comments-box__input:active {
-    border-color: rgb(91 83 255 / 75%);
-    appearance: none;
-  }
-  
-  .Comments-box__btn {
-    background-color: rgb(91 83 255 / 75%);
-    color: #fff;
-    border: 1px solid transparent;
-    padding: 4px 8px;
-    display: inline-block;
-    appearance: none;
-    font-family: inherit;
-    font-size: 14px;
-    border-radius: 4px;
-    margin-left: auto;
-  }
-  
-  .Comments-box__btn:disabled {
-    background-color: #ccc;
-  }
-  
-  .Comment {
-    padding: 16px;
-    border-bottom: 1px solid #0f1014;
-    color: #fff;
-  }
-  
-  .Comment-header {
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .Comment-avatar {
-    width: 24px;
-    height: 24px;
-    background-color: #15151c;
-    border-radius: 100%;
-    margin-right: 8px;
-    overflow: hidden;
-  }
-  
-  .Comment-avatar img {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .Comment-author {
-    font-weight: 600;
-    font-size: 14px;
-    margin-right: 8px;
-  }
-  
-  .Comment-time {
-    font-size: 14px;
-    color: rgb(125 130 154);
-  }
-  
-  .Comment-body {
-    margin-left: 32px;
-  }
+  margin: 24px auto;
+  width: 1400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.Comments-title {
+  color: #262626;
+  margin: 16px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.Comments-list {
+  overflow-y: auto;
+  border-top: 1px solid #686868;
+}
+
+.Comments-box {
+  margin-top: auto;
+  border-top: 1px solid #686868;
+  padding: 16px 0;
+}
+
+.Comments-box button {
+  color: white;
+  background: #007bff;
+  border: none;
+  padding: 8px 24px;
+  margin-top: 12px;
+}
+
+.Comments-box button:hover {
+  background: #056ddc;
+}
+
+.Comments-box__input {
+  background-color: rgb(239, 239, 239);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 16px;
+  color: #262626;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 72px;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.Comments-box__input:focus,
+.Comments-box__input:active {
+  border-color: rgba(216, 216, 216, 0.75);
+  // appearance: none;
+}
+
+.Comments-box__btn {
+  background-color: rgb(91 83 255 / 75%);
+  color: #262626;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  display: inline-block;
+  appearance: none;
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.Comments-box__btn:disabled {
+  background-color: #ccc;
+}
+
+.Comment {
+  padding: 16px;
+  border-bottom: 1px solid #686868;
+  color: #fff;
+}
+
+.Comment-header {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.Comment-avatar {
+  width: 24px;
+  height: 24px;
+  background-color: #15151c;
+  border-radius: 100%;
+  margin-right: 8px;
+  overflow: hidden;
+}
+
+.Comment-avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.Comment-author {
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 8px;
+  color: #262626;
+}
+
+.Comment-time {
+  font-size: 14px;
+  color: rgb(125 130 154);
+}
+
+.Comment-body {
+  margin-left: 32px;
+  color: #262626;
+}
+
+.Comment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.Comment-actions button {
+  background: none;
+  color: #404040;
+  font-size: 13px;
+  margin-left: 32px;
+  margin-top: 8px;
+}
