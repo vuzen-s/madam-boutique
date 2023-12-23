@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,3 +94,23 @@ Route::get('brands-edit/{id}', [BrandController::class, 'edit'])->name('brands.e
 Route::patch('brands-update/{id}', [BrandController::class, 'update'])->name('brands.update');
 // Xóa designers
 Route::delete('brands-destroy/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
+Route::get('users/edit/{id}', [UserController::class, 'edit']);
+// Update thông tin user edit
+Route::put('users/edit/{id}', [UserController::class, 'update']);
+
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+
+});
+

@@ -46,6 +46,8 @@ const BrandCreate = () => {
           'X-CSRF-TOKEN': csrfToken,
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS',
         },
         body: JSON.stringify(dataBrand), // Chuyển đổi FormData thành đối tượng JSON
       })
