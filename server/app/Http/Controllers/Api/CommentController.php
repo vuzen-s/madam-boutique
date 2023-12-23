@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Comments\StoreRequest;
 use App\Models\CommentModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +24,18 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
+        $data = new CommentModel();
+        $data->content = $request->content;
+        $data->user_id = $request->user_id;
+        $data->product_id = $request->product_id;
+
+        $data->save();
+
+        return response()->json([
+            'comments' => $data,
+        ]);
     }
 
     public function show($product_id) 
