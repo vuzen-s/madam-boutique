@@ -4,3 +4,8 @@
   will-change: auto;
   @include transition(padding .15s);
 }
+
+.simplebar-wrapper::webkit-scrollbar {
+  background-color: red !important;
+  width: 2px;
+}

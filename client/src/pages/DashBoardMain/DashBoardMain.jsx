@@ -2,12 +2,18 @@ import React, { Component, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import UserList from '../Dashboard/scenes/Users/UserList'
 import { AppFooter, AppHeader, AppSidebar } from './components'
+import BrandCreate from './scenes/Brands/BrandCreate'
+import BrandEdit from './scenes/Brands/BrandEdit'
+import BrandList from './scenes/Brands/BrandList'
 import { default as CategoryCreate } from "./scenes/Categories/CategoryCreate"
 import CategoryEdit from './scenes/Categories/CategoryEdit'
 import CategoryList from './scenes/Categories/CategoryList'
 import CollectionCreate from './scenes/Collections/CollectionCreate'
 import CollectionEdit from './scenes/Collections/CollectionEdit'
 import CollectionList from './scenes/Collections/CollectionList'
+import DesignerCreate from './scenes/Designers/DesignerCreate'
+import DesignerEdit from './scenes/Designers/DesignerEdit'
+import DesignerList from './scenes/Designers/DesignerList'
 import ProductCreate from './scenes/Products/ProductCreate'
 import ProductEdit from './scenes/Products/ProductEdit'
 import ProductList from './scenes/Products/ProductList'
@@ -39,6 +45,12 @@ class DashBoardMain extends Component {
             <Suspense fallback={loading}>
               <Routes>
                 <Route path="*" name="Home" element={<Dashboard />} />
+                <Route path="designer" element={<DesignerList />} />
+                <Route path="designer/create" element={<DesignerCreate />} />
+                <Route path="designer/edit/:id" element={<DesignerEdit />} />
+                <Route path="brand" element={<BrandList />} />
+                <Route path="brand/create" element={<BrandCreate />} />
+                <Route path="brand/edit/:id" element={<BrandEdit />} />
                 <Route path="user" element={<UserList />} />
                 <Route path="user/create" element={<UserCreate />} />
                 <Route path="user/edit/:id" element={<UserEdit />} />

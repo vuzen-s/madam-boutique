@@ -11,9 +11,45 @@ import {
 } from '@coreui/react'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import { getStyle } from '@coreui/utils'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const WidgetsDropdown = () => {
+
+  const [listUsers, setListUsers] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
+
+  /// Get list users
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/users', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data);
+        setListUsers(data.users);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+    /// Get list products
+    useEffect(() => {
+      fetch('http://127.0.0.1:8000/api/products', {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((respon) => respon.json())
+        .then((data) => {
+          console.log(data.products);
+          setListProducts(data.products);
+        })
+        .catch((error) => console.log(error));
+    }, []);
+
   return (
     <CRow>
       <CCol sm={6} lg={3}>
@@ -22,7 +58,7 @@ const WidgetsDropdown = () => {
           color="primary"
           value={
             <>
-              26K{' '}
+              {listUsers === undefined ? 0 : listUsers.length} {' '}
               <span className="fs-6 fw-normal">
                 (-12.4% <CIcon icon={cilArrowBottom} />)
               </span>
@@ -109,13 +145,13 @@ const WidgetsDropdown = () => {
           color="info"
           value={
             <>
-              $6.200{' '}
+              {listProducts === undefined ? 0 : listProducts.length} {' '}
               <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
               </span>
             </>
           }
-          title="Income"
+          title="Products"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">

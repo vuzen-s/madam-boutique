@@ -3,7 +3,6 @@ import {
   cilCalculator,
   cilDescription,
   cilDrop,
-  cilPencil,
   cilSpeedometer,
   cilStar
 } from '@coreui/icons'
@@ -20,25 +19,55 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Theme',
+    name: 'Account',
   },
   {
     component: CNavItem,
-    name: 'Colors',
+    name: 'Profile',
     to: '/dashboard/theme/colors',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Typography',
-    to: '/theme/typography',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
     name: 'Modules',
   },
-    // User
+  // Designer
+  {
+    component: CNavGroup,
+    name: 'Designer',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'List',
+        to: '/dashboard/designer',
+      },
+      {
+        component: CNavItem,
+        name: 'Create',
+        to: '/dashboard/designer/create',
+      },
+    ]
+  },
+    // Brand
+    {
+      component: CNavGroup,
+      name: 'Brand',
+      icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+      items: [
+        {
+          component: CNavItem,
+          name: 'List',
+          to: '/dashboard/brand',
+        },
+        {
+          component: CNavItem,
+          name: 'Create',
+          to: '/dashboard/brand/create',
+        },
+      ]
+    },
+  // User
   {
     component: CNavGroup,
     name: 'User',
@@ -51,12 +80,12 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'CollectionCreate',
+        name: 'Create',
         to: '/dashboard/user/create',
       },
     ]
   },
-  // 
+  // Collection
   {
     component: CNavGroup,
     name: 'Collection',
