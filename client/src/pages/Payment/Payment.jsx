@@ -106,7 +106,7 @@ const Step1 = () => {
                     {
                       amount: {
                         currency_code: 'USD',
-                        value: 35,
+                        value: 5,
                       },
                     },
                   ],
