@@ -204,7 +204,7 @@ const ProductCreate = () => {
                 <select name="designer_id" className="form-select" onChange={handleChangeInput} >
                   {
                     optionDesigners.map((item, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={item.id}>
                         {item.name}
                       </option>
                     ))
@@ -220,7 +220,7 @@ const ProductCreate = () => {
                 <select name="brand_id" className="form-select" onChange={handleChangeInput} >
                   {
                     optionBrands.map((item, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={item.id}>
                         {item.name}
                       </option>
                     ))
@@ -236,7 +236,7 @@ const ProductCreate = () => {
                 <select name="collection_id" className="form-select" onChange={handleChangeInput} >
                   {
                     optionCollections.map((item, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={item.id}>
                         {item.name}
                       </option>
                     ))
@@ -252,7 +252,7 @@ const ProductCreate = () => {
                 <select name="category_id" className="form-select" onChange={handleChangeInput} >
                   {
                     optionCategories.map((item, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={item.id}>
                         {item.name}
                       </option>
                     ))
