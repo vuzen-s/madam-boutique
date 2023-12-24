@@ -17,6 +17,8 @@ const WidgetsDropdown = () => {
 
   const [listUsers, setListUsers] = useState([]);
   const [listProducts, setListProducts] = useState([]);
+  const [collectionsList, setCollectionsList] = useState([]);
+  const [cartsList, setCartsList] = useState([]);
 
   /// Get list users
   useEffect(() => {
@@ -34,21 +36,53 @@ const WidgetsDropdown = () => {
       .catch((error) => console.log(error));
   }, []);
 
-    /// Get list products
-    useEffect(() => {
-      fetch('http://127.0.0.1:8000/api/products', {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-        }
+  /// Get list products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.products);
+        setListProducts(data.products);
       })
-        .then((respon) => respon.json())
-        .then((data) => {
-          console.log(data.products);
-          setListProducts(data.products);
-        })
-        .catch((error) => console.log(error));
-    }, []);
+      .catch((error) => console.log(error));
+  }, []);
+
+  // Get data collections
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/collections', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.collections);
+        setCollectionsList(data.collections);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  // Get data carts
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/carts', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.carts);
+        setCartsList(data.carts);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <CRow>
@@ -231,13 +265,13 @@ const WidgetsDropdown = () => {
           color="warning"
           value={
             <>
-              2.49{' '}
+              {collectionsList === undefined ? 0 : collectionsList.length} {' '}
               <span className="fs-6 fw-normal">
                 (84.7% <CIcon icon={cilArrowTop} />)
               </span>
             </>
           }
-          title="Conversion Rate"
+          title="Collections"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -304,13 +338,13 @@ const WidgetsDropdown = () => {
           color="danger"
           value={
             <>
-              44K{' '}
+              {cartsList === undefined ? 0 : cartsList.length} {' '}
               <span className="fs-6 fw-normal">
                 (-23.6% <CIcon icon={cilArrowBottom} />)
               </span>
             </>
           }
-          title="Sessions"
+          title="Orders"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">

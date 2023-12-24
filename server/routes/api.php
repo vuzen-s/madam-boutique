@@ -33,6 +33,8 @@ Route::get('products', [ProductController::class, 'index'])->name('products.inde
 Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 // Lấy thông tin sản phẩm theo category_id
 Route::get('products-showbycategory/{category_id}', [ProductController::class, 'showByCategory'])->name('products.showByCategory');
+// Lấy thông tin sản phẩm theo brand_id
+Route::get('products-showbybrand/{brand_id}', [ProductController::class, 'showByBrand'])->name('products.brand_id');
 // lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
 // Thêm sản phẩm 

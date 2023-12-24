@@ -1,18 +1,23 @@
 import { Box } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Formik } from "formik";
+import $ from 'jquery';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import 'select2';
+import 'select2/dist/css/select2.min.css';
 import { csrfTokenReducer } from "../../../../redux/madamBoutiqueSlice";
 import Header from "../../components/Header";
+import './ProductCreate.scss';
 
 const ProductCreate = () => {
   const [dataProduct, setDataProduct] = useState({
     name: '',
     desc: '',
     price: '',
+    color: '',
     avatar: '',
     status: 0,
     feature: 0,
@@ -119,6 +124,13 @@ const ProductCreate = () => {
     // }
   };
 
+  // select2
+  useEffect(() => {
+    $(function () { 
+      $('.form-select.select2ByID').select2();
+    });
+  }, []);
+
   return (
     <Box m="20px">
       <Header title="CREATE PRODUCT" subtitle="Create a New Product" />
@@ -170,6 +182,11 @@ const ProductCreate = () => {
               </div>
 
               <div class="mb-3">
+                <label for="color" class="form-label">Màu sản phẩm (không bắt buộc):</label>
+                <input class="form-control" type="text" id="color" placeholder="Enter color" name="color" onChange={handleChangeInput} />
+              </div>
+
+              <div class="mb-3">
                 <label for="avatar" class="form-label">Ảnh đại diện sản phẩm:</label>
                 <input multiple class="form-control" type="file" id="avatar" name="avatar" onChange={handleChangeInput} />
                 <p style={{ color: "red" }}>
@@ -201,7 +218,7 @@ const ProductCreate = () => {
 
               <div className="mb-3">
                 <label for="designer_id" class="form-label">Designer:</label>
-                <select name="designer_id" className="form-select" onChange={handleChangeInput} >
+                <select name="designer_id" className="form-select select2ByID" onChange={handleChangeInput} >
                   {
                     optionDesigners.map((item, index) => (
                       <option key={index} value={item.id}>
@@ -217,7 +234,7 @@ const ProductCreate = () => {
 
               <div className="mb-3">
                 <label for="brand_id" class="form-label">Brand:</label>
-                <select name="brand_id" className="form-select" onChange={handleChangeInput} >
+                <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput} >
                   {
                     optionBrands.map((item, index) => (
                       <option key={index} value={item.id}>
@@ -233,7 +250,7 @@ const ProductCreate = () => {
 
               <div className="mb-3">
                 <label for="collection_id" class="form-label">Collection:</label>
-                <select name="collection_id" className="form-select" onChange={handleChangeInput} >
+                <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput} >
                   {
                     optionCollections.map((item, index) => (
                       <option key={index} value={item.id}>
@@ -249,7 +266,7 @@ const ProductCreate = () => {
 
               <div className="mb-3">
                 <label for="category_id" class="form-label">Category:</label>
-                <select name="category_id" className="form-select" onChange={handleChangeInput} >
+                <select name="category_id" className="form-select select2ByID" onChange={handleChangeInput} >
                   {
                     optionCategories.map((item, index) => (
                       <option key={index} value={item.id}>
@@ -261,6 +278,9 @@ const ProductCreate = () => {
                 <p style={{ color: "red" }}>
                   {errorsField && errorsField.category_id}
                 </p>
+              </div>
+              <div className="mb-3">
+                <label for="images[]" class="form-label">Chọn nhiều hình ảnh:</label>
               </div>
             </Box>
             <Box mt="40px">
@@ -277,6 +297,7 @@ const initialValues = {
   name: '',
   desc: '',
   price: '',
+  color: '',
   avatar: '',
   status: 0,
   feature: 0,

@@ -39,6 +39,14 @@ class ProductController extends Controller
         ]);
     }
 
+    public function showByBrand($brand_id)
+    {
+        $products = DB::table('products')->where('brand_id', $brand_id)->get();
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     public function create()
     {
         $designers = DB::table('designers')->get();

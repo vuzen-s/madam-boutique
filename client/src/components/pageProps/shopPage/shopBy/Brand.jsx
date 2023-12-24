@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NavTitle from "./NavTitle";
 
 const Brand = () => {
@@ -22,6 +23,13 @@ const Brand = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  const navigate = useNavigate();
+
+  // get product by id category
+  const handleFilterProductByBrand = (idBrand) => {
+    navigate(`/shop?idBrand=${idBrand}`);
+  }
+
   return (
     <div>
       <div
@@ -42,7 +50,7 @@ const Brand = () => {
                 key={item.id}
                 className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 hover:text-primeColor hover:border-gray-400 duration-300"
               >
-                {item.name}
+                <button onClick={() => handleFilterProductByBrand(item.id)}>{item.name}</button>
               </li>
             ))}
           </ul>

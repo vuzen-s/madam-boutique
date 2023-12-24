@@ -10,7 +10,7 @@ import { tokens } from "../../theme";
 const CollectionList = () => {
   const [collectionsList, setCollectionsList] = useState([]);
 
-  // Get data products
+  // Get data collections
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/collections', {
       method: "GET",

@@ -7,21 +7,23 @@ import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
 
 const Shop = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [productsList, setProductsList] = useState([]);
+
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemsPerPage(itemsPerPage);
   };
-  const [resfreshData, setResfreshData] = useState(new Date().getTime());
-
-  const [productsList, setProductsList] = useState([]);
 
   const { search } = useLocation();
   const params = new URLSearchParams(search);
+  const queryString = params.toString();
+
   const idCategory = params.get("idCategory");
+  const idBrand = params.get("idBrand");
 
   // Get data products
-  const CallApiProduct = (url, params, depen) => {
+  const CallApiProduct = (api, byID, depen) => {
     useEffect(() => {
-      fetch(url + params, {
+      fetch(api + byID, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
@@ -33,14 +35,15 @@ const Shop = () => {
           setProductsList(data.products);
         })
         .catch((error) => console.log(error));
-    }, [params, depen]);
+    }, [byID, depen, queryString]);
   }
 
   if (idCategory !== null) {
-    //
+    // Get data products by category
     CallApiProduct('http://127.0.0.1:8000/api/products-showbycategory/', idCategory, idCategory);
-    //
-    // CallApiProduct('http://127.0.0.1:8000/api/products-showbybrand/', idBrand, idBrand);
+  } else if (idBrand !== null) {
+    // Get data products by brand
+    CallApiProduct('http://127.0.0.1:8000/api/products-showbybrand/', idBrand, idBrand);
   } else {
     // Get data products
     CallApiProduct('http://127.0.0.1:8000/api/products', '');
