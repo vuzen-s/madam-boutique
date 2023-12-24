@@ -45,19 +45,7 @@ const Category = () => {
 
   // get product by id category
   const handleFilterProductByCategory = (idCategory) => {
-    fetch('http://127.0.0.1:8000/api/products-showbycategory/' + idCategory, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((respon) => respon.json())
-      .then((data) => {
-        console.log(data.products);
-        setProductsList(data.products);
-        navigate(`/shop?productsList=${productsList}`);
-      })
-      .catch((error) => console.log(error));
+    navigate(`/shop?idCategory=${idCategory}`);
   }
 
   return (
