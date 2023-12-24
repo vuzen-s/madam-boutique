@@ -33,9 +33,9 @@ class ProductController extends Controller
 
     public function showByCategory($category_id)
     {
-        $product = DB::table('products')->where('category_id', $category_id)->first();
+        $products = DB::table('products')->where('category_id', $category_id)->get();
         return response()->json([
-            'product' => $product,
+            'products' => $products,
         ]);
     }
 

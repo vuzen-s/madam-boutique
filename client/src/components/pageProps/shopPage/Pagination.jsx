@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 
-function Items({ currentItems }) {
+function Items({ currentItems, items }) {
 
   return (
     <>
