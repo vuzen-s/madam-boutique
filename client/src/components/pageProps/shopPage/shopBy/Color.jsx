@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NavTitle from "./NavTitle";
 
 const Color = () => {
@@ -7,30 +8,32 @@ const Color = () => {
   const colors = [
     {
       _id: 9001,
-      title: "Green",
+      title: "Xanh",
       base: "#22c55e",
     },
     {
       _id: 9002,
-      title: "Gray",
-      base: "#a3a3a3",
-    },
-    {
-      _id: 9003,
-      title: "Red",
+      title: "Đỏ",
       base: "#dc2626",
     },
     {
       _id: 9004,
-      title: "Yellow",
-      base: "#f59e0b",
+      title: "Tím",
+      base: "#8a2be2",
     },
     {
       _id: 9005,
-      title: "Blue",
-      base: "#3b82f6",
+      title: "Vàng",
+      base: "#f59e0b",
     },
   ];
+
+  const navigate = useNavigate();
+
+  // get product by color
+  const handleFilterProductByColor = (nameColor) => {
+    navigate(`/shop?nameColor=${nameColor}`);
+  }
 
   return (
     <div>
@@ -56,7 +59,7 @@ const Color = () => {
                   style={{ background: item.base }}
                   className={`w-3 h-3 bg-gray-500 rounded-full`}
                 ></span>
-                {item.title}
+                <button onClick={() => handleFilterProductByColor(item.title)}>{item.title}</button>
               </li>
             ))}
           </ul>

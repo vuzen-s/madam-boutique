@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdOutlineLabelImportant } from "react-icons/md";
@@ -6,8 +6,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addProductsFavorite, addToCart } from "../../../redux/madamBoutiqueSlice";
 import Image from "../../designLayouts/Image";
+import Badge from './Badge';
 
 const Product = (props) => {
+  const [category, setCategory] = useState('');
+
   const dispatch = useDispatch();
   // const idString = (_id) => {
   //   return String(_id).toLowerCase().split(" ").join("");
@@ -25,15 +28,31 @@ const Product = (props) => {
     });
   };
 
+  // Get data categories
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/categories/${props.category_id}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.category);
+        setCategory(data.category);
+      })
+      .catch((error) => console.log(error));
+  }, [props.category_id]);
+
   return (
     <div className="w-full relative group">
       <div className="max-w-80 max-h-80 relative overflow-y-hidden ">
         <div>
           <Image className="w-full h-full" imgSrc={props.avatar} />
         </div>
-        {/* <div className="absolute top-6 left-8">
-          {props.badge && <Badge text="New" />}
-        </div> */}
+        <div className="absolute top-6 left-8">
+          {<Badge text={category.name} />}
+        </div>
         <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
             {/* <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">

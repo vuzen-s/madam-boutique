@@ -47,6 +47,26 @@ class ProductController extends Controller
         ]);
     }
 
+    public function showByPrice($start, $end)
+    {
+        $products = DB::table('products')
+            ->select('*')
+            ->whereBetween('price', [$start, $end])
+            ->get();
+
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
+    public function showByColor($color)
+    {
+        $products = DB::table('products')->where('color', 'LIKE', '%' . $color . '%')->get();
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     public function create()
     {
         $designers = DB::table('designers')->get();

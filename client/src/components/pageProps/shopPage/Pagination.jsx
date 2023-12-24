@@ -17,6 +17,7 @@ function Items({ currentItems }) {
               color={item.color}
               // badge={item.badge}
               desc={item.desc}
+              category_id={item.category_id}
             />
           </div>
         ))}
@@ -33,22 +34,6 @@ const Pagination = ({ itemsPerPage, productsList }) => {
     setItems(productsList);
   }, [productsList])
 
-  // Get items products
-  // useEffect(() => {
-  //   fetch('http://127.0.0.1:8000/api/products', {
-  //     method: "GET",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     }
-  //   })
-  //     .then((respon) => respon.json())
-  //     .then((data) => {
-  //       console.log(data.products);
-  //       setItems(data.products);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
-
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -59,12 +44,12 @@ const Pagination = ({ itemsPerPage, productsList }) => {
   // from an API endpoint with useEffect and useState)
   const endOffset = itemOffset + itemsPerPage;
   //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const currentItems = items && items.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(items && items.length / itemsPerPage);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = items && (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
     // console.log(
     //   `User requested page number ${event.selected}, which is offset ${newOffset},`
@@ -93,7 +78,7 @@ const Pagination = ({ itemsPerPage, productsList }) => {
 
         <p className="text-base font-normal text-lightText">
           Products from {itemStart === 0 ? 1 : itemStart} to {endOffset} of{" "}
-          {items.length}
+          {items && items.length}
         </p>
       </div>
     </div>

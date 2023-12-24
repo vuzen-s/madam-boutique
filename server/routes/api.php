@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Mail\ContactMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,11 @@ Route::get('products/{id}', [ProductController::class, 'show'])->name('products.
 // Lấy thông tin sản phẩm theo category_id
 Route::get('products-showbycategory/{category_id}', [ProductController::class, 'showByCategory'])->name('products.showByCategory');
 // Lấy thông tin sản phẩm theo brand_id
-Route::get('products-showbybrand/{brand_id}', [ProductController::class, 'showByBrand'])->name('products.brand_id');
+Route::get('products-showbybrand/{brand_id}', [ProductController::class, 'showByBrand'])->name('products.showByBrand');
+// Lấy thông tin sản phẩm theo giá start->end
+Route::get('products-{start}-to-{end}', [ProductController::class, 'showByPrice'])->name('products.showByPrice');
+// Lấy thông tin sản phẩm theo màu sắc
+Route::get('products-color/{color}', [ProductController::class, 'showByColor'])->name('products.showByColor');
 // lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
 // Thêm sản phẩm 
@@ -60,6 +65,8 @@ Route::delete('collections-destroy/{id}', [CollectionController::class, 'destroy
 
 // =================== CATEGORIES ===================
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+// Lấy thông tin categories theo id
+Route::get('categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
 // Đẩy data lên table categories
 Route::post('categories-store', [CategoryController::class, 'store'])->name('categories.store');
 // Update categories
@@ -114,3 +121,6 @@ Route::get('comments-edit/{id}', [CommentController::class, 'edit'])->name('comm
 Route::patch('comments-update/{id}', [CommentController::class, 'update'])->name('comments-update');
 // Xóa comment
 Route::delete('comments-destroy/{id}', [CommentController::class, 'destroy'])->name('comments-destroy');
+
+// =================== MAIL ===================
+Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');

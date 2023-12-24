@@ -25,7 +25,7 @@ const Brand = () => {
 
   const navigate = useNavigate();
 
-  // get product by id category
+  // get product by id brand
   const handleFilterProductByBrand = (idBrand) => {
     navigate(`/shop?idBrand=${idBrand}`);
   }

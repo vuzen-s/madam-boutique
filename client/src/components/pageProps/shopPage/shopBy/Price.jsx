@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NavTitle from "./NavTitle";
 
 const Price = () => {
@@ -34,6 +35,14 @@ const Price = () => {
       priceTwo: 1000.0,
     },
   ];
+
+  const navigate = useNavigate();
+
+  // get product by price
+  const handleFilterProductByPrice = (start, end) => {
+    navigate(`/shop?start=${start}&end=${end}`);
+  }
+
   return (
     <div className="cursor-pointer">
       <NavTitle title="Shop by Price" icons={false} />
@@ -44,7 +53,7 @@ const Price = () => {
               key={item._id}
               className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 hover:text-primeColor hover:border-gray-400 duration-300"
             >
-              ${item.priceOne.toFixed(3)} - ${item.priceTwo.toFixed(3)}
+              <button onClick={() => handleFilterProductByPrice(item.priceOne, item.priceTwo)}>${item.priceOne.toFixed(3)} - ${item.priceTwo.toFixed(3)}</button>
             </li>
           ))}
         </ul>

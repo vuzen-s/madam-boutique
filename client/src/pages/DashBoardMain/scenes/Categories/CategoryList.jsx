@@ -8,9 +8,9 @@ import Header from "../../components/Header";
 import { tokens } from "../../theme";
 
 const CategoryList = () => {
-  const [collectionsList, setCollectionsList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
 
-  // Get data products
+  // Get data categories
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/categories', {
       method: "GET",
@@ -21,7 +21,7 @@ const CategoryList = () => {
       .then((respon) => respon.json())
       .then((data) => {
         console.log(data.categories);
-        setCollectionsList(data.categories);
+        setCategoriesList(data.categories);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -151,7 +151,7 @@ const CategoryList = () => {
         }}
       >
         <DataGrid
-          rows={collectionsList}
+          rows={categoriesList}
           columns={columns}
         />
       </Box>

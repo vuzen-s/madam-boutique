@@ -19,9 +19,12 @@ const Shop = () => {
 
   const idCategory = params.get("idCategory");
   const idBrand = params.get("idBrand");
+  const start = params.get("start");
+  const end = params.get("end");
+  const nameColor = params.get("nameColor");
 
   // Get data products
-  const CallApiProduct = (api, byID, depen) => {
+  const CallApiProduct = (api, byID, depen, queryString) => {
     useEffect(() => {
       fetch(api + byID, {
         method: "GET",
@@ -40,12 +43,18 @@ const Shop = () => {
 
   if (idCategory !== null) {
     // Get data products by category
-    CallApiProduct('http://127.0.0.1:8000/api/products-showbycategory/', idCategory, idCategory);
+    CallApiProduct('http://127.0.0.1:8000/api/products-showbycategory/', idCategory, idCategory, queryString);
   } else if (idBrand !== null) {
     // Get data products by brand
-    CallApiProduct('http://127.0.0.1:8000/api/products-showbybrand/', idBrand, idBrand);
+    CallApiProduct('http://127.0.0.1:8000/api/products-showbybrand/', idBrand, idBrand, queryString);
+  } else if (start !== null && end !== null) {
+    // Get data products by price
+    CallApiProduct(`http://127.0.0.1:8000/api/products-${start}-to-${end}`, '', start + end, null);
+  } else if (nameColor !== null) {
+    // Get data products by color
+    CallApiProduct(`http://127.0.0.1:8000/api/products-color/`, nameColor, nameColor, null);
   } else {
-    // Get data products
+    // Get data products all
     CallApiProduct('http://127.0.0.1:8000/api/products', '');
   }
 
