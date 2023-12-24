@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "./Axios";
 import axios from "axios";
@@ -9,21 +9,23 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState(null);
     const [user, setUser] = useState(null);
-    const [errors, setErrors] = useState([]);
+    const [errorsRegister, setErrorsRegister] = useState([]);
+    const [errorsLogin, setErrorsLogin] = useState([]);
+    const [emailNotExist, setEmailNotExist] = useState("");
     const navigate = useNavigate();
 
     const axiosBasic = axios.create({
         baseURL: "http://localhost:8000",
-        headers:{
+        headers: {
             "Content-type" : "application/json",
-        },
+        }
     })
 
     const csrf = () => Axios.get("/sanctum/csrf-cookie");
 
     const getUser = async () => {
         const {data} = await axiosBasic.get('api/users');
-        setUser(data)
+        setUser(data);
     }
 
     const getUserAuth = async () => {
@@ -33,9 +35,10 @@ export const AuthProvider = ({ children }) => {
 
     const login = async ({email, password}) => {
         await csrf();
+        
         try {
             const response = await Axios.post('api/auth/login', {email, password})
-            const { access_token, user } = response.data;
+            const { access_token, user} = response.data;
 
             sessionStorage.setItem('token', access_token);
 
@@ -49,29 +52,56 @@ export const AuthProvider = ({ children }) => {
 
         } catch(e) {
             if(e.response.data.status === 422) {
-                setErrors(e.response.data.errors);
+                setErrorsLogin(e.response.data.errors);
+            }
+
+            if(e.response.data.status === 401) {
+                setEmailNotExist(e.response.data.errors);
             }
         }
     }
 
-    const register = async ({fullname, email, password, password_confirmation, gender}) => {
+    const resetFilterError = () => {
+        setEmailNotExist("");
+        setErrorsLogin();
+        setErrorsRegister();
+    };
+
+    const register = async ({fullname, email, password, password_confirmation, gender, phone}) => {
         await csrf();
         try {
-            await Axios.post('api/auth/register', {fullname, email, password, password_confirmation, gender})
+            await Axios.post('api/auth/register', {fullname, email, password, password_confirmation, gender, phone})
             await getUser();
             navigate("/signin");
         } catch(e) {
             if(e.response.data.status === 422) {
-                setErrors(e.response.data.errors);
+                setErrorsRegister(e.response.data.errors);
+                console.log(e.response.data.errors)
             }
         }
     }
 
     const logout = async () => {
-        await Axios.post('api/auth/logout').then(() => {
+        const token = sessionStorage.getItem('token');
+    
+        if (!token) {
+            console.log("No token found!!!");
+            return;
+        }
+    
+        await Axios.post('api/auth/logout')
+
+        .then(() => {
             setUserAuth(null);
-            sessionStorage.removeItem('token');
+            sessionStorage.clear();
         })
+        .catch(e => {
+            console.log("Error logout:", e);
+
+            if (e.response && e.response.status === 401) {
+                window.location.reload();
+            }
+        });
     }
 
     const refresh = async () => {
@@ -85,18 +115,16 @@ export const AuthProvider = ({ children }) => {
             const response = await Axios.post('api/auth/refresh');
             const newToken = response.data.access_token;
             
-            // Lưu lại token mới vào sessionStorage
             sessionStorage.setItem('token', newToken);
             
-            // Trả về token mới
             return newToken;
         } catch (e) {
-            console.e("Error refreshing token:", e);
+            console.log("Error refreshing token:", e);
             return null;
         }
     }
 
-    const checkAndRefreshToken = async () => {
+    const checkAndRefreshToken = useCallback(async () => {
         const token = sessionStorage.getItem('token');
 
         if (!token) {
@@ -119,13 +147,13 @@ export const AuthProvider = ({ children }) => {
         }
 
         return true;
-    }
+    }, [])
 
     useEffect(() => {
         const refreshSuccess = checkAndRefreshToken();
     
         if (!refreshSuccess) {
-            navigate("/signin"); // Xử lý tại đây nếu cần, ví dụ đưa người dùng đến trang đăng nhập
+            navigate("/signin");
         }
     
         const intervalToken = setInterval(() => {
@@ -133,13 +161,21 @@ export const AuthProvider = ({ children }) => {
             if (!refreshSuccess) {
                 navigate("/signin");
             }
-        }, 50 * 60 * 1000);  // Cập nhật lại token mỗi 50 phút
+        }, 5 * 60 * 1000);
     
         return () => clearInterval(intervalToken); 
+    }, [checkAndRefreshToken, navigate]);
+    
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            getUserAuth();
+        }
     }, []);
 
 
-    return <AuthContext.Provider value={{userAuth, user, getUser , getUserAuth, login, register, logout}}>
+    return <AuthContext.Provider value={{user, getUser, userAuth, getUserAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError}}>
             {children}
         </AuthContext.Provider>
 }

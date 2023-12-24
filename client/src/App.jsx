@@ -34,8 +34,9 @@ import Payment from "./pages/Payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Shop from "./pages/Shop/Shop";
-import Page404 from "./pages/Dashboard2/components/Page404/Page404";
 import Layout from "./Layout";
+import GuestLayoutNormal from "./pages/GuestLayout/GuestLayoutNormal";
+import Profile from "./pages/Profile/Profile";
 
 const App = () => {
   return (
@@ -54,10 +55,13 @@ const App = () => {
         <Route path="/favorite" element={<ProductFavorite />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Route>
       {/* // */}
-      <Route path="/signup" element={<SignUp />}></Route>
-      <Route path="/signin" element={<SignIn />}></Route>
+      <Route element={<GuestLayoutNormal />}>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/signin" element={<SignIn />}></Route>
+      </Route>
       <Route path="/dashboard/*" element={<Dashboard2App />}></Route>
     </Routes>
     </div>

@@ -31,16 +31,16 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->jsonjson([
+            return response()->json([
                 'status' => 422,
-                'errors'=> $validator->messages()
+                'errors'=> $validator->messages(),
             ], 422);
         }
 
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json([
                 'status' => 401,
-                'errors' => 'Unauthorized'
+                'errors' => 'Account is not registered or the password is incorrect.'
             ], 401);
         }
 
@@ -63,12 +63,13 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status' => 422,
-                'error'=> $validator->messages()
+                'errors'=> $validator->messages()
             ], 422);
         }
 
         $user = User::create(array_merge(
                     $validator->validated(),
+                    ['phone' => $request->phone],
                     ['password' => bcrypt($request->password)]
                 ));
 
