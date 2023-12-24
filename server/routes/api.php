@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 // Lấy thông tin sản phẩm theo id
 Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
+// Lấy thông tin sản phẩm theo category_id
+Route::get('products-showbycategory/{category_id}', [ProductController::class, 'showByCategory'])->name('products.showByCategory');
 // lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
 // Thêm sản phẩm 

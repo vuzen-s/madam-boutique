@@ -4,10 +4,10 @@ import NavTitle from "./NavTitle";
 
 const Category = () => {
   const [showSubCatOne, setShowSubCatOne] = useState(false);
-
   const [categoriesList, setCategoriesList] = useState([]);
+  const [productsList, setProductsList] = useState([]);
 
-  // Get data products
+  // Get data categories
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/categories', {
       method: "GET",
@@ -23,8 +23,24 @@ const Category = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  // Get data products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.products);
+        setProductsList(data.products);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const handleFilterProductByCategory = (idCategory) => {
-    fetch('http://127.0.0.1:8000/api/product-show/' + idCategory, {
+    fetch('http://127.0.0.1:8000/api/product-showbycategory/' + idCategory, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +63,7 @@ const Category = () => {
             <li
               key={index}
               className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center justify-between"
-              // onClick={handleFilterProductByCategory(item.name)}
+              onClick={() => handleFilterProductByCategory(item.id)}
             >
               {item.name}
               {/* {icons && (

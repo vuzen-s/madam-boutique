@@ -31,6 +31,14 @@ class ProductController extends Controller
         ]);
     }
 
+    public function showByCategory($category_id)
+    {
+        $product = DB::table('products')->where('category_id', $category_id)->first();
+        return response()->json([
+            'product' => $product,
+        ]);
+    }
+
     public function create()
     {
         $designers = DB::table('designers')->get();

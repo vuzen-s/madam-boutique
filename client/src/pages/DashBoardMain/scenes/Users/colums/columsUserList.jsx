@@ -27,7 +27,7 @@ export const colums = [
         headerAlign: "left",
         flex: 0.5,
         renderCell: (params) => {
-            if (params.value == 0) {
+            if (params.value === 0) {
                 params.value = "Male";
             } else {
                 params.value = "Female";
