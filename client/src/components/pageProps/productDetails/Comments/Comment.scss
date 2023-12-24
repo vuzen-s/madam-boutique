@@ -55,6 +55,7 @@
 .Comments-box__input:focus,
 .Comments-box__input:active {
   border-color: rgba(216, 216, 216, 0.75);
+  border: 1px solid rgba(216, 216, 216, 0.75);
   // appearance: none;
 }
 

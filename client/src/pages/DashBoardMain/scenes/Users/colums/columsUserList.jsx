@@ -55,19 +55,19 @@ export const colums = [
             let color = "";
             let backgroundColor = "";
             switch (params.value) {
-                case 0:
+                case 1:
                     levelName = "Admin Master";
                     backgroundColor = "#FF0000";
                     break;
-                case 1:
+                case 2:
                     levelName = "Admin Manager";
                     backgroundColor = "#6666FF";
                     break;
-                case 2:
+                case 3:
                     levelName = "Admin Editor";
                     backgroundColor = "#00FF00";
                     break;
-                case 3:
+                case 4:
                     levelName = "Member";
                     backgroundColor = "#DDDDDD";
                     break;

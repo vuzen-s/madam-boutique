@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import { tokens } from "../../theme";
 
 const BrandList = () => {
-  const [collectionsList, setCollectionsList] = useState([]);
+  const [brandsList, setBrandsList] = useState([]);
 
   // Get data products
   useEffect(() => {
@@ -21,7 +21,7 @@ const BrandList = () => {
       .then((respon) => respon.json())
       .then((data) => {
         console.log(data.brands);
-        setCollectionsList(data.brands);
+        setBrandsList(data.brands);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -134,7 +134,7 @@ const BrandList = () => {
         }}
       >
         <DataGrid
-          rows={collectionsList}
+          rows={brandsList}
           columns={columns}
         />
       </Box>
