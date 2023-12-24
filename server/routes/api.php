@@ -56,12 +56,12 @@ Route::delete('collections-destroy/{id}', [CollectionController::class, 'destroy
 
 // =================== CATEGORIES ===================
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-// Đẩy data lên table collections
+// Đẩy data lên table categories
 Route::post('categories-store', [CategoryController::class, 'store'])->name('categories.store');
-// Update collection
+// Update categories
 Route::get('categories-edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
 Route::patch('categories-update/{id}', [CategoryController::class, 'update'])->name('categories.update');
-// Xóa collection
+// Xóa categories
 Route::delete('categories-destroy/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 

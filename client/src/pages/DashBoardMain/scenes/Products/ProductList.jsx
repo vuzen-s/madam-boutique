@@ -87,7 +87,7 @@ const ProductList = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
-        <img src={params.value} alt="" width="40px" />
+        <img src={params.value} alt={params.row.name} width="40px" />
       ),
       flex: 0.5,
     },
@@ -96,6 +96,9 @@ const ProductList = () => {
       headerName: "Giá",
       headerAlign: "center",
       align: "center",
+      renderCell: (params) => (
+        <p>{'$' + params.value} </p>
+      ),
       flex: 0.5,
     },
     {

@@ -1,31 +1,26 @@
-import React, { useState } from "react";
 import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import NavTitle from "./NavTitle";
 
 const Brand = () => {
   const [showBrands, setShowBrands] = useState(true);
-  const brands = [
-    {
-      _id: 9006,
-      title: "Apple",
-    },
-    {
-      _id: 9007,
-      title: "Ultron",
-    },
-    {
-      _id: 9008,
-      title: "Unknown",
-    },
-    {
-      _id: 9009,
-      title: "Shoppers Home",
-    },
-    {
-      _id: 9010,
-      title: "Hoichoi",
-    },
-  ];
+  const [brandsList, setBrandsList] = useState([]);
+
+  // Get data products
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/brands', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.brands);
+        setBrandsList(data.brands);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div>
@@ -42,12 +37,12 @@ const Brand = () => {
           transition={{ duration: 0.5 }}
         >
           <ul className="flex flex-col gap-4 text-sm lg:text-base text-[#767676]">
-            {brands.map((item) => (
+            {brandsList.map((item) => (
               <li
-                key={item._id}
+                key={item.id}
                 className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 hover:text-primeColor hover:border-gray-400 duration-300"
               >
-                {item.title}
+                {item.name}
               </li>
             ))}
           </ul>
