@@ -22,6 +22,7 @@ const Shop = () => {
   const start = params.get("start");
   const end = params.get("end");
   const nameColor = params.get("nameColor");
+  const shortSelected = params.get("shortSelected");
 
   // Get data products
   const CallApiProduct = (api, byID, depen, queryString) => {
@@ -53,6 +54,8 @@ const Shop = () => {
   } else if (nameColor !== null) {
     // Get data products by color
     CallApiProduct(`http://127.0.0.1:8000/api/products-color/`, nameColor, nameColor, null);
+  } else if (shortSelected !== null) {
+    CallApiProduct(`http://127.0.0.1:8000/api/`, shortSelected, shortSelected, null);
   } else {
     // Get data products all
     CallApiProduct('http://127.0.0.1:8000/api/products', '');

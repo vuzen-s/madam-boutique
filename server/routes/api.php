@@ -40,6 +40,10 @@ Route::get('products-showbybrand/{brand_id}', [ProductController::class, 'showBy
 Route::get('products-{start}-to-{end}', [ProductController::class, 'showByPrice'])->name('products.showByPrice');
 // Lấy thông tin sản phẩm theo màu sắc
 Route::get('products-color/{color}', [ProductController::class, 'showByColor'])->name('products.showByColor');
+// Lấy thông tin sản phẩm theo giá tăng dần
+Route::get('products-asc', [ProductController::class, 'showOrderByPriceAsc'])->name('products.showOrderByPriceAsc');
+// Lấy thông tin sản phẩm theo giá giảm dần
+Route::get('products-desc', [ProductController::class, 'showOrderByPriceDesc'])->name('products.showOrderByPriceDesc');
 // lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
 // Thêm sản phẩm 
