@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
 import Comment from "./Comment";
 import './Comment.scss';
@@ -8,8 +10,9 @@ const Comments = ({ selectedUserId, idProduct }) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [errorsField, setErrorsField] = useState({});
-  const [message, setMessage] = useState('');
   const [refreshListCommend, setRefreshListCommend] = useState(new Date().getTime());
+  const [openModal, setOpenModal] = useState(false);
+  const [commentByID, setCommentByID] = useState({});
 
   const sendComment = async () => {
     try {
@@ -28,9 +31,6 @@ const Comments = ({ selectedUserId, idProduct }) => {
           setRefreshListCommend(new Date().getTime());
           // error
           setErrorsField(data.errors);
-          // message
-          console.log(data.message);
-          setMessage(data.message);
         })
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -64,16 +64,16 @@ const Comments = ({ selectedUserId, idProduct }) => {
     setContent("");
   }
 
-  const handleDeleteItem = (idDesigner) => {
+  const handleDeleteItem = (idComment) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa Nhà thiết kế này?",
+      title: "Bạn chắc chắn muốn xóa bình luận này?",
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: "Xóa",
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        await fetch('http://127.0.0.1:8000/api/designers-destroy/' + idDesigner, {
+        await fetch('http://127.0.0.1:8000/api/comments-destroy/' + idComment, {
           method: "DELETE",
           headers: {
             'Content-Type': 'application/json',
@@ -82,18 +82,70 @@ const Comments = ({ selectedUserId, idProduct }) => {
           .then((respon) => respon.json())
           .then((data) => {
             console.log(data);
-            console.log(idDesigner);
+            console.log(idComment);
             // handle event
             Swal.fire("Đã xóa!", "", "success");
             window.location.reload();
           })
           .catch((error) => {
             console.log(error)
-            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+            // Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
           });
       }
     });
   }
+
+  const handleEditItem = async (idComment) => {
+    // Get data comment by ID
+    await fetch('http://127.0.0.1:8000/api/comments-edit/' + idComment, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((respon) => respon.json())
+      .then((data) => {
+        console.log(data.comments);
+        setCommentByID(data.comments);
+      })
+      .catch((error) => console.log(error));
+    ///
+    setOpenModal(true);
+  }
+
+  const handleClose = () => {
+    setOpenModal(false);
+  }
+
+  const handleCommentUpdate = async (idComment) => {
+    try {
+      await fetch('http://127.0.0.1:8000/api/comments-update/' + idComment, {
+        method: "PATCH",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentByID), // Chuyển đổi FormData thành đối tượng JSON
+      })
+        .then((respon) => respon.json())
+        .then((data) => {
+          console.log(commentByID);
+          setRefreshListCommend(new Date().getTime());
+          // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+          console.log(data.errors);
+          setErrorsField(data.errors);
+        })
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+        console.log(error);
+      } else {
+        // Xử lý lỗi khác nếu có
+        console.error('Error:', error);
+      }
+    }
+    setOpenModal(false);
+  };
 
   return (
     <div className="Comments">
@@ -108,6 +160,8 @@ const Comments = ({ selectedUserId, idProduct }) => {
             key={comment.id}
             comment={comment}
             isYou={selectedUserId === comment.user.id}
+            handleEditItem={() => handleEditItem(comment.id)}
+            handleDeleteItem={() => handleDeleteItem(comment.id)}
           />
         ))}
       </div>
@@ -128,6 +182,34 @@ const Comments = ({ selectedUserId, idProduct }) => {
           </p>
           <button type="submit" class="btn btn-dark">Đăng</button>
         </form>
+      </div>
+      {/* Modal Edit */}
+      <div
+        className="modal show"
+        style={{ display: 'block', position: 'initial' }}
+      >
+        <Modal show={openModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Chỉnh sửa bình luận</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <textarea
+              value={commentByID.content}
+              onChange={(e) => setCommentByID((prev) => ({ ...prev, 'content': e.target.value }))}
+              name="content"
+              className="Comments-box__input"
+              placeholder="Nhập nội dung"
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => handleClose()}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => handleCommentUpdate(commentByID.id)} style={{ background: "red", borderColor: "red" }}>
+              Lưu thay đổi
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

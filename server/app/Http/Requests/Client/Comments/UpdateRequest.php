@@ -11,7 +11,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'content' => 'required',
+        ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'content.required' => 'Nội dung là bắt buộc. Vui lòng nhập lại.',
         ];
     }
 }

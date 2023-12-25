@@ -64,7 +64,7 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $data = DB::table('brands')->where('id', $id)->first();
 

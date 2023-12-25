@@ -7,7 +7,7 @@ import './Comment.scss';
 //   return formatDistance(date, new Date(), { addSuffix: true });
 // }
 
-const Comment = ({ comment, handleDeleteItem }) => {
+const Comment = ({ comment, handleDeleteItem, handleEditItem }) => {
 
   function formatTimeAgo(commentDate) {
     const now = new Date();
@@ -54,7 +54,7 @@ const Comment = ({ comment, handleDeleteItem }) => {
 
       <div className="Comment-body">{comment.content}</div>
       <div className='Comment-actions'>
-        <button>Chỉnh sửa</button>
+        <button onClick={handleEditItem}>Chỉnh sửa</button>
         <button onClick={handleDeleteItem}>Xóa</button>
       </div>
     </div>
