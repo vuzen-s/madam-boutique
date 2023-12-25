@@ -63,7 +63,7 @@ const Navbar = () => {
     };
     hiddenLogo();
     window.addEventListener("resize", hiddenLogo);
-  }, []);
+  }, []); 
 
   return (
     <header class="text-gray-600 body-font sticky top-0 z-50 bg-white h-full shadow-2xl">

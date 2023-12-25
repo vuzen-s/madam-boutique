@@ -1,38 +1,64 @@
-import { Button, Descriptions, Form, Input, Steps } from 'antd';
-import axios from 'axios'; // Import thư viện axios để gọi API
-import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import { Descriptions, Button, Form, Input, Steps, message } from 'antd';
+import React, { useEffect, useState ,useRef} from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const { Step } = Steps;
 
 const CheckoutForm = () => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [userData, setUserData] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/user/1`)
-      .then((res) => {
-        setUserData(res.data.user);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/user/1`);
+        setUserData(response.data.user);
+      } catch (error) {
         console.error('Error fetching user data:', error);
-      });
+      }
+    };
 
+    fetchData(); // Gọi hàm fetchData khi component được mount hoặc id thay đổi
   }, [id]);
 
+  const updateUser = async (newUserData) => {
+    try {
+      await axios.put(`http://localhost:8000/api/user/edit/1`, newUserData);
+      console.log('User data updated successfully');
+    } catch (error) {
+      console.error('Error updating user data:', error);
+    }
+  };
 
   const Step1 = () => {
     const [form] = Form.useForm();
-    const [name, setName] = useState(userData.fullname);
-    const [phone, setPhone] = useState(userData.phone);
-    const [address, setAddress] = useState(userData.address);
 
-    const handleSaveFormData = () => {
-      // Xử lý lưu dữ liệu ở đây, bạn có thể sử dụng useState hoặc context để lưu trữ dữ liệu
-      console.log('Name:', name);
-      console.log('Phone:', phone);
-      console.log('Address:', address);
+    const onFinish = (values) => {
+      const { Name, Phone, Address } = values;
+      if (!Name || !Phone || !Address) {
+        message.error('Please fill in all required fields.');
+        return;
+      }
+
+      const updatedUserData = {
+        fullname: Name,
+        phone: Phone,
+        address: Address,
+      };
+
+      updateUser(updatedUserData);
+      setUserData({
+        ...userData,
+        ...updatedUserData,
+      });
+
+      message.success('User information updated successfully');
     };
 
     return (
@@ -41,57 +67,64 @@ const CheckoutForm = () => {
         labelCol={{ span: 3 }}
         wrapperCol={{ span: 18 }}
         layout="horizontal"
+        onFinish={onFinish}
         initialValues={{
-          Name: name,
-          Phone: phone,
-          Address: address,
+          Name: userData.fullname,
+          Phone: userData.phone,
+          Address: userData.address,
         }}
       >
-        <Form.Item label="Name" name="Name">
-          <Input onChange={(e) => setName(e.target.value)} />
+        <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Please enter your name' }]}>
+          <Input />
         </Form.Item>
-        <Form.Item label="Phone" name="Phone">
-          <Input onChange={(e) => setPhone(e.target.value)} />
+        <Form.Item label="Phone" name="Phone" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+          <Input />
         </Form.Item>
-        <Form.Item label="Address" name="Address">
-          <Input.TextArea rows={4} onChange={(e) => setAddress(e.target.value)} />
+        <Form.Item label="Address" name="Address" rules={[{ required: true, message: 'Please enter your address' }]}>
+          <Input.TextArea rows={4} />
         </Form.Item>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
-          <Button style={{ marginRight: '6px' }} onClick={handleSaveFormData}>
+          <Button style={{ marginRight: '6px' }} htmlType="submit">
             Save
           </Button>
-
         </div>
       </Form>
     );
   };
 
-  const Step2 = () => (
-    <Descriptions layout="horizontal" column={1} bordered>
-      <Descriptions.Item label="Name">
-        {userData.Name}
-      </Descriptions.Item>
-      <Descriptions.Item label="Phone">
-        {userData.Phone}
-      </Descriptions.Item>
-      <Descriptions.Item label="Address">
-        {userData.Address}
-      </Descriptions.Item>
-      <Descriptions.Item label="Product">
-
-      </Descriptions.Item>
-      <Descriptions.Item label="Quantity">
-
-      </Descriptions.Item>
-      <Descriptions.Item label="Total">
-
-      </Descriptions.Item>
-    </Descriptions>
-  );
+  const Step2 = () => {
+    const { products, totalAmt, shippingCharge } = state.checkoutData || {};
+    const totalAmount = totalAmt + shippingCharge;
+  
+    return (
+      <Descriptions layout="horizontal" column={1} bordered>
+        {/* Thông tin khách hàng */}
+        <Descriptions.Item label="Name">{userData.fullname}</Descriptions.Item>
+        <Descriptions.Item label="Phone">{userData.phone}</Descriptions.Item>
+        <Descriptions.Item label="Address">{userData.address}</Descriptions.Item>
+    
+        {/* Chi tiết sản phẩm và số lượng */}
+        <Descriptions.Item label="Product">
+          {products.map((item) => (
+            <div key={item._id}>
+              <p>{`${item.name}(x ${item.quantity}) -- $${item.price}`}</p>
+              {/* <p>{`Quantity: ${item.quantity}`}</p> */}
+            </div>
+          ))}
+        </Descriptions.Item>
+    
+        {/* Tổng giá trị */}
+        <Descriptions.Item label="Shipping Charge">${shippingCharge}</Descriptions.Item>
+        <Descriptions.Item label="Total">${totalAmount}</Descriptions.Item>
+      </Descriptions>
+    );
+  };
+  
 
   const Step3 = () => {
     const paypalButtonRef = useRef();
-
+    const { products, totalAmt, shippingCharge } = state.checkoutData || {};
+    const totalAmount = totalAmt + shippingCharge;
     useEffect(() => {
       const script = document.createElement('script');
       script.src = 'https://www.paypal.com/sdk/js?client-id=Af17VKFbPaxzjq4BeurracfmK2uRzc4wfwgkFdhkaxvyCmUFNenmt4-JsbbHN3-7Ehmrzoa4QnL3_KWn';
@@ -107,7 +140,8 @@ const CheckoutForm = () => {
                     {
                       amount: {
                         currency_code: 'USD',
-                        value: 35,
+                        
+                        value: totalAmount ,shippingCharge,
                       },
                     },
                   ],
@@ -179,10 +213,7 @@ const CheckoutForm = () => {
       </div>
       <div style={{ marginTop: '24px' }}>
         {currentStep < steps.length - 1 && (
-          <Button onClick={handleNext}>
-            Next
-          </Button>
-
+          <Button onClick={handleNext}>Next</Button>
         )}
         {currentStep === steps.length - 1 && (
           <Button style={{ margin: '0 8px' }} onClick={handlePrev}>

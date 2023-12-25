@@ -65,6 +65,7 @@ const router = createBrowserRouter(
         <Route path="/favorite" element={<ProductFavorite />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        
       </Route>
       {/* // */}
       <Route path="/signup" element={<SignUp />}></Route>

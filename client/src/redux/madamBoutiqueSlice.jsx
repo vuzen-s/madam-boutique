@@ -17,7 +17,7 @@ export const madamBoutiqueSlice = createSlice({
       switch (action.type) {
         case 'SET_AUTH_TOKEN':
           state.csrfToken = action.payload;
-          break;
+          break;                                               //Redux (madamBoutiqueSlice.jsx) + Cart.jsx + payment.jsx ---- Tôi có sử dug redux ở file .. 
         default:
           return state;
       }
@@ -32,7 +32,7 @@ export const madamBoutiqueSlice = createSlice({
     },
     addToCart: (state, action) => {
       const item = state.products.find(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload._id    // gpt
       );
       if (item) {
         item.quantity += action.payload.quantity;
