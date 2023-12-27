@@ -1,8 +1,8 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Descriptions, Button, Form, Input, Steps, message } from 'antd';
-import React, { useEffect, useState ,useRef} from 'react';
+import { Button, Descriptions, Form, Input, Steps, message } from 'antd';
 import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const { Step } = Steps;
