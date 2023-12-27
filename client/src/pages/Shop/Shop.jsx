@@ -6,6 +6,7 @@ import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
 import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
 
 const Shop = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [productsList, setProductsList] = useState([]);
 
@@ -61,13 +62,19 @@ const Shop = () => {
     CallApiProduct('http://127.0.0.1:8000/api/products', '');
   }
 
+  // Callback function to handle category selection
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+  };
+
   return (
     <div className="max-w-container mx-auto px-4">
       <Breadcrumbs title="Products" />
       {/* ================= Products Start here =================== */}
       <div className="w-full h-full flex pb-20 gap-10">
         <div className="w-[20%] lgl:w-[25%] hidden mdl:inline-flex h-full">
-          <ShopSideNav />
+          {/* Pass the handleCategorySelect function to ShopSideNav */}
+          <ShopSideNav onSelectCategory={handleCategorySelect} />
         </div>
         <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
           <ProductBanner itemsPerPageFromBanner={itemsPerPageFromBanner} />
