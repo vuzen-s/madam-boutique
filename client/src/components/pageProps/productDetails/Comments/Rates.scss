@@ -1,0 +1,24 @@
+.ratings {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.action-rating {
+    width: 40%;
+    padding-left: 12px;
+}
+
+.progress-rating {
+    width: 60%;
+    padding-right: 12px;
+}
+
+.action-rating h4 {
+    margin-bottom: 20px;
+}
+
+.ratings-list {
+    overflow-y: auto;
+    border-top: 1px solid #686868;
+  }

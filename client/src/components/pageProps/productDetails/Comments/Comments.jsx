@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
 import Comment from "./Comment";
 import './Comment.scss';
+import Rates from "./Rates";
 
 const Comments = ({ selectedUserId, idProduct }) => {
 
@@ -148,68 +149,73 @@ const Comments = ({ selectedUserId, idProduct }) => {
   };
 
   return (
-    <div className="Comments">
-      <h3 className="Comments-title">
-        {(comments.length === 1) ? `1 comment` : `${comments.length} comments`}
-      </h3>
-      <p style={{ margin: '16px', marginTop: '0px', fontStyle: 'italic', color: '#fff' }}>{comments.length === 0 ? 'Hãy là người đầu tiên bình luận!' : ''}</p>
+    <div>
+      <div className="rates">
+        <Rates idProduct={idProduct} />
+      </div>
+      <div className="Comments">
+        <h3 className="Comments-title">
+          {(comments.length === 1 && comments.length !== undefined) ? `1 comment` : `${comments.length} comments`}
+        </h3>
+        <p style={{ margin: '16px', marginTop: '0px', fontStyle: 'italic', color: '#000' }}>{comments.length === 0 ? 'Hãy là người đầu tiên bình luận!' : ''}</p>
 
-      <div className="Comments-list">
-        {comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            isYou={selectedUserId === comment.user.id}
-            handleEditItem={() => handleEditItem(comment.id)}
-            handleDeleteItem={() => handleDeleteItem(comment.id)}
-          />
-        ))}
-      </div>
-      <div className="Comments-box">
-        <form
-          className=""
-          onSubmit={handleSubmit}
-        >
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            name="content"
-            className="Comments-box__input"
-            placeholder="Nhập nội dung"
-          />
-          <p style={{ color: "red", fontSize: '15px' }}>
-            {errorsField && errorsField.content}
-          </p>
-          <button type="submit" class="btn btn-dark">Đăng</button>
-        </form>
-      </div>
-      {/* Modal Edit */}
-      <div
-        className="modal show"
-        style={{ display: 'block', position: 'initial' }}
-      >
-        <Modal show={openModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Chỉnh sửa bình luận</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        <div className="Comments-list">
+          {comments.map((comment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              isYou={selectedUserId === comment.user.id}
+              handleEditItem={() => handleEditItem(comment.id)}
+              handleDeleteItem={() => handleDeleteItem(comment.id)}
+            />
+          ))}
+        </div>
+        <div className="Comments-box">
+          <form
+            className=""
+            onSubmit={handleSubmit}
+          >
             <textarea
-              value={commentByID.content}
-              onChange={(e) => setCommentByID((prev) => ({ ...prev, 'content': e.target.value }))}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               name="content"
               className="Comments-box__input"
               placeholder="Nhập nội dung"
             />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => handleClose()}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => handleCommentUpdate(commentByID.id)} style={{ background: "red", borderColor: "red" }}>
-              Lưu thay đổi
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            <p style={{ color: "red", fontSize: '15px' }}>
+              {errorsField && errorsField.content}
+            </p>
+            <button type="submit" class="btn btn-dark">Đăng</button>
+          </form>
+        </div>
+        {/* Modal Edit */}
+        <div
+          className="modal show"
+          style={{ display: 'block', position: 'initial' }}
+        >
+          <Modal show={openModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Chỉnh sửa bình luận</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <textarea
+                value={commentByID.content}
+                onChange={(e) => setCommentByID((prev) => ({ ...prev, 'content': e.target.value }))}
+                name="content"
+                className="Comments-box__input"
+                placeholder="Nhập nội dung"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => handleClose()}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => handleCommentUpdate(commentByID.id)} style={{ background: "red", borderColor: "red" }}>
+                Lưu thay đổi
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </div>
     </div>
   );

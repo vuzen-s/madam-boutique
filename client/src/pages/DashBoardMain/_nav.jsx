@@ -137,6 +137,11 @@ const _nav = [
         name: 'Create',
         to: '/dashboard/product/create',
       },
+      {
+        component: CNavItem,
+        name: 'Comment',
+        to: '/dashboard/product/comment',
+      },
     ]
   },
   {

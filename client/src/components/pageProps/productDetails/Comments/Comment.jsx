@@ -52,10 +52,24 @@ const Comment = ({ comment, handleDeleteItem, handleEditItem }) => {
         <span className="Comment-time">{formatTimeAgo(comment.created_at)}</span>
       </div>
 
-      <div className="Comment-body">{comment.content}</div>
+      <div className="Comment-body">
+        {comment.status !== 0
+          ? comment.content
+          : <div style={{ fontSize: '15px', color: 'grey', fontStyle: 'italic' }}>
+            {comment.content}
+            <span > - Trạng thái: Đang chờ duyệt.</span>
+          </div>
+        }
+      </div>
+
       <div className='Comment-actions'>
-        <button onClick={handleEditItem}>Chỉnh sửa</button>
-        <button onClick={handleDeleteItem}>Xóa</button>
+        {comment.status !== 0
+          ? <div>
+            <button onClick={handleEditItem}>Chỉnh sửa</button>
+            <button onClick={handleDeleteItem}>Xóa</button>
+          </div>
+          : ''
+        }
       </div>
     </div>
   )

@@ -51,7 +51,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $comment = DB::table('comments')->where('id', $id)->first();
 

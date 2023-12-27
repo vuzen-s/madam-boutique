@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -125,6 +126,21 @@ Route::get('comments-edit/{id}', [CommentController::class, 'edit'])->name('comm
 Route::patch('comments-update/{id}', [CommentController::class, 'update'])->name('comments-update');
 // Xóa comment
 Route::delete('comments-destroy/{id}', [CommentController::class, 'destroy'])->name('comments-destroy');
+
+// =================== RATINGS ===================
+// List data comments
+Route::get('ratings', [RatingController::class, 'index'])->name('ratings.index');
+// Đẩy data lên table comment
+Route::post('ratings-store', [RatingController::class, 'store'])->name('ratings.store');
+// show comment theo id product
+Route::get('ratings-show/{product_id}', [RatingController::class, 'show'])->name('ratings.show');
+// show comment theo id product và tính số lượng
+Route::get('ratings-quantity-{rating}/{product_id}', [RatingController::class, 'quantityRating'])->name('ratings.quantityRating');
+// Update comment
+Route::get('ratings-edit/{id}', [RatingController::class, 'edit'])->name('ratings.edit');
+Route::patch('ratings-update/{id}', [RatingController::class, 'update'])->name('ratings-update');
+// Xóa designers
+Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
 // =================== MAIL ===================
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');

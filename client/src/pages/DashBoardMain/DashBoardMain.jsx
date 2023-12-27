@@ -14,6 +14,8 @@ import CollectionList from './scenes/Collections/CollectionList'
 import DesignerCreate from './scenes/Designers/DesignerCreate'
 import DesignerEdit from './scenes/Designers/DesignerEdit'
 import DesignerList from './scenes/Designers/DesignerList'
+import CommentByProduct from './scenes/Products/CommentByProduct/CommentByProduct'
+import Details from './scenes/Products/CommentByProduct/Details'
 import ProductCreate from './scenes/Products/ProductCreate'
 import ProductEdit from './scenes/Products/ProductEdit'
 import ProductList from './scenes/Products/ProductList'
@@ -63,6 +65,8 @@ class DashBoardMain extends Component {
                 <Route path="product" element={<ProductList />} />
                 <Route path="product/create" element={<ProductCreate />} />
                 <Route path="product/edit/:id" element={<ProductEdit />} />
+                <Route path="product/comment/" element={<CommentByProduct />} />
+                <Route path="product/comment/detail/:id" element={< Details/>} />
                 {/* //  */}
                 <Route path="theme/color" element={<Colors />} />
               </Routes>
