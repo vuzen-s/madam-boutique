@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Mail\ContactMailController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,19 +81,6 @@ Route::patch('categories-update/{id}', [CategoryController::class, 'update'])->n
 // Xóa categories
 Route::delete('categories-destroy/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-
-// =================== USERS ===================
-// Lấy danh sách user
-Route::get('users', [UserController::class, 'index']);
-// show user
-Route::get('user/{id}', [UserController::class, 'show']);
-// Tạo user
-Route::post('user/create', [UserController::class, 'store']);
-// Show thông tin user edit
-Route::get('user/edit/{id}', [UserController::class, 'edit']);
-// Update thông tin user edit
-Route::put('user/edit/{id}', [UserController::class, 'update']);
-
 // =================== DESIGNERS ===================
 Route::get('designers', [DesignerController::class, 'index'])->name('designers.index');
 // Đẩy data lên table designers
@@ -146,3 +134,27 @@ Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->nam
 
 // =================== MAIL ===================
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
+
+// =================== USER ===================
+// Lấy danh sách user
+Route::get('users', [UserController::class, 'index']);
+// Tạo user
+Route::post('users/create', [UserController::class, 'store']);
+// Show thông tin user edit
+Route::get('users/edit/{id}', [UserController::class, 'edit']);
+// Update thông tin user edit
+Route::put('users/edit/{id}', [UserController::class, 'update']);
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});

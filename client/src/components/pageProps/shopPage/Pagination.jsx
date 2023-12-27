@@ -18,6 +18,7 @@ function Items({ currentItems }) {
               // badge={item.badge}
               desc={item.desc}
               category_id={item.category_id}
+              brand={item.brand}
             />
           </div>
         ))}

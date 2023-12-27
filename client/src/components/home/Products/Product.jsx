@@ -119,8 +119,13 @@ const Product = (props) => {
           </h2>
           <p className="text-[#767676] text-[14px]">${props.price}</p>
         </div>
-        <div>
-          <p className="text-[#767676] text-[14px]">{props.color}</p>
+        <div className="flex items-center justify-between font-titleFont">
+          <div>
+            <p className="text-[#767676] text-[14px]">{props.color}</p>
+          </div>
+          <div>
+            <p className="text-[#767676] text-[14px]">{props.brand && props.brand.name}</p>
+          </div>
         </div>
       </div>
     </div>

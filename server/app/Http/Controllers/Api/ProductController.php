@@ -25,7 +25,10 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = DB::table('products')->where('id', $id)->first();
+        $product = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->where('id', $id)
+            ->first();
+
         return response()->json([
             'product' => $product,
         ]);
@@ -33,7 +36,10 @@ class ProductController extends Controller
 
     public function showByCategory($category_id)
     {
-        $products = DB::table('products')->where('category_id', $category_id)->get();
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->where('category_id', $category_id)
+            ->get();
+
         return response()->json([
             'products' => $products,
         ]);
@@ -41,7 +47,10 @@ class ProductController extends Controller
 
     public function showByBrand($brand_id)
     {
-        $products = DB::table('products')->where('brand_id', $brand_id)->get();
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->where('brand_id', $brand_id)
+            ->get();
+
         return response()->json([
             'products' => $products,
         ]);
@@ -49,7 +58,9 @@ class ProductController extends Controller
 
     public function showOrderByPriceAsc()
     {
-        $products = DB::table('products')->orderBy('price')->get();
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->orderBy('price')
+            ->get();
 
         return response()->json([
             'products' => $products,
@@ -58,7 +69,9 @@ class ProductController extends Controller
 
     public function showOrderByPriceDesc()
     {
-        $products = DB::table('products')->orderByDesc('price')->get();
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->orderByDesc('price')
+            ->get();
 
         return response()->json([
             'products' => $products,
@@ -67,7 +80,10 @@ class ProductController extends Controller
 
     public function showByColor($color)
     {
-        $products = DB::table('products')->where('color', 'LIKE', '%' . $color . '%')->get();
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->where('color', 'LIKE', '%' . $color . '%')
+            ->get();
+
         return response()->json([
             'products' => $products,
         ]);
@@ -75,7 +91,7 @@ class ProductController extends Controller
 
     public function showByPrice($start, $end)
     {
-        $products = DB::table('products')
+        $products = ProductModel::with(['designer', 'brand', 'collection', 'category'])
             ->select('*')
             ->whereBetween('price', [$start, $end])
             ->get();

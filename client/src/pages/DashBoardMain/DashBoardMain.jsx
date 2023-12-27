@@ -1,6 +1,5 @@
 import React, { Component, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import UserList from '../Dashboard/scenes/Users/UserList'
 import { AppFooter, AppHeader, AppSidebar } from './components'
 import BrandCreate from './scenes/Brands/BrandCreate'
 import BrandEdit from './scenes/Brands/BrandEdit'
@@ -21,6 +20,7 @@ import ProductEdit from './scenes/Products/ProductEdit'
 import ProductList from './scenes/Products/ProductList'
 import UserCreate from './scenes/Users/UserCreate'
 import UserEdit from './scenes/Users/UserEdit'
+import UserList from './scenes/Users/UserList'
 import './scss/style.scss'
 import Dashboard from './views/dashboard/Dashboard'
 import Colors from './views/theme/colors/Colors'
@@ -46,6 +46,7 @@ class DashBoardMain extends Component {
             {/* <AppContent /> */}
             <Suspense fallback={loading}>
               <Routes>
+                {/* <Route path="/*" element={<MainLayout />} /> */}
                 <Route path="*" name="Home" element={<Dashboard />} />
                 <Route path="designer" element={<DesignerList />} />
                 <Route path="designer/create" element={<DesignerCreate />} />
@@ -66,7 +67,7 @@ class DashBoardMain extends Component {
                 <Route path="product/create" element={<ProductCreate />} />
                 <Route path="product/edit/:id" element={<ProductEdit />} />
                 <Route path="product/comment/" element={<CommentByProduct />} />
-                <Route path="product/comment/detail/:id" element={< Details/>} />
+                <Route path="product/comment/detail/:id" element={< Details />} />
                 {/* //  */}
                 <Route path="theme/color" element={<Colors />} />
               </Routes>

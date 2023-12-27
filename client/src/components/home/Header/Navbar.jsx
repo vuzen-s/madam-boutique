@@ -9,6 +9,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import { navBarList } from "../../../constants";
+import useAuthContext from "../../../pages/AuthContext/AuthContext";
 
 const Navbar = () => {
   const [productsList, setProductsList] = useState([]);
@@ -42,6 +43,8 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { userAuth, logout } = useAuthContext();
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -68,14 +71,14 @@ const Navbar = () => {
   return (
     <header class="text-gray-600 body-font sticky top-0 z-50 bg-white h-full shadow-2xl">
       <div class="max-w-container mx-auto flex flex-wrap h-16 flex-col md:flex-row justify-center relative">
-      {showLogo && (
-        <Link
+        {showLogo && (
+          <Link
             to="/"
             class="flex title-font font-medium items-center text-gray-900 md:mb-0"
           >
-                  <span class="ml-3 text-xl bold">Madam's Boutique</span>
-        </Link>
-      )}
+            <span class="ml-3 text-xl bold">Madam's Boutique</span>
+          </Link>
+        )}
 
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-end">
           <div
@@ -153,21 +156,42 @@ const Navbar = () => {
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="absolute top-12 mt-2.5 right-0 z-50 bg-black w-40 h-auto text-center"
+              className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
             >
-              <Link to="/signin">
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Login
+               {/* && userAuth.level === 4) */}
+              {userAuth ? (
+                <>
+                {userAuth && userAuth.level !== 4 ? (
+                <Link to="/dashboard">
+                  <li className="text-slate-200 font-bold text-base w-full px-1 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white bg-gray-600 rounded-t-md hover:text-white duration-300 cursor-pointer">
+                    Go To Dashboard
+                  </li>
+                </Link> ) : ''}
+                <Link to="/profile">
+                  <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                    Profile
+                  </li>
+                </Link>
+                <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 rounded-md">
+                  <button onClick={logout} className="text-gray-400 w-full hover:text-white">
+                    Logout
+                  </button>
                 </li>
-              </Link>
-              <Link onClick={() => setShowUser(false)} to="/signup">
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Sign Up
-                </li>
-              </Link>
-              <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                Profile
-              </li>
+              </>
+              ) : (
+                <>
+                  <Link to="/signin">
+                    <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                      Login
+                    </li>
+                  </Link>
+                  <Link onClick={() => setShowUser(false)} to="/signup">
+                    <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer rounded-md">
+                      Sign Up
+                    </li>
+                  </Link>
+                </>
+              )}
             </motion.ul>
           )}
 
