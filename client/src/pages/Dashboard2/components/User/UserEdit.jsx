@@ -154,7 +154,7 @@ const UserEdit = () => {
                   >
                     <div className="border-2 border-slate-300 rounded-md inline-block mb-3 ">
                       <Button
-                        style={{
+                        sx={{
                           backgroundColor: "#D1D5DB",
                           color: "#4B5563",
                           boxShadow: "0 4px 6px rgba(0, 0, 0.1, 0.2)",
@@ -178,10 +178,10 @@ const UserEdit = () => {
           {/* Cut handle */}
 
           <div className="w-full h-full flex flex-col md:flex-row justify-between px-5 gap-10 mt-4 mb-4">
-            <div className="flex-1 flex-col">
+            <div className="flex-1 flex flex-col gap-2">
               {/* full name */}
 
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="fullName"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -199,14 +199,14 @@ const UserEdit = () => {
                 />
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.fullname}
                 </span>
               )}
 
               {/* email */}
 
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="email"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -224,13 +224,13 @@ const UserEdit = () => {
                 />
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className="text-sm text-red-500 font-titleFont px-2">
                   {errors.email}
                 </span>
               )}
 
               {/* Password */}
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="password"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -249,13 +249,13 @@ const UserEdit = () => {
                 />
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.password}
                 </span>
               )}
 
               {/* Password Confirmation */}
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="passwordConfirmation"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -274,7 +274,7 @@ const UserEdit = () => {
                 />
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.password ? errors.password[0] : ""}
                 </span>
               )}
@@ -282,12 +282,12 @@ const UserEdit = () => {
 
             {/* ---------- Layout cut ---------- */}
 
-            <div className="flex-1 flex-col">
+            <div className="flex-1 flex flex-col gap-3">
               {/* Gender && Level */}
 
-              <div className="flex flex-raw justify-between gap-.8 mb-4">
+              <div className="flex flex-raw justify-between">
                 <div className="flex-1 mr-1.5">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col gap-.8 ">
                     <label
                       htmlFor="gender"
                       className="font-titleFont text-base font-semibold text-gray-600"
@@ -305,15 +305,15 @@ const UserEdit = () => {
                       <option value="Female">Female</option>
                     </select>
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-1">
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
                         {errors.gender}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex-1 ml-1.5">
-                  <div className="flex flex-col">
+                <div className="flex-1 flex flex-col gap-.8 ml-1.5">
+                  <div className="flex flex-col gap-.8">
                     <label
                       htmlFor="phone"
                       className="font-titleFont text-base font-semibold text-gray-600"
@@ -329,7 +329,7 @@ const UserEdit = () => {
                       placeholder="Phone Number"
                     />
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-1">
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
                         {errors.phone}
                       </span>
                     )}
@@ -338,7 +338,7 @@ const UserEdit = () => {
               </div>
 
               {/* Level */}
-              <div className="flex-1 mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="level"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -359,7 +359,7 @@ const UserEdit = () => {
                 </select>
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.level}
                 </span>
               )}
@@ -378,11 +378,11 @@ const UserEdit = () => {
                   rows={3}
                   placeholder="Your Address Is Here"
                   maxLength={350}
-                  className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 />
               </div>
               {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-1">
+                <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.Address}
                 </span>
               )}

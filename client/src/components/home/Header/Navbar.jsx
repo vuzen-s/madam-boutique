@@ -148,8 +148,8 @@ const Navbar = () => {
                 <>
                 {userAuth && userAuth.level !== 4 ? (
                 <Link to="/dashboard">
-                  <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                    Go to Dashboard
+                  <li className="text-slate-200 font-bold text-base w-full px-1 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white bg-gray-600 rounded-t-md hover:text-white duration-300 cursor-pointer">
+                    Go To Dashboard
                   </li>
                 </Link> ) : ''}
                 <Link to="/profile">
@@ -158,7 +158,7 @@ const Navbar = () => {
                   </li>
                 </Link>
                 <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 rounded-md">
-                  <button onClick={logout} className="text-gray-400 w-full">
+                  <button onClick={logout} className="text-gray-400 w-full hover:text-white">
                     Logout
                   </button>
                 </li>

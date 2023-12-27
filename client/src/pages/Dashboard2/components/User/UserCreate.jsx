@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Breadcrumb, Input, Select } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import AvatarProfile from "../../../../components/Avatar/Avatar";
+// import AvatarProfile from "../../../../components/Avatar/Avatar";
 import axios from "axios";
+import { Image } from "antd";
+import "./AvtUserCreate.css";
+import ImgCrop from "antd-img-crop";
+import { Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
@@ -18,7 +23,7 @@ const UserCreate = () => {
     gender: "",
     level: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
   });
 
   const handleBackToList = () => {
@@ -32,7 +37,7 @@ const UserCreate = () => {
   };
 
   const handleCreateUser = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const data = {
       fullname: users.fullname,
       email: users.email,
@@ -44,39 +49,56 @@ const UserCreate = () => {
       password_confirmation: users.password_confirmation,
     };
 
-    axios.post(`http://localhost:8000/api/users/create`, data).then((res) => {
+    axios
+      .post(`http://localhost:8000/api/users/create`, data)
+      .then((res) => {
         console.log(res.data.error);
         alert(res.data.message);
-    })
+      })
 
-    .catch((e) => {
-      if (e.response && e.response.status === 400) {
-        setErrors(e.response.data.error);
-        console.log(e.response.data.error);
-      }
-      // if (e.response.status === 404) {
-      //   // set page
-      // }
-      // if (e.response.status === 500) {
-      //   // set page
-      // }
-  });
+      .catch((e) => {
+        if (e.response && e.response.status === 400) {
+          setErrors(e.response.data.error);
+          console.log(e.response.data.error);
+        }
+        // if (e.response.status === 404) {
+        //   // set page
+        // }
+        // if (e.response.status === 500) {
+        //   // set page
+        // }
+      });
+  };
 
-    // .catch((err) => {
-    //   if (err.response) {
-    //     if (err.response.status === 400) {
-    //       //setError
-    //       // loading
-    //     }
-    //     if (err.response.status === 404) {
-    //       // set page
-    //     }
-    //     if (err.response.status === 500) {
-    //       // set page
-    //     }
-    //   }
-    // });
-  }
+  useEffect(() => {
+    setErrors({});
+  }, [
+    users.fullname,
+    users.email,
+    users.password,
+    users.password_confirmation,
+    users.gender,
+    users.level,
+    users.phone,
+    users.Address,
+  ]);
+
+  const [imageSrc, setImageSrc] = useState(
+    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  );
+
+  const handleImageUpload = (fileList) => {
+    if (fileList && fileList.length > 0) {
+      const file = fileList[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div>
@@ -98,14 +120,56 @@ const UserCreate = () => {
       </div>
       <form onSubmit={handleCreateUser}>
         <div className="max-w-full h-full mt-2 mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
+          {/* Upload Avavtar */}
           <div>
-            <AvatarProfile />
+            <div className="flex flex-col justify-center gap-3">
+              <div className="border-3 border-slate-300 p-1 rounded-full flex mdl:flex-col justify-center mx-auto">
+                <Image
+                  width={160}
+                  style={{ borderRadius: "100%", objectFit: "cover" }}
+                  src={imageSrc}
+                />
+              </div>
+              <div className="flex mdl:flex-col justify-center mx-auto">
+                <ImgCrop rotationSlider>
+                  <Upload
+                    onChange={(info) => {
+                      if (info.fileList.length > 0) {
+                        handleImageUpload([info.file.originFileObj]);
+                      }
+                    }}
+                    showUploadList={false}
+                  >
+                    <div className="border-2 border-slate-300 rounded-md inline-block mb-3 ">
+                      <Button
+                        sx={{
+                          backgroundColor: "#D1D5DB",
+                          color: "#4B5563",
+                          boxShadow: "0 4px 6px rgba(0, 0, 0.1, 0.2)",
+                          fontWeight: "bold",
+                          fontSize: "16px",
+                          height: "37px",
+                        }}
+                        icon={
+                          <UploadOutlined style={{ marginBottom: "8px" }} />
+                        }
+                      >
+                        Upload Avatar
+                      </Button>
+                    </div>
+                  </Upload>
+                </ImgCrop>
+              </div>
+            </div>
           </div>
+
+          {/* Cut handle */}
+
           <div className="w-full h-full flex flex-col md:flex-row justify-between px-5 gap-10 mt-4 mb-4">
-            <div className="flex-1 flex-col">
+            <div className="flex-1 flex flex-col gap-2">
               {/* full name */}
 
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="fullName"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -122,10 +186,15 @@ const UserCreate = () => {
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-2">
+                  {errors.fullname}
+                </span>
+              )}
 
               {/* email */}
 
-              <div className="mb-4">
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="email"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -142,7 +211,14 @@ const UserCreate = () => {
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
-              <div className="mb-4">
+              {errors && (
+                <span className="text-sm text-red-500 font-titleFont px-2">
+                  {errors.email}
+                </span>
+              )}
+
+              {/* Password */}
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="password"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -160,7 +236,14 @@ const UserCreate = () => {
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
-              <div className="mb-4">
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-2">
+                  {errors.password}
+                </span>
+              )}
+
+              {/* Password Confirmation */}
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="passwordConfirmation"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -178,51 +261,72 @@ const UserCreate = () => {
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-2">
+                  {errors.password ? errors.password[0] : ""}
+                </span>
+              )}
             </div>
 
             {/* ---------- Layout cut ---------- */}
 
-            <div className="flex-1 flex-col">
+            <div className="flex-1 flex flex-col gap-3">
               {/* Gender && Level */}
 
-              <div className="flex flex-grow justify-between gap-.8 mb-4">
+              <div className="flex flex-raw justify-between">
                 <div className="flex-1 mr-1.5">
-                  <label
-                    htmlFor="gender"
-                    className="font-titleFont text-base font-semibold text-gray-600"
-                  >
-                    Gender
-                  </label>
-                  <select
-                    id="level"
-                    name="gender"
-                    value={users.gender}
-                    onChange={handleInputValue}
-                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                  >
-                    <option value="Choose Gender">Choose Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
+                  <div className="flex flex-col gap-.8 ">
+                    <label
+                      htmlFor="gender"
+                      className="font-titleFont text-base font-semibold text-gray-600"
+                    >
+                      Gender
+                    </label>
+                    <select
+                      id="level"
+                      name="gender"
+                      value={users.gender}
+                      onChange={handleInputValue}
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    {errors && (
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                        {errors.gender}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className="flex-1 ml-1.5">
-                  <label
-                    htmlFor="phone"
-                    className="font-titleFont text-base font-semibold text-gray-600"
-                  >
-                    Phone
-                  </label>
-                  <input
-                    name="phone"
-                    value={users.phone}
-                    onChange={handleInputValue}
-                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="text"
-                    placeholder="Phone Number"
-                  />
+
+                <div className="flex-1 flex flex-col gap-.8 ml-1.5">
+                  <div className="flex flex-col gap-.8">
+                    <label
+                      htmlFor="phone"
+                      className="font-titleFont text-base font-semibold text-gray-600"
+                    >
+                      Phone
+                    </label>
+                    <input
+                      name="phone"
+                      value={users.phone}
+                      onChange={handleInputValue}
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                      type="text"
+                      placeholder="Phone Number"
+                    />
+                    {errors && (
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                        {errors.phone}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="flex-1 mb-4">
+
+              {/* Level */}
+              <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="level"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -236,13 +340,18 @@ const UserCreate = () => {
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
-                  <option value="Choose Level">Choose Level</option>
                   <option value="1">Admin Master</option>
                   <option value="2">Admin Manager</option>
                   <option value="3">Admin Editor</option>
                   <option value="4">Member</option>
                 </select>
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-2">
+                  {errors.level}
+                </span>
+              )}
+              {/* Address */}
               <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="address"
@@ -252,24 +361,29 @@ const UserCreate = () => {
                 </label>
                 <TextArea
                   name="Address"
-                  rows={3}
                   value={users.Address}
                   onChange={handleInputValue}
+                  rows={3}
                   placeholder="Your Address Is Here"
                   maxLength={350}
-                  className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-2">
+                  {errors.Address}
+                </span>
+              )}
             </div>
           </div>
           <div className="flex justify-end">
             <Button
               type="submit"
               variant="contained"
-              color="primary"
+              color="success"
               style={{ width: "150px", height: "45px" }}
             >
-              Updated
+              Create
             </Button>
           </div>
         </div>

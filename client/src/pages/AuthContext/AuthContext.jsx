@@ -78,8 +78,6 @@ export const AuthProvider = ({ children }) => {
         } 
     }
 
-    
-
     const resetFilterError = () => {
         setEmailNotExist("");
         setErrorsLogin();
