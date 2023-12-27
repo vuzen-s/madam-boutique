@@ -1,4 +1,4 @@
-import { Typography, Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
 const Header = ({ title, subtitle }) => {
@@ -7,9 +7,9 @@ const Header = ({ title, subtitle }) => {
   return (
     <Box mb="30px">
       <Typography
-        variant="h2"
+        variant="h4"
         color={colors.grey[100]}
-        fontWeight="bold"
+        fontWeight="600"
         sx={{ m: "0 0 5px 0" }}
       >
         {title}

@@ -1,7 +1,7 @@
 // import formatDistance from "date-fns/formatDistance";
 // import parseISO from "date-fns/parseISO";
 
-import { Badge } from 'antd';
+import { Tag } from 'antd';
 
 // function formatDate(dateStr) {
 //   const date = parseISO(dateStr);
@@ -42,9 +42,6 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
         <div className="Comment">
             <div className="Comment-header">
                 <div className="Comment-avatar">
-                    <button type="button" class="btn btn-warning" style={{ background: '#dc3545', color: '#fff', border: 'none' }} onClick={() => { }}>
-                        Xóa tất cả
-                    </button>
                     <img src={comment.user.avatar != null ? comment.user.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVnsLhjbXRN_F--iLPPJ-ED7WP3qqfwhiAkNtgKsONg&s"} alt={comment.user.name} />
                 </div>
                 {/* <span className="Comment-author">
@@ -58,12 +55,18 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
 
             <div className="Comment-body">
                 {comment.status !== 0
-                    ? <Badge.Ribbon text="Đã duyệt" color="green">
+                    ? <div>
                         {comment.content}
-                    </Badge.Ribbon>
+                        <Tag bordered={false} color="green">
+                            Showed
+                        </Tag>
+                    </div>
                     : <div style={{ fontSize: '15px', color: 'grey', fontStyle: 'italic' }}>
                         {comment.content}
                         <span > - Trạng thái: Đang chờ duyệt.</span>
+                        <Tag bordered={false} color="magenta">
+                            Hidden
+                        </Tag>
                     </div>
                 }
             </div>
@@ -71,8 +74,8 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
             <div className='Comment-actions'>
                 {comment.status === 0
                     ? <div>
-                        <button onClick={handleEditItem}>Duyệt</button>
-                        <button onClick={handleDeleteItem}>Xóa vĩnh viễn</button>
+                        <button onClick={handleEditItem} style={{ background: "green", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Duyệt</button>
+                        <button onClick={handleDeleteItem} style={{ background: "red", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Xóa vĩnh viễn</button>
                     </div>
                     : ''
                 }

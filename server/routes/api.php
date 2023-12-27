@@ -121,6 +121,8 @@ Route::get('comments', [CommentController::class, 'index'])->name('comments.inde
 Route::post('comments-store', [CommentController::class, 'store'])->name('comments.store');
 // show comment theo id product
 Route::get('comments-show/{product_id}', [CommentController::class, 'show'])->name('comments.show');
+// Show all comments đang bị ẩn
+Route::patch('ratings-update-hidden/{product_id}', [CommentController::class, 'quantityCommentHidden'])->name('ratings.quantityCommentHidden');
 // Update comment
 Route::get('comments-edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
 Route::patch('comments-update/{id}', [CommentController::class, 'update'])->name('comments-update');

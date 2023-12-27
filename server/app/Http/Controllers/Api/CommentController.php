@@ -48,6 +48,18 @@ class CommentController extends Controller
         ]);
     }
 
+    public function quantityCommentHidden($product_id)
+    {
+        $comments = CommentModel::with(['user', 'product'])
+            ->where('product_id', $product_id)
+            ->where('status', 0)
+            ->update(['status' => 1]);
+
+        return response()->json([
+            'comments' => $comments,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */

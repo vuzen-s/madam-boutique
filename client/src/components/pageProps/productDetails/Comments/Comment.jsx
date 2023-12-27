@@ -1,5 +1,7 @@
 // import formatDistance from "date-fns/formatDistance";
 // import parseISO from "date-fns/parseISO";
+
+import { Tag } from 'antd';
 import './Comment.scss';
 
 // function formatDate(dateStr) {
@@ -58,6 +60,9 @@ const Comment = ({ comment, handleDeleteItem, handleEditItem }) => {
           : <div style={{ fontSize: '15px', color: 'grey', fontStyle: 'italic' }}>
             {comment.content}
             <span > - Trạng thái: Đang chờ duyệt.</span>
+            <Tag bordered={false} color="magenta">
+              Hidden
+            </Tag>
           </div>
         }
       </div>

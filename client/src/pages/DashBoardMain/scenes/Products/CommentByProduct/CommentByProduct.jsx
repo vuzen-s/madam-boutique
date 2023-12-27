@@ -94,12 +94,6 @@ const CommentByProduct = () => {
           <button type="button" class="btn btn-primary" style={{ background: '#ffc107', border: 'none' }} onClick={() => handleDtailItem(params.row.id)}>
             Chi tiết
           </button>
-          <button type="button" class="btn btn-success" style={{ background: '#2eb85c', color: '#fff', border: 'none' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Duyệt tất cả
-          </button>
-          <button type="button" class="btn btn-warning" style={{ background: '#dc3545', color: '#fff', border: 'none' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Xóa tất cả
-          </button>
         </div>
       ),
       flex: 0.5,
