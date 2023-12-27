@@ -3,7 +3,14 @@ import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+// import AvatarProfile from "../../../../components/Avatar/Avatar";
+import { Image } from "antd";
+import "./AvtUserEdit.css";
+import ImgCrop from "antd-img-crop";
+import { Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
+const { TextArea } = Input;
 
 const UserEdit = () => {
   const [users, setUsers] = useState({});
@@ -11,11 +18,40 @@ const UserEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [imageSrc, setImageSrc] = useState(
+    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  );
+
+  const handleImageChange = (fileList) => {
+    if (fileList && fileList.length > 0) {
+      const file = fileList[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   useEffect(() => {
     axios.get(`http://localhost:8000/api/users/edit/${id}`).then((res) => {
       console.log(res.data.user);
       setUsers(res.data.user);
     });
+    // .catch((e) => {
+    //   if (e.response && e.response.status === 400) {
+    //     setErrors(e.response.data.message);
+    //     console.log(e.response.data.message);
+    //   }
+    //   // if (e.response.status === 404) {
+    //   //   // set page
+    //   // }
+    //   // if (e.response.status === 500) {
+    //   //   // set page
+    //   // }
+    // });
   }, [id]);
 
   const handleInputValue = (e) => {
@@ -33,31 +69,44 @@ const UserEdit = () => {
       level: users.level,
       gender: users.gender,
       password: users.password,
+      phone: users.phone,
+      Address: users.Address,
       password_confirmation: users.password_confirmation,
     };
 
     axios
       .put(`http://localhost:8000/api/users/edit/${id}`, data)
       .then((res) => {
-        console.log(res.data.error);
+        console.log(res.data);
         alert(res.data.message);
-      });
+      })
 
-    // .catch((err) => {
-    //   if (err.response) {
-    //     if (err.response.status === 400) {
-    //       //setError
-    //       // loading
-    //     }
-    //     if (err.response.status === 404) {
-    //       // set page
-    //     }
-    //     if (err.response.status === 500) {
-    //       // set page
-    //     }
-    //   }
-    // });
+      .catch((e) => {
+        if (e.response && e.response.status === 400) {
+          setErrors(e.response.data.error);
+          console.log(e.response.data.error);
+        }
+        // if (e.response.status === 404) {
+        //   // set page
+        // }
+        // if (e.response.status === 500) {
+        //   // set page
+        // }
+      });
   };
+
+  useEffect(() => {
+    setErrors({});
+  }, [
+    users.fullname,
+    users.email,
+    users.password,
+    users.password_confirmation,
+    users.gender,
+    users.level,
+    users.phone,
+    users.Address,
+  ]);
 
   const handleBackToList = () => {
     navigate("../users");
@@ -82,11 +131,61 @@ const UserEdit = () => {
         </Button>
       </div>
       <form onSubmit={handleUpdateUser}>
-        <div className="max-w-full h-[520px] mt-2 mx-auto p-4 flex-wrap flex-col md:flex-row bg-white rounded-md shadow-lg relative">
-          <div className="w-full h-full mt-2 mx-auto p-4 flex justify-evenly ">
-            <div className="w-50 pr-10">
+        <div className="max-w-full h-full mt-2 mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
+          {/* Update Avavtar */}
+          <div>
+            <div className="flex flex-col justify-center gap-3">
+              <div className="border-3 border-slate-300 p-1 rounded-full flex mdl:flex-col justify-center mx-auto">
+                <Image
+                  width={160}
+                  style={{ borderRadius: "100%", objectFit: "cover" }}
+                  src={imageSrc}
+                />
+              </div>
+              <div className="flex mdl:flex-col justify-center mx-auto">
+                <ImgCrop rotationSlider>
+                  <Upload
+                    onChange={(info) => {
+                      if (info.fileList.length > 0) {
+                        handleImageChange([info.file.originFileObj]);
+                      }
+                    }}
+                    showUploadList={false}
+                  >
+                    <div className="border-2 border-slate-300 rounded-md inline-block mb-3 ">
+                      <Button
+                        style={{
+                          backgroundColor: "#D1D5DB",
+                          color: "#4B5563",
+                          boxShadow: "0 4px 6px rgba(0, 0, 0.1, 0.2)",
+                          fontWeight: "bold",
+                          fontSize: "16px",
+                          height: "37px",
+                        }}
+                        icon={
+                          <UploadOutlined style={{ marginBottom: "8px" }} />
+                        }
+                      >
+                        Change Avatar
+                      </Button>
+                    </div>
+                  </Upload>
+                </ImgCrop>
+              </div>
+            </div>
+          </div>
+
+          {/* Cut handle */}
+
+          <div className="w-full h-full flex flex-col md:flex-row justify-between px-5 gap-10 mt-4 mb-4">
+            <div className="flex-1 flex-col">
+              {/* full name */}
+
               <div className="mb-4">
-                <label htmlFor="fullName" className="block mb-1 font-medium">
+                <label
+                  htmlFor="fullName"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
                   Full Name
                 </label>
                 <Input
@@ -94,13 +193,24 @@ const UserEdit = () => {
                   name="fullname"
                   value={users.fullname}
                   onChange={handleInputValue}
-                  className="w-full bg-slate-200"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. Le Van Truong Anh"
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.fullname}
+                </span>
+              )}
+
+              {/* email */}
+
               <div className="mb-4">
-                <label htmlFor="email" className="block mb-1 font-medium">
+                <label
+                  htmlFor="email"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
                   Email
                 </label>
                 <Input
@@ -108,13 +218,23 @@ const UserEdit = () => {
                   name="email"
                   value={users.email}
                   onChange={handleInputValue}
-                  className="w-full  bg-slate-200"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. truonganh@gmail.com"
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.email}
+                </span>
+              )}
+
+              {/* Password */}
               <div className="mb-4">
-                <label htmlFor="password" className="block mb-1 font-medium">
+                <label
+                  htmlFor="password"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
                   Password
                 </label>
                 <Input
@@ -123,15 +243,22 @@ const UserEdit = () => {
                   name="password"
                   value={users.password}
                   onChange={handleInputValue}
-                  className="w-full  bg-slate-200"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Password"
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.password}
+                </span>
+              )}
+
+              {/* Password Confirmation */}
               <div className="mb-4">
                 <label
                   htmlFor="passwordConfirmation"
-                  className="block mb-1 font-medium"
+                  className="font-titleFont text-base font-semibold text-gray-600"
                 >
                   Confirm Password
                 </label>
@@ -141,31 +268,81 @@ const UserEdit = () => {
                   name="password_confirmation"
                   value={users.password_confirmation}
                   onChange={handleInputValue}
-                  className="w-full  bg-slate-200"
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Confirm Password"
                   style={{ width: "100%", height: "40px" }}
                 />
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.password ? errors.password[0] : ""}
+                </span>
+              )}
             </div>
-            {/* -------------------------------- */}
-            <div className="w-60 pr-5">
-              <div className="mb-4">
-                <label htmlFor="gender" className="block mb-1 font-medium">
-                  Gender
-                </label>
-                <select
-                  id="level"
-                  name="gender"
-                  value={users.gender}
-                  onChange={handleInputValue}
-                  className="w-full h-10 bg-slate-200 rounded-md pl-3"
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+
+            {/* ---------- Layout cut ---------- */}
+
+            <div className="flex-1 flex-col">
+              {/* Gender && Level */}
+
+              <div className="flex flex-raw justify-between gap-.8 mb-4">
+                <div className="flex-1 mr-1.5">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="gender"
+                      className="font-titleFont text-base font-semibold text-gray-600"
+                    >
+                      Gender
+                    </label>
+                    <select
+                      id="level"
+                      name="gender"
+                      value={users.gender}
+                      onChange={handleInputValue}
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    {errors && (
+                      <span className=" text-sm text-red-500 font-titleFont px-1">
+                        {errors.gender}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex-1 ml-1.5">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="phone"
+                      className="font-titleFont text-base font-semibold text-gray-600"
+                    >
+                      Phone
+                    </label>
+                    <input
+                      name="phone"
+                      value={users.phone}
+                      onChange={handleInputValue}
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                      type="text"
+                      placeholder="Phone Number"
+                    />
+                    {errors && (
+                      <span className=" text-sm text-red-500 font-titleFont px-1">
+                        {errors.phone}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="mb-4">
-                <label htmlFor="level" className="block mb-1 font-medium">
+
+              {/* Level */}
+              <div className="flex-1 mb-4">
+                <label
+                  htmlFor="level"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
                   Level
                 </label>
                 <select
@@ -173,7 +350,7 @@ const UserEdit = () => {
                   name="level"
                   value={users.level}
                   onChange={handleInputValue}
-                  className="w-full h-10 bg-slate-200 rounded-md pl-3 "
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
                   <option value="1">Admin Master</option>
                   <option value="2">Admin Manager</option>
@@ -181,9 +358,37 @@ const UserEdit = () => {
                   <option value="4">Member</option>
                 </select>
               </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.level}
+                </span>
+              )}
+              {/* Address */}
+              <div className="flex flex-col gap-.8">
+                <label
+                  htmlFor="address"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
+                  Address
+                </label>
+                <TextArea
+                  name="Address"
+                  value={users.Address}
+                  onChange={handleInputValue}
+                  rows={3}
+                  placeholder="Your Address Is Here"
+                  maxLength={350}
+                  className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                />
+              </div>
+              {errors && (
+                <span className=" text-sm text-red-500 font-titleFont px-1">
+                  {errors.Address}
+                </span>
+              )}
             </div>
           </div>
-          <div style={{ position: "absolute", bottom: 20, right: 20 }}>
+          <div className="flex justify-end">
             <Button
               type="submit"
               variant="contained"

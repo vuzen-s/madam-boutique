@@ -105,8 +105,31 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    // public function userProfile() {
+    //     return response()->json(auth()->user());
+    // }
+
     public function userProfile() {
-        return response()->json(auth()->user());
+        try {
+            $user = auth()->userOrFail(); // Ném ra một ngoại lệ nếu không tìm thấy người dùng
+    
+            return response()->json([
+                'status' => 200,
+                'user' => $user
+            ], 200);
+    
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            return response()->json([
+                'status' => 401,
+                'errors' => 'Unauthorized. User not authenticated.'
+            ], 401);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'errors' => 'Internal Server Error.'
+            ], 500);
+        }
     }
 
     /**

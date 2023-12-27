@@ -1,0 +1,16 @@
+.lgl\:flex-wrap {
+    flex-wrap: wrap;  /* Giữa chúng ở một hàng khi màn hình lớn hơn 667px */
+  }
+  
+  /* Cho các thiết bị có màn hình nhỏ hơn hoặc bằng 667px */
+  @media (max-width: 667px) {
+    .lgl\:flex-wrap {
+      flex-direction: column; /* Đặt dạng cột khi màn hình nhỏ hơn hoặc bằng 667px */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .lgl\:flex-wrap {
+      flex-direction: column; /* Đặt dạng cột khi màn hình nhỏ hơn hoặc bằng 667px */
+    }
+  }

@@ -46,7 +46,9 @@ class UserController extends Controller
             'email' => 'required|string|email||max:50|unique:users,email',
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
-            'gender' => 'required'
+            'gender' => 'nullable',
+            'phone' => 'nullable|numeric|digits:10',
+            'Address' => 'nullable|max:250'
         ]);
 
         if($validate->fails()) {
@@ -60,6 +62,8 @@ class UserController extends Controller
                 'password' => bcrypt($request['password']),
                 'level' => $request['level'],
                 'gender' => $request['gender'],
+                'phone' => $request['phone'],
+                'Address' => $request['Address'],
             ]);
 
             if($user){
@@ -69,8 +73,9 @@ class UserController extends Controller
                 ], 200);
             } else {
                 return response()->json([
+                    'status' => 500,
                     'messages' => 'Failed to Create User'
-                ]);
+                ], 500);
             }
         }
     }
@@ -112,13 +117,18 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
+                'status' => 404,
                 'message' => "User Not Found"
-            ]);
+            ], 404);
         }
 
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email|max:100|unique:users,email,'.Cid,
+            'email' => 'required|string|email|max:100|unique:users,email,'.$id,
+            'gender' => 'nullable',
+            'level' => 'required',
+            'phone' => 'nullable|numeric|digits:10',
+            'Address' => 'nullable|max:250'
         ]);
 
         if(!empty($request->password)){
@@ -128,8 +138,9 @@ class UserController extends Controller
     
             if ($passwordValidator->fails()) {
                 return response()->json([
+                    'status' => 400,
                     'error'=> $passwordValidator->messages()
-                ]);
+                ], 400);
             }
 
             $user->password = bcrypt($request['password']);
@@ -137,13 +148,16 @@ class UserController extends Controller
 
         if ($validate->fails()) {
             return response()->json([
+                'status' => 400,
                 'error'=> $validate->messages()
-            ]);
+            ], 400);
         } else {
             $user->fullname = $request['fullname'];
             $user->email = strtolower($request['email']);
-            $user->level = $request['level'];
+            $user->phone = $request['phone'];
             $user->gender = $request['gender'];
+            $user->level = $request['level'];
+            $user->Address = $request['Address'];
 
             if ($user->save()) {
                 return response()->json([

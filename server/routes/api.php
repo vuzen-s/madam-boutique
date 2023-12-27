@@ -32,7 +32,7 @@ Route::get('products/{id}', [ProductController::class, 'show'])->name('products.
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
 // Tạo user
-Route::post('user/create', [UserController::class, 'store']);
+Route::post('users/create', [UserController::class, 'store']);
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit

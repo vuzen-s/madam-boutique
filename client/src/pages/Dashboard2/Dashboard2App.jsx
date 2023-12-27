@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "./scenes/MainLayout/MainLayout";
 // import Page404 from "./components/Page404/Page404";
+// import DefaultLayoutDashboard from "../AuthLayout/DefaultLayoutDashboad";
 
 const Dashboard2App = () => {
     return (

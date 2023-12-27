@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Axios from "./Axios";
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
@@ -8,7 +8,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState(null);
-    const [user, setUser] = useState(null);
+    const [userNormal, setUserNormal] = useState(null);
     const [errorsRegister, setErrorsRegister] = useState([]);
     const [errorsLogin, setErrorsLogin] = useState([]);
     const [emailNotExist, setEmailNotExist] = useState("");
@@ -25,12 +25,25 @@ export const AuthProvider = ({ children }) => {
 
     const getUser = async () => {
         const {data} = await axiosBasic.get('api/users');
-        setUser(data);
+        setUserNormal(data);
     }
 
+    // const getUserAuth = async () => {
+    //     const {data} = await Axios.get('api/auth/user-profile');
+    //     setUserAuth(data);
+    // }
+
     const getUserAuth = async () => {
-        const {data} = await Axios.get('api/auth/user-profile');
-        setUserAuth(data);
+        try {
+            const { data } = await Axios.get('api/auth/user-profile');
+            setUserAuth(data);
+        } catch (e) {
+            if (e.response && e.response.status === 401) {
+                setUserAuth(null); 
+                sessionStorage.removeItem('token'); 
+                navigate("/signin");
+            }
+        }
     }
 
     const login = async ({email, password}) => {
@@ -42,13 +55,17 @@ export const AuthProvider = ({ children }) => {
 
             sessionStorage.setItem('token', access_token);
 
-            setUserAuth(user);
+            console.log(user)
 
-            if (user.level === 1 || user.level === 2 || user.level === 3) {
-                navigate("/dashboard");
-            } else {
-                navigate("/");
-            }
+            setUserAuth(user)
+
+            console.log(userAuth)
+
+            // if (user.level === 1 || user.level === 2 || user.level === 3) {
+            //     navigate("/dashboard");
+            // } else if (user.level === 4) {
+            //     navigate("/");
+            // }
 
         } catch(e) {
             if(e.response.data.status === 422) {
@@ -58,8 +75,10 @@ export const AuthProvider = ({ children }) => {
             if(e.response.data.status === 401) {
                 setEmailNotExist(e.response.data.errors);
             }
-        }
+        } 
     }
+
+    
 
     const resetFilterError = () => {
         setEmailNotExist("");
@@ -80,28 +99,28 @@ export const AuthProvider = ({ children }) => {
             }
         }
     }
-
+      
     const logout = async () => {
         const token = sessionStorage.getItem('token');
-    
+        
         if (!token) {
-            console.log("No token found!!!");
+            console.log("No token found !");
             return;
         }
     
-        await Axios.post('api/auth/logout')
-
-        .then(() => {
+        try {
+            await Axios.post('api/auth/logout');
             setUserAuth(null);
-            sessionStorage.clear();
-        })
-        .catch(e => {
+            sessionStorage.removeItem('token');
+            navigate("/");
+        } catch (e) {
             console.log("Error logout:", e);
-
             if (e.response && e.response.status === 401) {
-                window.location.reload();
+                setUserAuth(null);
+                sessionStorage.removeItem('token');
+                navigate("/signin");
             }
-        });
+        }
     }
 
     const refresh = async () => {
@@ -120,7 +139,9 @@ export const AuthProvider = ({ children }) => {
             return newToken;
         } catch (e) {
             console.log("Error refreshing token:", e);
-            return null;
+            if (e.response && e.response.status === 401) {
+                return false
+            }
         }
     }
 
@@ -161,7 +182,7 @@ export const AuthProvider = ({ children }) => {
             if (!refreshSuccess) {
                 navigate("/signin");
             }
-        }, 5 * 60 * 1000);
+        }, 50 * 60 * 1000);
     
         return () => clearInterval(intervalToken); 
     }, [checkAndRefreshToken, navigate]);
@@ -175,7 +196,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
 
-    return <AuthContext.Provider value={{user, getUser, userAuth, getUserAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError}}>
+
+    return <AuthContext.Provider value={{userAuth, getUserAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError}}>
             {children}
         </AuthContext.Provider>
 }

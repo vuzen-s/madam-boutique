@@ -89,7 +89,7 @@ const SignUp = () => {
                     <p className="font-titleFont text-base font-semibold text-gray-600">
                       Gender *
                     </p>
-                    <select name="" id="" value={gender} onChange={(e) => setGender(e.target.value)} className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-2.5 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none">
+                    <select name="gender" id="" value={gender} onChange={(e) => setGender(e.target.value)} className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-2.5 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none">
                       <option value="Select Gender">Choose Gender</option>
                       <option value="Male" >Male</option>
                       <option value="Female" >Female</option>

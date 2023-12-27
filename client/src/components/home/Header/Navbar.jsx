@@ -143,8 +143,15 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
               className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
             >
+               {/* && userAuth.level === 4) */}
               {userAuth ? (
                 <>
+                {userAuth && userAuth.level !== 4 ? (
+                <Link to="/dashboard">
+                  <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                    Go to Dashboard
+                  </li>
+                </Link> ) : ''}
                 <Link to="/profile">
                   <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Profile
