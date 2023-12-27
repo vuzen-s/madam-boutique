@@ -11,6 +11,13 @@ const DataBlog = [
       desc: "Bài viết đưa vào",
       imageUrl: "/blog_img/fashion.png", 
     },
+    {
+        id: 3,
+        title: "Autumn-Winter 2024 Collection",
+        desc: "Bài viết đưa vào",
+        imageUrl: "/blog_img/fashion.png", 
+      },
+     
     // Thêm các bài viết khác 
   ];
   

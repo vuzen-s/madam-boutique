@@ -170,7 +170,7 @@ const CheckoutForm = () => {
 
     return (
       <Form labelCol={{ span: 3 }} wrapperCol={{ span: 18 }} layout="horizontal">
-        <Button style={{ width: '100%', height: '50px', marginBottom: '20px', padding: '0px', background: 'yellow' }}>
+        <Button style={{ width: '100%', height: '50px', marginBottom: '20px 0', padding: '0px', background: 'yellow' }}>
           Cash on Delivery - COD
         </Button>
         <div ref={paypalButtonRef}></div>

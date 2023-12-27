@@ -1,6 +1,6 @@
 
 import React from "react";
-import BlogList from "../../components/BlogList/BlogList";
+// import BlogList from "../../components/BlogList/BlogList";
 
 // import DataBlog from "../../components/Blog_List/DataBlog";
 
