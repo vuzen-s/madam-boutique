@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdOutlineLabelImportant } from "react-icons/md";
@@ -9,7 +9,7 @@ import Image from "../../designLayouts/Image";
 import Badge from './Badge';
 
 const Product = (props) => {
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
 
   const dispatch = useDispatch();
   // const idString = (_id) => {
@@ -29,20 +29,20 @@ const Product = (props) => {
   };
 
   // Get data categories
-  useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/categories/${props.category_id}`, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((respon) => respon.json())
-      .then((data) => {
-        console.log(data.category);
-        setCategory(data.category);
-      })
-      .catch((error) => console.log(error));
-  }, [props.category_id]);
+  // useEffect(() => {
+  //   fetch(`http://127.0.0.1:8000/api/categories/${props.category_id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     }
+  //   })
+  //     .then((respon) => respon.json())
+  //     .then((data) => {
+  //       console.log(data.category);
+  //       setCategory(data.category);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [props.category_id]);
 
   return (
     <div className="w-full relative group">
@@ -51,7 +51,7 @@ const Product = (props) => {
           <Image className="w-full h-full" imgSrc={props.avatar} />
         </div>
         <div className="absolute top-6 left-8">
-          {<Badge text={category.name} />}
+          {<Badge text={props.category && props.category.name} />}
         </div>
         <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">

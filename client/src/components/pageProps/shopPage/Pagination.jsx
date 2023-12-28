@@ -17,7 +17,7 @@ function Items({ currentItems }) {
               color={item.color}
               // badge={item.badge}
               desc={item.desc}
-              category_id={item.category_id}
+              category={item.category}
               brand={item.brand}
             />
           </div>

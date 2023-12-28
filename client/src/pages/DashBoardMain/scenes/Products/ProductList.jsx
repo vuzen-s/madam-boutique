@@ -1,5 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { Tag } from 'antd';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
@@ -107,8 +108,16 @@ const ProductList = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
-        <div style={{ background: params.value === 0 ? 'green' : 'red', color: 'white', padding: '0px 4px', borderRadius: '4px', fontWeight: '600' }}>
-          {params.value === 0 ? 'Hiển thị' : 'Ẩn'}
+        <div>
+          {
+            params.value === 0
+              ? <Tag bordered={false} color="success">
+                Hiển thị
+              </Tag>
+              : <Tag bordered={false} color="error">
+                Ẩn
+              </Tag>
+          }
         </div>
       ),
       flex: 0.3,
@@ -119,8 +128,16 @@ const ProductList = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
-        <div style={{ background: params.value === 0 ? 'orange' : 'grey', color: 'white', padding: '0px 4px', borderRadius: '4px', fontWeight: '600' }}>
-          {params.value === 0 ? 'Nổi bật' : 'Không nổi bật'}
+        <div>
+          {
+            params.value === 0
+              ? <Tag bordered={false} color="cyan">
+                Nổi bật
+              </Tag>
+              : <Tag bordered={false} color="magenta">
+                Không nổi bật
+              </Tag>
+          }
         </div>
       ),
       flex: 0.4,

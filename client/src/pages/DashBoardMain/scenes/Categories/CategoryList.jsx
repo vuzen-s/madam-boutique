@@ -1,5 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { Tag } from 'antd';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
@@ -71,7 +72,7 @@ const CategoryList = () => {
     { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Tên Bộ sưu tập",
+      headerName: "Tên Danh mục",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
@@ -83,8 +84,16 @@ const CategoryList = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => (
-        <div style={{ background: params.value === 0 ? 'green' : 'red', color: 'white', padding: '0px 4px', borderRadius: '4px', fontWeight: '600' }}>
-          {params.value === 0 ? 'Hiển thị' : 'Ẩn'}
+        <div>
+          {
+            params.value === 0
+              ? <Tag bordered={false} color="success">
+                Hiển thị
+              </Tag>
+              : <Tag bordered={false} color="error">
+                Ẩn
+              </Tag>
+          }
         </div>
       ),
       flex: 0.3,
