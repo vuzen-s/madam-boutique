@@ -64,9 +64,8 @@ const CheckoutForm = () => {
     return (
       <Form
         form={form}
-        labelCol={{ span: 3 }}
-        wrapperCol={{ span: 18 }}
-        layout="horizontal"
+        
+        
         onFinish={onFinish}
         initialValues={{
           Name: userData.fullname,
@@ -74,20 +73,40 @@ const CheckoutForm = () => {
           Address: userData.address,
         }}
       >
-        <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Please enter your name' }]}>
+        {/* form mới */}
+      <div className=' w-full py-8 grid grid-cols-10 h-full max-h-screem  gap-4'>
+
+       <div className='w-full flex justify-center items-center col-span-6'>
+       <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[100%] object-contain'/>
+       </div>
+
+         <div className='flex w-full flex-col items-center col-span-4 gap-8' >
+         <p className="text-base font-titleFont font-semibold px-2">"Delivery information for you</p>
+
+         <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Please enter your name' }]} 
+           className="w-full py-1 border-b-4 px-1 text-base font-medium placeholder:font-normal placeholder:text-sm outline-none focus-within:border-primeColor">
+              <Input />
+         </Form.Item>
+
+         <Form.Item label="Phone" name="Phone" rules={[{ required: true, message: 'Please enter your phone number' }]} 
+          className="w-full py-1 border-b-4 px-1 text-base font-medium placeholder:font-normal placeholder:text-sm outline-none focus-within:border-primeColor">
           <Input />
         </Form.Item>
-        <Form.Item label="Phone" name="Phone" rules={[{ required: true, message: 'Please enter your phone number' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Address" name="Address" rules={[{ required: true, message: 'Please enter your address' }]}>
+
+        <Form.Item label="Address" name="Address" rules={[{ required: true, message: 'Please enter your address' }]}
+         className="w-full py-1 border-b-4 px-1 text-base font-medium placeholder:font-normal placeholder:text-sm outline-none focus-within:border-primeColor">
           <Input.TextArea rows={4} />
         </Form.Item>
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
-          <Button style={{ marginRight: '6px' }} htmlType="submit">
-            Save
-          </Button>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
+          <Button  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200" htmlType="submit"> Save </Button>
+          <Button onClick={handleNext}  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"  >Next</Button>
         </div>
+         </div>
+      </div>
+       
+
+       
       </Form>
     );
   };
@@ -97,27 +116,68 @@ const CheckoutForm = () => {
     const totalAmount = totalAmt + shippingCharge;
   
     return (
-      <Descriptions layout="horizontal" column={1} bordered>
-        {/* Thông tin khách hàng */}
-        <Descriptions.Item label="Name">{userData.fullname}</Descriptions.Item>
-        <Descriptions.Item label="Phone">{userData.phone}</Descriptions.Item>
-        <Descriptions.Item label="Address">{userData.address}</Descriptions.Item>
+    <div>
+        <div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem  gap-6'>
+           
+           
+           <div className='w-full flex justify-center items-center col-span-4'>
+            <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[100%] object-contain'/>
+           </div>
+
+           <div className=' w-full flex-col items-center col-span-6 gap 6'>
+            <h2 className='text-2xl font-bold'>check  </h2>
+              <table className='table-auto w-full'>
+                <thead>
+                  <tr className='border bg-gray-300 '>
+                    <th className='text-center p-2'>Products</th>
+                    <th className='text-center p-2'>Quantity</th>
+                    <th className='text-center p-2'>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {products.map((item) => (
+            <tr key={item._id} >
+              
+
+              <td className='text-center p-2 border-b-2'>{`${item.name}`} </td>
+              <td className='text-center p-2 border-b-2'>{`${item.quantity}`}</td>
+              <td className='text-center p-2 border-b-2'>{`${item.price * item.quantity}USD`}</td>
+            </tr>  ))}
+                </tbody>
+
+              </table>
+           <span className='flex items-center gap-8-sm'>
+            <span className='p-2'>Shipping Charge :</span>
+            <span className=' text-main font-bold'>{`${shippingCharge}USD`}</span>
+
+            <span className='m-2 p-2'>Total :</span>
+            <span className=' text-main font-bold'>{`${totalAmount}USD`}</span>
+
+           </span>
+           </div>
+           
+
+     </div>
+     <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
+          <Button  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200" onClick={handlePrev}> Previous  </Button>
+          <Button onClick={handleNext}  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"  >Next</Button>
+        </div>
+    </div>
     
-        {/* Chi tiết sản phẩm và số lượng */}
-        <Descriptions.Item label="Product">
-          {products.map((item) => (
-            <div key={item._id}>
-              <p>{`${item.name}(x ${item.quantity}) -- $${item.price}`}</p>
-              {/* <p>{`Quantity: ${item.quantity}`}</p> */}
-            </div>
-          ))}
-        </Descriptions.Item>
+          
+          
+          // <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+          //   <Button style={{ margin: '0 8px' }} onClick={handlePrev}  
+          //     className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200" htmlType="submit">Previous</Button>
     
-        {/* Tổng giá trị */}
-        <Descriptions.Item label="Shipping Charge">${shippingCharge}</Descriptions.Item>
-        <Descriptions.Item label="Total">${totalAmount}</Descriptions.Item>
-      </Descriptions>
+          //   <Button onClick={handleNext} 
+          //     className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200" htmlType="submit">Next</Button>
+          // </div>
+      
+        
+     
     );
+    
   };
   
 
@@ -169,12 +229,15 @@ const CheckoutForm = () => {
     }, []);
 
     return (
-      <Form labelCol={{ span: 3 }} wrapperCol={{ span: 18 }} layout="horizontal">
-        <Button style={{ width: '100%', height: '50px', marginBottom: '20px', padding: '0px', background: 'yellow' }}>
-          Cash on Delivery - COD
-        </Button>
+     <div>
+       <Form labelCol={{ span: 3 }} wrapperCol={{ span: 18 }} layout="horizontal">
         <div ref={paypalButtonRef}></div>
       </Form>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+          <Button style={{ margin: '0 8px' }} onClick={handlePrev} >  Previous </Button>
+
+        </div>
+     </div>
     );
   };
 
@@ -202,7 +265,7 @@ const CheckoutForm = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding:'24px'}}>
       <Steps current={currentStep} onChange={(step) => setCurrentStep(step)}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
@@ -210,16 +273,6 @@ const CheckoutForm = () => {
       </Steps>
       <div style={{ marginTop: '20px', width: '50%' }}>
         {steps[currentStep].content}
-      </div>
-      <div style={{ marginTop: '24px' }}>
-        {currentStep < steps.length - 1 && (
-          <Button onClick={handleNext}>Next</Button>
-        )}
-        {currentStep === steps.length - 1 && (
-          <Button style={{ margin: '0 8px' }} onClick={handlePrev}>
-            Previous
-          </Button>
-        )}
       </div>
     </div>
   );
