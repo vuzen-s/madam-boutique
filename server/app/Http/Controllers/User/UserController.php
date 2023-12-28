@@ -41,6 +41,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // $avatar = $request->avatar;
+        // $avatarName = time(). '-' . $avatar->getClientOriginalName();
+
+        // $user->avatar = $avatarName;
+        // $avatar->move(public_path('uploads/'), $avatarName);
+
+        // if($request->avatar != null){
+        //     $this->uploadImageDetail($request->avatar, $user->id);
+        // }
+
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
             'email' => 'required|string|email||max:50|unique:users,email',
@@ -114,6 +124,27 @@ class UserController extends Controller
     public function update(Request $request, int $id)
     {
         $user = User::findOrFail($id);
+
+        // $avatar = $request->avatar;
+
+        // if (!empty($avatar)) {
+        //     $request->validate([
+        //         'image' => 'required|mimes:jpg,bmp,png,jpeg'
+        //     ]);
+
+        //     $avatar_old_path = public_path('uploads/'. $user->avatar);
+        //     if (file_exists($avatar_old_path)) {
+        //         unlink($avatar_old_path);
+        //     }
+
+        //     $avatarName = time(). '-' . $avatar->getClientOriginalName();
+        //     $user->avatar = $avatarName;
+        //     $avatar->move(public_path('uploads/'), $avatarName);
+        // }
+
+        // if($request->avatar != null){
+        //     $this->uploadImageDetail($request->avatar, $user->id);
+        // }
 
         if (!$user) {
             return response()->json([
