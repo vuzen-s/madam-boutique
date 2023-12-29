@@ -116,55 +116,7 @@ const CheckoutForm = () => {
     const totalAmount = totalAmt + shippingCharge;
   
     return (
-    // <div>
-    //     <div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem  gap-6'>
-           
-           
-    //        <div className='w-full flex justify-center items-center col-span-4'>
-    //         <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[100%] object-contain'/>
-    //        </div>
-
-    //        <div className=' w-full flex-col items-center col-span-6 gap 6'>
-    //         <h2 className='text-2xl font-bold'>check  </h2>
-    //           <table className='table-auto w-full'>
-    //             <thead>
-    //               <tr className='border bg-gray-300 '>
-    //                 <th className='text-center p-2'>Products</th>
-    //                 <th className='text-center p-2'>Quantity</th>
-    //                 <th className='text-center p-2'>Price</th>
-    //               </tr>
-    //             </thead>
-    //             <tbody>
-    //             {products.map((item) => (
-    //         <tr key={item._id} >
-              
-
-    //           <td className='text-center p-2 border-b-2'>{`${item.name}`} </td>
-    //           <td className='text-center p-2 border-b-2'>{`${item.quantity}`}</td>
-    //           <td className='text-center p-2 border-b-2'>{`${item.price * item.quantity}USD`}</td>
-    //         </tr>  ))}
-    //             </tbody>
-
-    //           </table>
-    //        <span className='flex items-center gap-8-sm'>
-    //         <span className='p-2'>Shipping Charge :</span>
-    //         <span className=' text-main font-bold'>{`${shippingCharge}USD`}</span>
-
-    //         <span className='m-2 p-2'>Total :</span>
-    //         <span className=' text-main font-bold'>{`${totalAmount}USD`}</span>
-
-    //        </span>
-    //        </div>
-           
-
-    //  </div>
-    //  <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
-    //       <Button  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400" onClick={handlePrev}> Previous  </Button>
-    //       <Button onClick={handleNext}  className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"  >Next</Button>
-    //     </div>
-    // </div>
     
-          
           
           
           //moi
@@ -176,7 +128,7 @@ const CheckoutForm = () => {
       <div className=' w-full py-8 grid grid-cols-10 h-full max-h-screem  gap-4'>
 
        <div className='w-full flex justify-center items-center col-span-6'>
-       <img src="/payment-svg/paymentaddress.svg" alt="paymentform" className='w-[100%] object-contain'/>
+       <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[100%] object-contain'/>
        </div>
 
          <div className='flex w-full flex-col items-center col-span-4 gap-8' >
@@ -279,7 +231,7 @@ const CheckoutForm = () => {
      <div>
       
       <div className='w-full flex justify-center items-center col-span-4'>
-       <img src="/payment-svg/paymentaddress.svg" alt="paymentform" className='w-[50%] object-contain'/>
+       <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
        
        </div>
       
