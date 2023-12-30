@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +50,7 @@ Route::get('products-asc', [ProductController::class, 'showOrderByPriceAsc'])->n
 Route::get('products-desc', [ProductController::class, 'showOrderByPriceDesc'])->name('products.showOrderByPriceDesc');
 // Lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
-// Lấy đường dẫn tới thư mục public
+// Lấy đường dẫn tới thư mục public/uploads/products/
 Route::get('products-publicPath', [ProductController::class, 'getPublicPath'])->name('products.product-getPublicPath');
 // Thêm sản phẩm
 Route::post('products-store', [ProductController::class, 'store'])->name('products.products-store');
@@ -134,9 +136,6 @@ Route::patch('ratings-update/{id}', [RatingController::class, 'update'])->name('
 // Xóa designers
 Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
-// =================== MAIL ===================
-Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
-
 // =================== USER ===================
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
@@ -160,3 +159,22 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
+
+// =================== TOPICS ===================
+Route::get('topics', [TopicController::class, 'index'])->name('topics.index');
+
+// =================== BLOGS ===================
+// List data collections
+Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+// Đẩy data lên table collections
+Route::post('blogs-store', [BlogController::class, 'store'])->name('blogs-store');
+// Update collection
+Route::get('blogs-edit/{id}', [BlogController::class, 'edit'])->name('blogs-edit');
+Route::patch('blogs-update/{id}', [BlogController::class, 'update'])->name('blogs-update');
+// Xóa collection
+Route::delete('blogs-destroy/{id}', [BlogController::class, 'destroy'])->name('blogs-destroy');
+// Lấy đường dẫn tới thư mục public/uploads/blogs/
+Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->name('blogs-getPublicPath');
+
+// =================== MAIL ===================
+Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');

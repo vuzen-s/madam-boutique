@@ -28,6 +28,23 @@ const _nav = [
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
+    component: CNavGroup,
+    name: 'Blog',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'List',
+        to: '/dashboard/blog',
+      },
+      {
+        component: CNavItem,
+        name: 'Create',
+        to: '/dashboard/blog/create',
+      },
+    ]
+  },
+  {
     component: CNavTitle,
     name: 'Modules',
   },
