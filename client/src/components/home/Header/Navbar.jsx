@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { HiMenuAlt2 } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import { navBarList } from "../../../constants";
 import useAuthContext from "../../../pages/AuthContext/AuthContext";
+import axios from "axios";
 
 const Navbar = () => {
   const [productsList, setProductsList] = useState([]);
@@ -29,6 +30,7 @@ const Navbar = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
   
   const products = useSelector((state) => state.madamBoutiqueReducer.products);
   const productsFavorite = useSelector(
@@ -43,7 +45,12 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { userAuth, logout } = useAuthContext();
+  const {userAuth, logout } = useAuthContext();
+
+  const handleEditUser = () => {
+    navigate(`../profile`);
+  }
+
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -167,11 +174,11 @@ const Navbar = () => {
                     Go To Dashboard
                   </li>
                 </Link> ) : ''}
-                <Link to="/profile">
-                  <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300">
+                  <button onClick={handleEditUser} className="text-gray-400 w-full hover:text-white">
                     Profile
-                  </li>
-                </Link>
+                  </button>
+                </li>
                 <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 rounded-md">
                   <button onClick={logout} className="text-gray-400 w-full hover:text-white">
                     Logout

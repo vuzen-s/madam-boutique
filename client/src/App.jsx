@@ -30,6 +30,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Profile from "./pages/Profile/Profile";
 import Shop from "./pages/Shop/Shop";
+import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
 
           <Route element={<DefaultLayoutProfile />}>
             <Route path="/profile" element={<Profile />}></Route>
+            {/* <Route path="/profile/:email" element={<Profile />}></Route> */}
           </Route>
         </Route>
         {/* // */}
@@ -60,7 +62,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />}></Route>
         </Route>
 
-          {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
+        {/* <Route element={<DefaultLayoutDashboard />}> */}
           <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
         {/* </Route> */}
         <Route path="/404" element={<Page404 />}></Route>

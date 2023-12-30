@@ -17,7 +17,7 @@ const UserList = () => {
   const navigate = useNavigate();
 
   const handleCreateUser = () => {
-    navigate("../users/create");
+    navigate("../user/create");
   };
 
   const handleEditUser = (id) => {
@@ -33,12 +33,12 @@ const UserList = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-md p-2 flex justify-between items-center shadow-md">
+      <div className="bg-white rounded-md py-2 px-2.5 flex justify-between items-center shadow-md">
         <Breadcrumb
-          style={{ margin: "2px 0", fontSize: "20px", fontWeight: "500" }}
+          style={{ margin: "5px 0", fontSize: "20px", fontWeight: "500" }}
         >
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>User list</Breadcrumb.Item>
+          <Breadcrumb.Item className="text-2xl">User Information</Breadcrumb.Item>
+          {/* <Breadcrumb.Item>User list</Breadcrumb.Item> */}
         </Breadcrumb>
 
         <Button
@@ -50,10 +50,9 @@ const UserList = () => {
           Create User
         </Button>
       </div>
-      <div className="bg-white rounded-md shadow-lg">
+      <div className="bg-white rounded-md shadow-lg my-3">
         <Box>
           <Box
-            m="8px 0 0 0"
             height="75vh"
             width="100%"
             sx={{

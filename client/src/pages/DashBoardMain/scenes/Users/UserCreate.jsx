@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Breadcrumb, Input, Select } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-// import AvatarProfile from "../../../../components/Avatar/Avatar";
 import axios from "axios";
 import { Image } from "antd";
-import "./AvtUserCreate.css";
+import "./AvtUser.css";
 import ImgCrop from "antd-img-crop";
+import img from "../../../../../src/assets/images/undefineAvt.png"
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -14,7 +14,11 @@ const { TextArea } = Input;
 
 const UserCreate = () => {
   const [errors, setErrors] = useState({});
+  // const [hasImageChanged, setHasImageChanged] = useState(false);
   const navigate = useNavigate();
+  // const [avatarFile, setAvatarFile] = useState(img);
+  const [avatar, setAvatar] = useState("");
+
   const [users, setUsers] = useState({
     fullname: "",
     email: "",
@@ -27,7 +31,7 @@ const UserCreate = () => {
   });
 
   const handleBackToList = () => {
-    navigate("../users");
+    navigate("../user");
   };
 
   const handleInputValue = (e) => {
@@ -36,40 +40,109 @@ const UserCreate = () => {
     setUsers((values) => ({ ...values, [name]: value }));
   };
 
+  // const handleCreateUser = (e) => {
+  //   e.preventDefault();
+
+  //   let data = {
+  //     fullname: users.fullname,
+  //     email: users.email,
+  //     level: users.level,
+  //     gender: users.gender,
+  //     password: users.password,
+  //     phone: users.phone,
+  //     Address: users.Address,
+  //     password_confirmation: users.password_confirmation,
+  //   };
+
+  //   // console.log(data)
+
+  //   // if (hasImageChanged) {
+  //   //   data = {
+  //   //     ...data,
+  //   //     avatar: users.avatar
+  //   //   };
+  //   // }
+
+  //   axios
+  //     .post(`http://localhost:8000/api/users/create`, data)
+  //     .then((res) => {
+  //       console.log(res.data.error);
+  //       alert(res.data.message);
+  //     })
+
+  //     .catch((e) => {
+  //       if (e.response && e.response.status === 400) {
+  //         setErrors(e.response.data.error);
+  //         console.log(e.response.data.error);
+  //       }
+  //       // if (e.response.status === 404) {
+  //       //   // set page
+  //       // }
+  //       // if (e.response.status === 500) {
+  //       //   // set page
+  //       // }
+  //     });
+  // };
+  
+
+  const handleImageUpload = (fileList) => {
+    if (fileList && fileList.length <= 1) {
+      const file = fileList[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setAvatar(reader.result)
+
+        // setHasImageChanged(true);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleCreateUser = (e) => {
     e.preventDefault();
-    const data = {
-      fullname: users.fullname,
-      email: users.email,
-      level: users.level,
-      gender: users.gender,
-      password: users.password,
-      phone: users.phone,
-      Address: users.Address,
-      password_confirmation: users.password_confirmation,
-    };
+
+    let formData = new FormData();
+    formData.append("fullname", users.fullname);
+    formData.append("email", users.email);
+    formData.append("level", users.level);
+    formData.append("gender", users.gender);
+    formData.append("password", users.password);
+    formData.append("phone", users.phone);
+    formData.append("Address", users.Address);
+    formData.append("password_confirmation", users.password_confirmation);
+
+    if (avatar) {
+      formData.append("avatar", avatar);
+    }
 
     axios
-      .post(`http://localhost:8000/api/users/create`, data)
+      .post(`http://localhost:8000/api/users/create`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
         console.log(res.data.error);
         alert(res.data.message);
       })
-
       .catch((e) => {
         if (e.response && e.response.status === 400) {
           setErrors(e.response.data.error);
           console.log(e.response.data.error);
         }
-        // if (e.response.status === 404) {
-        //   // set page
-        // }
-        // if (e.response.status === 500) {
-        //   // set page
-        // }
       });
   };
 
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if(file) {
+  //     const avatarFileURL = URL.createObjectURL(file);
+  //     setAvatarFile(avatarFileURL);
+  //     setHasImageChanged(true)
+  //   }
+  // }
+
+  
   useEffect(() => {
     setErrors({});
   }, [
@@ -83,31 +156,15 @@ const UserCreate = () => {
     users.Address,
   ]);
 
-  const [imageSrc, setImageSrc] = useState(
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  );
 
-  const handleImageUpload = (fileList) => {
-    if (fileList && fileList.length > 0) {
-      const file = fileList[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setImageSrc(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div>
-      <div className="bg-white rounded-md p-2 flex justify-between items-center shadow-md">
+      <div className="bg-white rounded-md py-2 px-2.5 mb-3 flex justify-between items-center shadow-md">
         <Breadcrumb
           style={{ margin: "5px 0", fontSize: "20px", fontWeight: "500" }}
         >
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>User Create</Breadcrumb.Item>
+          <Breadcrumb.Item className="text-2xl">Create User</Breadcrumb.Item>
         </Breadcrumb>
         <Button
           variant="contained"
@@ -119,25 +176,30 @@ const UserCreate = () => {
         </Button>
       </div>
       <form onSubmit={handleCreateUser}>
-        <div className="max-w-full h-full mt-2 mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
+        <div className="max-w-full h-full mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
           {/* Upload Avavtar */}
-          <div>
+
+          {/* <div>
             <div className="flex flex-col justify-center gap-3">
               <div className="border-3 border-slate-300 p-1 rounded-full flex mdl:flex-col justify-center mx-auto">
                 <Image
+                  
                   width={160}
                   style={{ borderRadius: "100%", objectFit: "cover" }}
-                  src={imageSrc}
+                  src={avatar}
                 />
               </div>
               <div className="flex mdl:flex-col justify-center mx-auto">
                 <ImgCrop rotationSlider>
                   <Upload
+                    name="avatar"
+                    accept="image/*"
                     onChange={(info) => {
                       if (info.fileList.length > 0) {
                         handleImageUpload([info.file.originFileObj]);
                       }
                     }}
+
                     showUploadList={false}
                   >
                     <div className="border-2 border-slate-300 rounded-md inline-block mb-3 ">
@@ -161,9 +223,32 @@ const UserCreate = () => {
                 </ImgCrop>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {/* Cut handle */}
+          {/* <div className="flex flex-col gap-.8">
+            <label
+              htmlFor="avatar"
+              className="font-titleFont text-base font-semibold text-gray-600"
+            >
+              Avatar
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              onChange={handleImageUpload}
+              className="border-[1px] border-gray-400 rounded-md px-3 py-2 outline-none"
+            />
+            {avatarFile && (
+              <img
+                src={avatarFile}
+                alt="Uploaded avatar"
+                style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "100%" }}
+              />
+            )}
+          </div> */}
+
+          {/* ----- Cut ----- */}
 
           <div className="w-full h-full flex flex-col md:flex-row justify-between px-5 gap-10 mt-4 mb-4">
             <div className="flex-1 flex flex-col gap-2">

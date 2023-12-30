@@ -3,6 +3,8 @@ import { jwtDecode } from 'jwt-decode';
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "./Axios";
+import AlertSuccess from "./AlertSuccess";
+import Swal from "sweetalert2";
 
 const AuthContext = createContext({});
 
@@ -12,7 +14,9 @@ export const AuthProvider = ({ children }) => {
     const [errorsRegister, setErrorsRegister] = useState([]);
     const [errorsLogin, setErrorsLogin] = useState([]);
     const [emailNotExist, setEmailNotExist] = useState("");
+    const [errorsUpdate, setErrorsUpdate] = useState([]);
     const navigate = useNavigate();
+    const [alertModal, setAlertModal] = useState(false)
 
     const axiosBasic = axios.create({
         baseURL: "http://localhost:8000",
@@ -27,11 +31,6 @@ export const AuthProvider = ({ children }) => {
         const {data} = await axiosBasic.get('api/users');
         setUserNormal(data);
     }
-
-    // const getUserAuth = async () => {
-    //     const {data} = await Axios.get('api/auth/user-profile');
-    //     setUserAuth(data);
-    // }
 
     const getUserAuth = async () => {
         try {
@@ -60,6 +59,10 @@ export const AuthProvider = ({ children }) => {
             setUserAuth(user)
 
             console.log(userAuth)
+
+            // if(response.status === 200){
+            //     navigate("/")
+            // }
 
             // if (user.level === 1 || user.level === 2 || user.level === 3) {
             //     navigate("/dashboard");
@@ -121,81 +124,117 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const refresh = async () => {
-        const token = sessionStorage.getItem('token');
 
-        if (!token) {
-            return null;
-        }
+    const updateProfile = async (formData) => {
+        await csrf();
 
         try {
-            const response = await Axios.post('api/auth/refresh');
-            const newToken = response.data.access_token;
-            
-            sessionStorage.setItem('token', newToken);
-            
-            return newToken;
+            const response = await Axios.put('api/auth/update-profile', formData);
+
+            if (response.status === 200) {
+                setUserAuth(response.data.user);
+                Swal.fire({
+                    position: "top-center",
+                    icon: 'success',
+                    title: 'Update Profile Successfully',
+                    text: 'After changing your profile, you need to SignIn again. Thank you!',
+                    confirmButtonText: 'Ok',
+                    timer: 10000
+                });
+                // return { success: true, message: "Profile updated successfully" };
+
+            }
+
         } catch (e) {
-            console.log("Error refreshing token:", e);
-            if (e.response && e.response.status === 401) {
-                return false
+            // return { success: false, message: "Error updating profile" };
+            // if (e.response && e.response.status === 401) {
+            //     setUserAuth(null);
+            //     sessionStorage.removeItem('token');
+            //     navigate("/signin");
+            // }
+
+            if(e.response.data.status === 400) {
+                setErrorsUpdate(e.response.data.errors);
+                console.log(e.response.data.errors)
             }
         }
     }
 
-    const checkAndRefreshToken = useCallback(async () => {
-        const token = sessionStorage.getItem('token');
+    // const refresh = async () => {
+    //     const token = sessionStorage.getItem('token');
 
-        if (!token) {
-            return false;
-        }
+    //     if (!token) {
+    //         return null;
+    //     }
 
-        // Thư viện jwt-decode biên dịch token để lấy thời gian hết hạn
-        const decodedToken = jwtDecode(token);; 
-        const expirationTime = decodedToken.exp * 1000; // Convert từ giây sang mili giây
+    //     try {
+    //         const response = await Axios.post('api/auth/refresh');
+    //         const newToken = response.data.access_token;
+            
+    //         sessionStorage.setItem('token', newToken);
+            
+    //         return newToken;
+    //     } catch (e) {
+    //         console.log("Error refreshing token:", e);
+    //         if (e.response && e.response.status === 401) {
+    //             return false
+    //         }
+    //     }
+    // }
 
-        if (Date.now() >= expirationTime) {
-            const newToken = await refresh();
+    // const checkAndRefreshToken = useCallback(async () => {
+    //     const token = sessionStorage.getItem('token');
 
-            if (newToken) {
-                await getUserAuth(); // Update user info hoặc state nếu cần
-                return true;
-            } else {
-                return false; // Xử lý khi không thể refresh token
-            }
-        }
+    //     if (!token) {
+    //         return false;
+    //     }
 
-        return true;
-    }, [])
+    //     // Thư viện jwt-decode biên dịch token để lấy thời gian hết hạn
+    //     const decodedToken = jwtDecode(token);; 
+    //     const expirationTime = decodedToken.exp * 1000; // Convert từ giây sang mili giây
 
-    useEffect(() => {
-        const refreshSuccess = checkAndRefreshToken();
+    //     if (Date.now() >= expirationTime) {
+    //         const newToken = await refresh();
+
+    //         if (newToken) {
+    //             await getUserAuth(); // Update user info hoặc state nếu cần
+    //             return true;
+    //         } else {
+    //             return false; // Xử lý khi không thể refresh token
+    //         }
+    //     }
+
+    //     return true;
+    // }, [])
+
+    // useEffect(() => {
+    //     const refreshSuccess = checkAndRefreshToken();
     
-        if (!refreshSuccess) {
-            navigate("/signin");
-        }
+    //     if (!refreshSuccess) {
+    //         navigate("/signin");
+    //     }
     
-        const intervalToken = setInterval(() => {
-            const refreshSuccess = checkAndRefreshToken();
-            if (!refreshSuccess) {
-                navigate("/signin");
-            }
-        }, 50 * 60 * 1000);
+    //     const intervalToken = setInterval(() => {
+    //         const refreshSuccess = checkAndRefreshToken();
+    //         if (!refreshSuccess) {
+    //             navigate("/signin");
+    //         }
+    //     }, 50 * 60 * 1000);
     
-        return () => clearInterval(intervalToken); 
-    }, [checkAndRefreshToken, navigate]);
+    //     return () => clearInterval(intervalToken); 
+    // }, [checkAndRefreshToken, navigate]);
     
 
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (token) {
-            getUserAuth();
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('token');
+    //     if (!token) {
+    //         getUserAuth();
+    //     }
+    // }, []);
 
 
 
-    return <AuthContext.Provider value={{userAuth, getUserAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError}}>
+    return <AuthContext.Provider value={{userAuth, getUserAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError, errorsUpdate, updateProfile}}>
             {children}
         </AuthContext.Provider>
 }

@@ -5,7 +5,7 @@ import useAuthContext from "../AuthContext/AuthContext"
 const DefaultLayoutDashboard = () => {
     const { userAuth } = useAuthContext()
     
-    return (userAuth && (userAuth?.level === 1 || userAuth?.level === 2 || userAuth?.level === 3))  ? <Outlet /> : <Navigate to="/" />
+    return userAuth  ? <Outlet /> : <Navigate to="/" />
 
 }
    
