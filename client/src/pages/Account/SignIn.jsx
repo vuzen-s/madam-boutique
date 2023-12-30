@@ -1,29 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const SignIn = () => {
-  // ============= Initial State Start here =============
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // ============= Initial State End here ===============
-  // ============= Error Msg Start here =================
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
-
-  // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
-  // ============= Event Handler Start here =============
+  const [captchaValue, setCaptchaValue] = useState(null);
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
   };
+
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setErrPassword("");
   };
-  // ============= Event Handler End here ===============
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
+
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    if (!captchaValue) {
+      setErrPassword("Please verify that you are not a robot.");
+      return;
+    }
 
     if (!email) {
       setErrEmail("Enter your email");
@@ -32,15 +39,17 @@ const SignIn = () => {
     if (!password) {
       setErrPassword("Create a password");
     }
-    // ============== Getting the value ==============
+
     if (email && password) {
       setSuccessMsg(
         `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
       );
       setEmail("");
       setPassword("");
+      // Gửi yêu cầu đăng ký hoặc xử lý logic của bạn ở đây
     }
   };
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-full lgl:w-1/2 flex items-center justify-center h-full">
@@ -65,7 +74,6 @@ const SignIn = () => {
                 Sign in
               </h1>
               <div className="flex flex-col gap-3">
-                {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
                     Email
@@ -85,7 +93,6 @@ const SignIn = () => {
                   )}
                 </div>
 
-                {/* Password */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
                     Password
@@ -105,13 +112,11 @@ const SignIn = () => {
                   )}
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <div> 
-                    <input type="checkbox" className="text-center"/>
-                    <span className="text-black text-center"> Remember me</span>
-                  </div>
-                  <Link className="text-blue-600">For got password?</Link>
-                </div>
+                <ReCAPTCHA
+                  sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J"
+                  onChange={handleCaptchaChange}
+                  hl="en"
+                />
 
                 <button
                   onClick={handleSignUp}
@@ -119,6 +124,7 @@ const SignIn = () => {
                 >
                   Sign In
                 </button>
+
                 <p className="text-sm text-center font-titleFont font-medium">
                   Don't have an Account?{" "}
                   <Link to="/signup">

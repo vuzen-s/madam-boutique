@@ -87,7 +87,7 @@ Route::get('users', [UserController::class, 'index']);
 // show user
 Route::get('user/{id}', [UserController::class, 'show']);
 // Tạo user
-Route::post('user/create', [UserController::class, 'store']);
+Route::post('user/create', [UserController::class, 'store']) ->middleware('recaptcha');
 // Show thông tin user edit
 Route::get('user/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
@@ -146,3 +146,5 @@ Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->nam
 
 // =================== MAIL ===================
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
+// Xác thực lại reCapcha
+Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact') ->middleware('recaptcha');

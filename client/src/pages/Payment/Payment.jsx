@@ -155,7 +155,7 @@ const CheckoutForm = () => {
               </table>
 
               <div className='flex items-center  flex justify-center gap-8-sm '>
-            <span className='text-xl pl-4 text-main font-bold flex-col items-center'>Shipping Charge :</span>
+            <span className='text-xl pl-2 text-main font-bold flex-col items-center'>Shipping  :</span>
              <span className='   pl-2 text-xl  text-red-600'>{`${shippingCharge}  USD`}</span>
              </div>
              <div className='flex  flex justify-center gap-8-sm'>
@@ -184,6 +184,7 @@ const CheckoutForm = () => {
     const paypalButtonRef = useRef();
     const { products, totalAmt, shippingCharge } = state.checkoutData || {};
     const totalAmount = totalAmt + shippingCharge;
+  
     useEffect(() => {
       const script = document.createElement('script');
       script.src = 'https://www.paypal.com/sdk/js?client-id=Af17VKFbPaxzjq4BeurracfmK2uRzc4wfwgkFdhkaxvyCmUFNenmt4-JsbbHN3-7Ehmrzoa4QnL3_KWn';
@@ -200,7 +201,7 @@ const CheckoutForm = () => {
                       amount: {
                         currency_code: 'USD',
                         
-                        value: totalAmount ,shippingCharge,
+                        value: totalAmount ,shippingCharge,products,
                       },
                     },
                   ],
@@ -209,8 +210,10 @@ const CheckoutForm = () => {
               onApprove: (data, actions) => {
                 return actions.order.capture().then((details) => {
                   console.log(details);
+                  
                 });
               },
+              
             })
             .render(paypalButtonRef.current);
         }
