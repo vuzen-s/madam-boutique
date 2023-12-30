@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|unique:products,name,' . $this->id,
             'price' => 'required|numeric',
             'desc' => 'required',
-            // 'avatar' => 'mimes:jpg,png,jpeg',
+            'avatar' => 'mimes:jpg,png,jpeg',
             'status' => 'required',
             'feature' => 'required',
             'collection_id' => 'required',
@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    public function messages():array
+    public function messages(): array
     {
         return [
             'name.required' => 'Mục tên sản phẩm là bắt buộc. Vui lòng nhập lại.',
@@ -43,7 +43,7 @@ class StoreRequest extends FormRequest
             'price.required' => 'Mục giá cả là bắt buộc. Vui lòng nhập lại.',
             'price.numeric' => 'Mục giá cả phải là kiểu số. Vui lòng nhập lại.',
             'desc.required' => 'Mục description là bắt buộc. Vui lòng nhập lại.',
-            // 'avatar.mimes' => 'Mục avatar phải là tệp thuộc loại: jpg, png, jpeg. Vui lòng nhập lại.',
+            'avatar.mimes' => 'Mục avatar phải là tệp thuộc loại: jpg, png, jpeg. Vui lòng nhập lại.',
             'status.required' => 'Mục status là bắt buộc. Vui lòng nhập lại.',
             'feature.required' => 'Mục feature là bắt buộc. Vui lòng nhập lại.',
             'collection_id.required' => 'Mục collection là bắt buộc. Vui lòng nhập lại.',

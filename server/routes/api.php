@@ -46,9 +46,11 @@ Route::get('products-color/{color}', [ProductController::class, 'showByColor'])-
 Route::get('products-asc', [ProductController::class, 'showOrderByPriceAsc'])->name('products.showOrderByPriceAsc');
 // Lấy thông tin sản phẩm theo giá giảm dần
 Route::get('products-desc', [ProductController::class, 'showOrderByPriceDesc'])->name('products.showOrderByPriceDesc');
-// lấy data từ bảng khác
+// Lấy data từ bảng khác
 Route::get('products-create', [ProductController::class, 'create'])->name('products.product-create');
-// Thêm sản phẩm 
+// Lấy đường dẫn tới thư mục public
+Route::get('products-publicPath', [ProductController::class, 'getPublicPath'])->name('products.product-getPublicPath');
+// Thêm sản phẩm
 Route::post('products-store', [ProductController::class, 'store'])->name('products.products-store');
 // Xóa sản phẩm
 Route::delete('products-destroy/{id}', [ProductController::class, 'destroy'])->name('products.product-destroy');

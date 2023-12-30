@@ -15,7 +15,7 @@ import DesignerEdit from './scenes/Designers/DesignerEdit'
 import DesignerList from './scenes/Designers/DesignerList'
 import CommentByProduct from './scenes/Products/CommentByProduct/CommentByProduct'
 import Details from './scenes/Products/CommentByProduct/Details'
-import ProductCreate from './scenes/Products/ProductCreate'
+import ProductCreate from "./scenes/Products/ProductCreate"
 import ProductEdit from './scenes/Products/ProductEdit'
 import ProductList from './scenes/Products/ProductList'
 import UserCreate from './scenes/Users/UserCreate'

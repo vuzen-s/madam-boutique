@@ -21,6 +21,7 @@ const ProductEdit = () => {
     designer_id: 0,
     category_id: 0,
   });
+  const [publicPath, setPublicPath] = useState("");
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [optionDesigners, setOptionDesigners] = useState([]);
@@ -127,6 +128,22 @@ const ProductEdit = () => {
     navigate('/dashboard/product');
   }
 
+  /// Get path to public in serve
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products-publicPath', {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+        .then((respon) => respon.json())
+        .then((data) => {
+          console.log(data);
+          setPublicPath(data.publicPath);
+        })
+        .catch((error) => console.log(error));
+  }, []);
+
   return (
     <Box m="20px">
       <Header title="EDIT PRODUCT" subtitle="Edit a Product" />
@@ -179,7 +196,7 @@ const ProductEdit = () => {
 
               <div class="mb-3">
                 <label class="form-label">Ảnh hiện tại:</label>
-                <img src={dataProductEdit.avatar} alt={dataProductEdit.name} width="50px" />
+                <img src={dataProductEdit.avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + dataProductEdit.avatar} alt={dataProductEdit.name} width="50px" />
               </div>
 
               <div class="mb-3">

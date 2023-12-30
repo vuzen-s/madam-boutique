@@ -116,6 +116,12 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getPublicPath()
+    {
+        $publicPath = asset('uploads/products/');
+        return response()->json(['publicPath' => $publicPath]);
+    }
+
     public function store(StoreRequest $request)
     {
         $data = new ProductModel();
@@ -131,20 +137,23 @@ class ProductController extends Controller
         $data->designer_id = $request->designer_id;
         $data->category_id = $request->category_id;
 
+        // color
+        if ($request->color) {
+            $data->color = $request->color;
+        }
+
         // save img
         if ($request->hasFile('avatar')) {
             $avatar = $request->avatar;
-            $data->avatar = time() . $avatar->getClientOriginalName();
-            $avatar->move(public_path('uploads/'), $data->avatar);
+            $data->avatar = time() . '_' . $avatar->getClientOriginalName();
+            $avatar->move(public_path('uploads/products/'), $data->avatar);
         } else {
             $data->avatar = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
         }
 
-        // DB::table('products')->insert($data);
-
         $data->save();
 
-        // multi image
+        // multi image // TODO: Implements insert product_image table
         $productID = $data->id;
         $productImageName = $data->name;
         $dataProductImage = array();
@@ -153,7 +162,7 @@ class ProductController extends Controller
         if ($products_images != null) {
             foreach ($products_images as $value) {
                 $nameImageDetail = $count . '_' . time() . '_' . $value->getClientOriginalName();
-                $value->move(public_path('uploads/'), $nameImageDetail);
+                $value->move(public_path('uploads/product_images/'), $nameImageDetail);
                 $count++;
 
                 $dataProductImage[] = array(
@@ -197,7 +206,7 @@ class ProductController extends Controller
         if (isset($request->avatar)) {
             // xóa avatar hiện tại lưu trong thư mục public
             $avatarCurrent = $dataCurrent->avatar;
-            $imgPath = public_path('uploads/' . $avatarCurrent);
+            $imgPath = public_path('uploads/products/' . $avatarCurrent);
             if (file_exists($imgPath)) {
                 unlink($imgPath);
             }
@@ -217,7 +226,7 @@ class ProductController extends Controller
     {
         $data = DB::table('products')->where('id', $id)->first();
         $avatar = $data->avatar;
-        $imgPath = public_path('uploads/' . $avatar);
+        $imgPath = public_path('uploads/products' . $avatar);
 
         DB::table('products')->where('id', $id)->delete();
 

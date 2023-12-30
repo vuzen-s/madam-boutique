@@ -41,10 +41,7 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink to="/dashboard/user">Users</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
@@ -68,10 +65,10 @@ const AppHeader = () => {
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
-      <CHeaderDivider />
-      <CContainer fluid>
+      {/* <CHeaderDivider /> */}
+      {/* <CContainer fluid>
         <AppBreadcrumb />
-      </CContainer>
+      </CContainer> */}
     </CHeader>
   )
 }
