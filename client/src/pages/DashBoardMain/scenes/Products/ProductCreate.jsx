@@ -2,7 +2,7 @@ import {Box} from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from 'axios';
 import $ from 'jquery';
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {toast} from 'react-toastify';
@@ -36,6 +36,8 @@ const ProductCreate = () => {
     const [message, setMessage] = useState('');
 
     const navigate = useNavigate();
+
+    const select2Ref = useRef();
 
     const showToastMessage = () => {
         toast.success('Thêm sản phẩm thành công!', {
@@ -137,18 +139,6 @@ const ProductCreate = () => {
             case "feature":
                 setFeature(event.target.value);
                 break;
-            case "collection_id":
-                setCollection_id(event.target.value);
-                break;
-            case "brand_id":
-                setBrand_id(event.target.value);
-                break;
-            case "designer_id":
-                setDesigner_id(event.target.value);
-                break;
-            case "category_id":
-                setCategory_id(event.target.value);
-                break;
             default:
                 break;
         }
@@ -156,15 +146,41 @@ const ProductCreate = () => {
 
     // select2
     useEffect(() => {
-        $(function () {
-            $('.form-select.select2ByID').select2();
+        const $select = $('.form-select.select2ByID');
+        $select.select2();
+
+        // Đăng ký sự kiện change để theo dõi giá trị được chọn
+        $select.on('change', (event) => {
+            const selectedValue = event.target.value;
+            console.log('Selected value:', selectedValue);
+            ///
+            switch (event.target.name) {
+                case "collection_id":
+                    setCollection_id(event.target.value);
+                    break;
+                case "brand_id":
+                    setBrand_id(event.target.value);
+                    break;
+                case "designer_id":
+                    setDesigner_id(event.target.value);
+                    break;
+                case "category_id":
+                    setCategory_id(event.target.value);
+                    break;
+                default:
+                    break;
+            }
         });
+        return () => {
+            // Hủy đăng ký sự kiện khi component bị hủy
+            $select.off('change');
+            // Hủy Select2 khi component bị hủy
+            $select.select2('destroy');
+        };
     }, []);
 
     return (<Box m="20px">
         <Header title="CREATE PRODUCT" subtitle="Create a New Product"/>
-
-
         <form onSubmit={handleFormSubmit}>
             <Box
                 display="grid"
@@ -219,7 +235,7 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="status" class="form-label">Trạng thái sản phẩm:</label>
-                    <select className="form-select" name="status" onChange={handleChangeInput}>
+                    <select className="form-select" name="status" onChange={handleChangeInput} value={status}>
                         <option value={0}> Hiển thị</option>
                         <option value={1}> Ẩn</option>
                     </select>
@@ -230,7 +246,7 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="feature" class="form-label">Feature sản phẩm:</label>
-                    <select className="form-select" name="feature" onChange={handleChangeInput}>
+                    <select className="form-select" name="feature" onChange={handleChangeInput} value={feature}>
                         <option value={0}> Nổi bật</option>
                         <option value={1}> Không nổi bật</option>
                     </select>
@@ -241,7 +257,8 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="designer_id" class="form-label">Designer:</label>
-                    <select name="designer_id" className="form-select select2ByID" onChange={handleChangeInput}>
+                    <select name="designer_id" className="form-select select2ByID" onChange={handleChangeInput}
+                            ref={select2Ref}>
                         {optionDesigners.map((item, index) => (<option key={index} value={item.id}>
                             {item.name}
                         </option>))}
@@ -253,7 +270,8 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="brand_id" class="form-label">Brand:</label>
-                    <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput}>
+                    <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput}
+                            ref={select2Ref}>
                         {optionBrands.map((item, index) => (
                             <option key={index} value={item.id}>
                                 {item.name}
@@ -267,7 +285,8 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="collection_id" class="form-label">Collection:</label>
-                    <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput}>
+                    <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput}
+                            ref={select2Ref}>
                         {optionCollections.map((item, index) => (<option key={index} value={item.id}>
                             {item.name}
                         </option>))}
@@ -279,7 +298,8 @@ const ProductCreate = () => {
 
                 <div className="mb-3">
                     <label for="category_id" class="form-label">Category:</label>
-                    <select name="category_id" className="form-select select2ByID" onChange={handleChangeInput}>
+                    <select name="category_id" className="form-select select2ByID" onChange={handleChangeInput}
+                            ref={select2Ref}>
                         {optionCategories.map((item, index) => (<option key={index} value={item.id}>
                             {item.name}
                         </option>))}
