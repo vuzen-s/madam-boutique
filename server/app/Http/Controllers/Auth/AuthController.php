@@ -111,7 +111,7 @@ class AuthController extends Controller
 
     public function userProfile() {
         try {
-            $user = auth()->userOrFail(); // Ném ra một ngoại lệ nếu không tìm thấy người dùng
+            $user = auth()->user(); // Nếu không tìm thấy người dùng báo lỗi
     
             return response()->json([
                 'status' => 200,
@@ -148,25 +148,157 @@ class AuthController extends Controller
         ]);
     }
 
-    public function changePassWord(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|min:6',
-            'new_password' => 'required|string|confirmed|min:6',
-        ]);
+    // public function showEditProfile(string $email)
+    // {
+    //     try {
+    //         // Xác thực người dùng từ token
+    //         $tokenUser = auth()->user();
+            
+    //         // So sánh email từ token với email mà bạn truyền vào
+    //         if ($tokenUser->email !== $email) {
+    //             return response()->json([
+    //                 'message' => 'Unauthorized'
+    //             ], 401);
+    //         }
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+    //         // Tìm user dựa trên email
+    //         $user = User::where('email', $email)->first();
+
+    //         // Kiểm tra nếu không tìm thấy user
+    //         if (!$user) {
+    //             return response()->json([
+    //                 'message' => 'User not found'
+    //             ], 404);
+    //         }
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'user' => $user
+    //         ], 200);
+
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 500, 
+    //             'errors' => 'Internal Server Error'
+    //         ], 500);
+    //     }
+    // }
+
+    // public function updateProfile(Request $request) {
+    //     // Kiểm tra dữ liệu đầu vào
+    //     $validator = Validator::make($request->all(), [
+    //         'fullname' => 'required|string|max:50',
+    //         'email' => 'required|string|email|max:100|unique:users,email,'. $userId,
+    //         'gender' => 'nullable',
+    //         'level' => 'required',
+    //         'phone' => 'nullable|numeric|digits:10',
+    //         'Address' => 'nullable|max:250'
+    //     ]);
+
+    
+    //     $userId = auth()->user()->id;
+
+    
+    //     // Kiểm tra và cập nhật mật khẩu nếu có
+    //     if (!empty($request->password)) {
+    //         $passwordValidator = Validator::make($request->all(), [
+    //             'password' => 'required|confirmed|min:8',
+    //         ]);
+    
+    //         if ($passwordValidator->fails()) {
+    //             return response()->json([
+    //                 'status' => 400,
+    //                 'error' => $passwordValidator->messages()
+    //             ], 400);
+    //         }
+    
+    //         // Cập nhật mật khẩu mới
+    //         $user->password = bcrypt($request->password);
+    //     }
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 400,
+    //             'error' => $validator->messages()
+    //         ], 400);
+    //     } else {
+    //         $user = User::where('id', $userId)->update([
+    //             ['fullname' => $request->fullname],
+    //             ['email' => $request->email],
+    //             ['gender' => $request->gender],
+    //             ['level' => $request->level],
+    //             ['phone' => $request->phone],
+    //             ['address' => $request->Address]
+
+    //         ]);
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Profile updated successfully',
+    //             'user' => $user,
+    //         ], 200);
+    //     }
+
+    //     // $user->save();
+    // }
+    
+
+    public function updateProfile(Request $request) {
+        // Lấy ID của người dùng hiện tại
         $userId = auth()->user()->id;
-
-        $user = User::where('id', $userId)->update(
-                    ['password' => bcrypt($request->new_password)]
-                );
-
+    
+        // Kiểm tra dữ liệu đầu vào
+        $validator = Validator::make($request->all(), [
+            'fullname' => 'required|string|max:50',
+            'email' => 'required|string|email|max:100|unique:users,email,' . $userId,
+            'gender' => 'nullable',
+            'level' => 'required',
+            'phone' => 'nullable|numeric|digits:10',
+            'Address' => 'nullable|max:250'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ], 400);
+        }
+    
+        // Kiểm tra và cập nhật mật khẩu nếu có
+        if (!empty($request->password)) {
+            $passwordValidator = Validator::make($request->all(), [
+                'password' => 'required|confirmed|min:8',
+            ]);
+    
+            if ($passwordValidator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $passwordValidator->messages()
+                ], 400);
+            }
+    
+            // Cập nhật mật khẩu mới
+            User::where('id', $userId)->update(['password' => bcrypt($request->password)]);
+        }
+    
+        // Cập nhật thông tin người dùng
+        $updateData = [
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'level' => $request->level,
+            'phone' => $request->phone,
+            'address' => $request->Address
+        ];
+    
+        User::where('id', $userId)->update($updateData);
+    
         return response()->json([
-            'message' => 'User successfully changed password',
-            'user' => $user,
-        ], 201);
+            'status' => 200,
+            'message' => 'Profile updated successfully'
+        ], 200);
     }
+    
+    
 }
 

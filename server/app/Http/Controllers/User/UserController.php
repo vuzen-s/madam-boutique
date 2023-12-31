@@ -43,12 +43,14 @@ class UserController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email||max:50|unique:users,email',
+            'email' => 'required|string|email|max:50|unique:users,email',
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'nullable',
             'phone' => 'nullable|numeric|digits:10',
-            'Address' => 'nullable|max:250'
+            'Address' => 'nullable|max:250',
+            'avatar' => 'nullable|mimes:jpeg,jpg,png'
+            // |mimes:jpeg,jpg,png
         ]);
 
         if($validate->fails()) {
@@ -66,6 +68,15 @@ class UserController extends Controller
                 'Address' => $request['Address'],
             ]);
 
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $avatarName = time(). '-' . $avatar->getClientOriginalName();
+                $avatar->storeAs('uploads/', $avatarName, 'public');
+    
+                $user->avatar = $avatarName;
+                $user->save();
+            }
+
             if($user){
                 return response()->json([
                     'status' => 200,
@@ -79,6 +90,8 @@ class UserController extends Controller
             }
         }
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -114,6 +127,27 @@ class UserController extends Controller
     public function update(Request $request, int $id)
     {
         $user = User::findOrFail($id);
+
+        // $avatar = $request->avatar;
+
+        // if (!empty($avatar)) {
+        //     $request->validate([
+        //         'image' => 'required|mimes:jpg,bmp,png,jpeg'
+        //     ]);
+
+        //     $avatar_old_path = public_path('uploads/'. $user->avatar);
+        //     if (file_exists($avatar_old_path)) {
+        //         unlink($avatar_old_path);
+        //     }
+
+        //     $avatarName = time(). '-' . $avatar->getClientOriginalName();
+        //     $user->avatar = $avatarName;
+        //     $avatar->move(public_path('uploads/'), $avatarName);
+        // }
+
+        // if($request->avatar != null){
+        //     $this->uploadImageDetail($request->avatar, $user->id);
+        // }
 
         if (!$user) {
             return response()->json([

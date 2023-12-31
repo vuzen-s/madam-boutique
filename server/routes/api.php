@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
@@ -157,4 +157,6 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    // Route::get('/showEditProfile/{email}', [AuthController::class, 'showEditProfile']);
+    Route::put('/update-profile', [AuthController::class, 'updateProfile']);
 });
