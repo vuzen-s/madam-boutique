@@ -60,9 +60,9 @@ export const AuthProvider = ({ children }) => {
 
             console.log(userAuth)
 
-            // if(response.status === 200){
-            //     navigate("/")
-            // }
+            if(response.status === 200){
+                navigate("/")
+            }
 
             // if (user.level === 1 || user.level === 2 || user.level === 3) {
             //     navigate("/dashboard");
@@ -227,7 +227,7 @@ export const AuthProvider = ({ children }) => {
 
     // useEffect(() => {
     //     const token = sessionStorage.getItem('token');
-    //     if (!token) {
+    //     if (token) {
     //         getUserAuth();
     //     }
     // }, []);

@@ -246,6 +246,7 @@ class AuthController extends Controller
     public function updateProfile(Request $request) {
         // Lấy ID của người dùng hiện tại
         $userId = auth()->user()->id;
+        // $userId = user()->id;
     
         // Kiểm tra dữ liệu đầu vào
         $validator = Validator::make($request->all(), [

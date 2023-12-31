@@ -57,10 +57,10 @@ const App = () => {
         </Route>
         {/* // */}
 
-        <Route element={<GuestLayoutNormal />}>
+        {/* <Route element={<GuestLayoutNormal />}> */}
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
-        </Route>
+        {/* </Route> */}
 
         {/* <Route element={<DefaultLayoutDashboard />}> */}
           <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
