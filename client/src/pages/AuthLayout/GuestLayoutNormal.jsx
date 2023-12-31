@@ -2,9 +2,9 @@ import { Navigate, Outlet } from "react-router-dom"
 import useAuthContext from "../AuthContext/AuthContext"
 
 const GuestLayoutNormal = () => {
- const { userAuth } = useAuthContext()
+ const token = localStorage.getItem('token')
 
- return !userAuth ? <Outlet /> : <Navigate to="/" />
+ return !token ? <Outlet /> : <Navigate to="/" />
 }
 
 export default GuestLayoutNormal;

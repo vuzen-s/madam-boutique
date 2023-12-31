@@ -3,23 +3,16 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Input } from "antd";
 import TableHistoryPayment from "./Table/TablePayment";
-import { Link } from "react-router-dom";
-import useAuthContext from "../AuthContext/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../AuthContext/api";
+import Swal from "sweetalert2";
 
 const { TextArea } = Input;
 
 const Profile = () => {
-  const { userAuth, errorsUpdate, updateProfile } = useAuthContext();
-  const [formData, setFormData] = useState({
-    fullname: "",
-    email: "",
-    level: "",
-    phone: "",
-    gender: "",
-    Address: "",
-    password: "",
-    password_confirmation: "",
-  });
+  const [userAuth, setUserAuth] = useState({});
+  const [errorsUpdate, setErrorsUpdate] = useState([]);
+  const navigate = useNavigate();
 
   const levelMapping = {
     1: "Admin Master",
@@ -29,47 +22,93 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (userAuth) {
-      setFormData({
-        fullname: userAuth.fullname,
-        email: userAuth.email,
-        level: userAuth.level,
-        phone: userAuth.phone,
-        gender: userAuth.gender,
-        Address: userAuth.address,
-        password: userAuth.password,
-        password_confirmation: userAuth.password_confirmation,
+    api
+      .get(`/api/auth/user-profile`)
+      .then((res) => {
+        console.log(res.data.user);
+        setUserAuth(res.data.user);
+      })
+      .catch((e) => {
+        if (e.response && e.response.status === 401) {
+          navigate("/signin");
+        }
       });
-    }
-  }, [userAuth]);
+  }, []);
 
-  console.log(formData);
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+
+    const data = {
+      fullname: userAuth.fullname,
+      email: userAuth.email,
+      level: userAuth.level,
+      gender: userAuth.gender,
+      password: userAuth.password,
+      phone: userAuth.phone,
+      address: userAuth.address,
+      password_confirmation: userAuth.password_confirmation,
+    };
+
+    api
+      .put(`api/auth/update-profile`, data)
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.status === 200) {
+          setUserAuth(res.data.user);
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Update Profile Successfully",
+            text: "After changing your profile, you need to SignIn again. Thank you!",
+            confirmButtonText: "Ok",
+            timer: 8000,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        }
+      })
+
+      .catch((e) => {
+        if (e.response && e.response.status === 400) {
+          setErrorsUpdate(e.response.data.errors);
+          console.log(e.response.data.errors);
+        }
+      });
+  };
+
+  useEffect(() => {
+    setErrorsUpdate([]);
+  }, [
+    userAuth.fullname,
+    userAuth.password,
+    userAuth.phone,
+    userAuth.address,
+    userAuth.password_confirmation,
+  ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setUserAuth((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateProfile(formData);
-  };
-
   return (
     <div>
       <div className="max-full h-full flex flex-col px-20 py-4">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleUpdateProfile}>
           <div>
             {/* <div>
             <AvatarProfile />
           </div> */}
 
             <div className="w-full h-full flex flex-col md:flex-row justify-between gap-12 mt-4 mb-4">
-              <div className="flex-1 flex-col gap-3">
-                <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-xl mdl:text-2xl mb-2.5">
+              <div className="flex-1 flex flex-col gap-2">
+                <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-xl mdl:text-2xl mb-1">
                   Your information
                 </h1>
 
@@ -84,14 +123,19 @@ const Profile = () => {
                   </label>
                   <input
                     name="email"
-                    value={formData.email}
+                    value={userAuth === undefined ? "" : userAuth.email}
                     onChange={handleChange}
                     disabled
-                    className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder="Eg. Le Van Truong Anh"
                   />
                 </div>
+                {errorsUpdate && (
+                  <span className=" text-sm text-red-500 font-titleFont px-2">
+                    {errorsUpdate.email}
+                  </span>
+                )}
 
                 {/* full name */}
 
@@ -104,19 +148,18 @@ const Profile = () => {
                   </label>
                   <input
                     name="fullname"
-                    value={formData.fullname}
+                    value={userAuth === undefined ? "" : userAuth.fullname}
                     onChange={handleChange}
-                    className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder="Eg. Le Van Truong Anh"
                   />
                 </div>
-
-                {/* {errorsUpdate && (
+                {errorsUpdate && (
                   <span className=" text-sm text-red-500 font-titleFont px-2">
                     {errorsUpdate.fullname}
                   </span>
-                )} */}
+                )}
 
                 {/* level */}
 
@@ -129,13 +172,20 @@ const Profile = () => {
                   </label>
                   <input
                     name="level"
-                    value={levelMapping[formData.level]}
+                    value={
+                      userAuth === undefined ? "" : levelMapping[userAuth.level]
+                    }
                     onChange={handleChange}
                     disabled
-                    className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                   />
                 </div>
+                {errorsUpdate && (
+                  <span className=" text-sm text-red-500 font-titleFont px-2">
+                    {errorsUpdate.level}
+                  </span>
+                )}
 
                 {/* Gender && Phone Number */}
 
@@ -149,14 +199,20 @@ const Profile = () => {
                     </label>
                     <input
                       name="gender"
-                      value={formData.gender}
+                      value={userAuth === undefined ? "" : userAuth.gender}
                       onChange={handleChange}
                       disabled
-                      className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
                       placeholder="Eg. Le Van Truong Anh"
                     />
+                    {errorsUpdate && (
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                        {errorsUpdate.gender}
+                      </span>
+                    )}
                   </div>
+
                   {/* ------  -------  ------ */}
                   <div className="flex-1 ml-1.5">
                     <label
@@ -167,19 +223,20 @@ const Profile = () => {
                     </label>
                     <input
                       name="phone"
-                      value={formData.phone}
+                      value={userAuth === undefined ? "" : userAuth.phone}
                       onChange={handleChange}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
                       placeholder="Phone Number"
                     />
+                    {errorsUpdate && (
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                        {errorsUpdate.phone}
+                      </span>
+                    )}
                   </div>
-                  {/* {errorsUpdate && (
-                    <span className=" text-sm text-red-500 font-titleFont px-2">
-                      {errorsUpdate.phone}
-                    </span>
-                  )} */}
                 </div>
+
                 {/* Address */}
 
                 <div className="flex flex-col gap-.8">
@@ -190,78 +247,79 @@ const Profile = () => {
                     Address
                   </label>
                   <TextArea
-                    name="Address"
-                    value={formData.Address}
+                    name="address"
+                    value={userAuth === undefined ? "" : userAuth.address}
                     onChange={handleChange}
                     rows={3}
                     placeholder="Your Address Is Here"
                     maxLength={350}
-                    className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   />
                 </div>
-                {/* {errorsUpdate && (
+                {errorsUpdate && (
                   <span className=" text-sm text-red-500 font-titleFont px-2">
                     {errorsUpdate.Address}
                   </span>
-                )} */}
+                )}
               </div>
 
               {/*------ ----- Layout cut ----- ------ */}
 
-              <div className="flex-1 flex-col">
+              <div className="flex-1 flex flex-col gap-2">
                 {/* Password  && Confirm Password */}
-                <div>
-                  <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-xl mdl:text-2xl mb-2.5">
-                    Change Password
-                  </h1>
-                  {/* Password */}
+                <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-xl mdl:text-2xl mb-1">
+                  Change Password
+                </h1>
+                {/* Password */}
 
-                  <div className="flex flex-col gap-.8">
-                    <label
-                      htmlFor="Password"
-                      className="font-titleFont text-base font-semibold text-gray-600"
-                    >
-                      New Password
-                    </label>
-                    <input
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className="w-full h-10 mb-2.5 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                      type="password"
-                      placeholder="Password"
-                    />
-                  </div>
-
-                  {errorsUpdate && (
-                    <span className=" text-sm text-red-500 font-titleFont px-2">
-                      {errorsUpdate.password}
-                    </span>
-                  )}
-
-                  {/* Confirm Password */}
-                  <div className="flex flex-col gap-.8">
-                    <label
-                      htmlFor="Confirm Password"
-                      className="font-titleFont text-base font-semibold text-gray-600"
-                    >
-                      Confirm Password
-                    </label>
-                    <input
-                      name="password_confirmation"
-                      value={formData.password_confirmation}
-                      onChange={handleChange}
-                      className="w-full h-10 mb-4 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                      type="password"
-                      placeholder="Confirm Password"
-                    />
-                  </div>
-                  {/* {errorsUpdate && (
-                    <span className=" text-sm text-red-500 font-titleFont px-2">
-                      {errorsUpdate.password ? errorsUpdate.password[0] : ""}
-                    </span>
-                  )} */}
+                <div className="flex flex-col gap-.8">
+                  <label
+                    htmlFor="Password"
+                    className="font-titleFont text-base font-semibold text-gray-600"
+                  >
+                    New Password
+                  </label>
+                  <input
+                    name="password"
+                    value={userAuth === undefined ? "" : userAuth.password}
+                    onChange={handleChange}
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    type="password"
+                    placeholder="Password"
+                  />
                 </div>
+                {errorsUpdate && (
+                  <span className=" text-sm text-red-500 font-titleFont px-2">
+                    {errorsUpdate.password}
+                  </span>
+                )}
+
+                {/* Confirm Password */}
+                <div className="flex flex-col gap-.8">
+                  <label
+                    htmlFor="Confirm Password"
+                    className="font-titleFont text-base font-semibold text-gray-600"
+                  >
+                    Confirm Password
+                  </label>
+                  <input
+                    name="password_confirmation"
+                    value={
+                      userAuth === undefined
+                        ? ""
+                        : userAuth.password_confirmation
+                    }
+                    onChange={handleChange}
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    type="password"
+                    placeholder="Confirm Password"
+                  />
+                </div>
+                {errorsUpdate && (
+                  <span className=" text-sm text-red-500 font-titleFont px-2">
+                    {errorsUpdate.password ? errorsUpdate.password[0] : ""}
+                  </span>
+                )}
                 {/* ----- ----- */}
               </div>
             </div>

@@ -42,7 +42,7 @@ class AuthController extends Controller
                 'status' => 401,
                 'errors' => 'Account is not registered or the password is incorrect.'
             ], 401);
-        }
+        } 
 
         return $this->createNewToken($token);
     }
@@ -105,13 +105,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function userProfile() {
-    //     return response()->json(auth()->user());
-    // }
 
     public function userProfile() {
         try {
-            $user = auth()->user(); // Nếu không tìm thấy người dùng báo lỗi
+            $user = auth()->userOrFail(); // Nếu không tìm thấy người dùng báo lỗi
     
             return response()->json([
                 'status' => 200,
@@ -161,10 +158,8 @@ class AuthController extends Controller
     //             ], 401);
     //         }
 
-    //         // Tìm user dựa trên email
     //         $user = User::where('email', $email)->first();
 
-    //         // Kiểm tra nếu không tìm thấy user
     //         if (!$user) {
     //             return response()->json([
     //                 'message' => 'User not found'
@@ -184,63 +179,6 @@ class AuthController extends Controller
     //     }
     // }
 
-    // public function updateProfile(Request $request) {
-    //     // Kiểm tra dữ liệu đầu vào
-    //     $validator = Validator::make($request->all(), [
-    //         'fullname' => 'required|string|max:50',
-    //         'email' => 'required|string|email|max:100|unique:users,email,'. $userId,
-    //         'gender' => 'nullable',
-    //         'level' => 'required',
-    //         'phone' => 'nullable|numeric|digits:10',
-    //         'Address' => 'nullable|max:250'
-    //     ]);
-
-    
-    //     $userId = auth()->user()->id;
-
-    
-    //     // Kiểm tra và cập nhật mật khẩu nếu có
-    //     if (!empty($request->password)) {
-    //         $passwordValidator = Validator::make($request->all(), [
-    //             'password' => 'required|confirmed|min:8',
-    //         ]);
-    
-    //         if ($passwordValidator->fails()) {
-    //             return response()->json([
-    //                 'status' => 400,
-    //                 'error' => $passwordValidator->messages()
-    //             ], 400);
-    //         }
-    
-    //         // Cập nhật mật khẩu mới
-    //         $user->password = bcrypt($request->password);
-    //     }
-
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => 400,
-    //             'error' => $validator->messages()
-    //         ], 400);
-    //     } else {
-    //         $user = User::where('id', $userId)->update([
-    //             ['fullname' => $request->fullname],
-    //             ['email' => $request->email],
-    //             ['gender' => $request->gender],
-    //             ['level' => $request->level],
-    //             ['phone' => $request->phone],
-    //             ['address' => $request->Address]
-
-    //         ]);
-
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => 'Profile updated successfully',
-    //             'user' => $user,
-    //         ], 200);
-    //     }
-
-    //     // $user->save();
-    // }
     
 
     public function updateProfile(Request $request) {

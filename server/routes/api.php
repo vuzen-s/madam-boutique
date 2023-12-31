@@ -160,3 +160,4 @@ Route::group([
     // Route::get('/showEditProfile/{email}', [AuthController::class, 'showEditProfile']);
     Route::put('/update-profile', [AuthController::class, 'updateProfile']);
 });
+
