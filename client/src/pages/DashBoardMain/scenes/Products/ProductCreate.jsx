@@ -254,9 +254,11 @@ const ProductCreate = () => {
                 <div className="mb-3">
                     <label for="brand_id" class="form-label">Brand:</label>
                     <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput}>
-                        {optionBrands.map((item, index) => (<option key={index} value={item.id}>
-                            {item.name}
-                        </option>))}
+                        {optionBrands.map((item, index) => (
+                            <option key={index} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
                     </select>
                     <p style={{color: "red"}}>
                         {errorsField && errorsField.brand_id}
