@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AddressMap } from "../../components/Map/map";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
+import ReCAPTCHA from "react-google-recaptcha"; // Thêm import cho reCAPTCHA
 import './contact.css';
 
 const Contact = () => {
@@ -21,15 +22,18 @@ const Contact = () => {
   const [errMessages, setErrMessages] = useState("");
   // ========== Error Messages End here ==============
   const [successMsg, setSuccessMsg] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   const handleName = (e) => {
     setclientName(e.target.value);
     setErrClientName("");
   };
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
   };
+
   const handleMessages = (e) => {
     setMessages(e.target.value);
     setErrMessages("");
@@ -58,18 +62,23 @@ const Contact = () => {
     if (!messages) {
       setErrMessages("Enter your Messages");
     }
+    if (!captchaValue) {
+      // Hiển thị lỗi nếu reCAPTCHA chưa được xác minh
+      setErrMessages("Please verify that you are not a robot.");
+      return;
+    }
     if (clientName && email && EmailValidation(email) && messages) {
       setSuccessMsg(
-        `Thank you dear ${clientName}, Your messages has been received successfully. Futher details will sent to you by your email at ${email}.`
+        `Thank you dear ${clientName}, Your messages has been received successfully. Further details will be sent to you by your email at ${email}.`
       );
-      // Call api
+      // Call API
       fetch('http://127.0.0.1:8000/api/sendmail-contact', {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
         }
       })
-        .then((respon) => respon.json())
+        .then((response) => response.json())
         .then((data) => {
           console.log(data);
         })
@@ -143,6 +152,14 @@ const Contact = () => {
                   </p>
                 )}
               </div>
+
+              {/* Thêm component ReCAPTCHA */}
+              <ReCAPTCHA
+                sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J" //  khóa reCAPTCHA
+                onChange={(value) => setCaptchaValue(value)}
+                hl="en"
+              />
+
               <button
                 onClick={handlePost}
                 className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
@@ -158,10 +175,8 @@ const Contact = () => {
           </div>
         </div>
       )}
-
-
     </div>
   );
 };
-// ReactDOM.render(<App />, document.getElementById("root"));
+
 export default Contact;

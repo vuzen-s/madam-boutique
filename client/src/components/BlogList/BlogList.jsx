@@ -28,12 +28,7 @@ const BlogList = () => {
           imageUrl={blog.imageUrl}
         />
       ))}
-      {/* {
-        designer.map((item, index) => 
-          <p key={index}>{item.name}</p>
-        )
-      }
-      <h2>fetch api Designer</h2> */}
+   
     </div>
   );
 };

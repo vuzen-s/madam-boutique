@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import Header from "../../components/Header";
 import {tokens} from "../../theme";
 import {Tag} from "antd";
+import 'react-toastify/dist/ReactToastify.css';
 
 const BlogList = () => {
     const [blogList, setBlogList] = useState([]);

@@ -7,6 +7,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {Box} from "@mui/material";
 import './BlogCreate.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BlogCreate = () => {
     const [content, setContent] = useState(EditorState.createEmpty());

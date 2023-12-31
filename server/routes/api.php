@@ -140,7 +140,7 @@ Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->nam
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
 // Tạo user
-Route::post('users/create', [UserController::class, 'store']);
+Route::post('users/create', [UserController::class, 'store']) ->middleware('recaptcha');
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
@@ -177,4 +177,5 @@ Route::delete('blogs-destroy/{id}', [BlogController::class, 'destroy'])->name('b
 Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->name('blogs-getPublicPath');
 
 // =================== MAIL ===================
-Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
+// Xác thực lại reCapcha
+Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact') ->middleware('recaptcha');

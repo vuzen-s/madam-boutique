@@ -1,7 +1,7 @@
 const DataBlog = [
     {
       id: 1,
-      title: "Spring-Summer 2024 Collection",
+      title: "Embracing Elegance: Luxury Fashion Styles for Special Occasions in Late 2024",
       desc: "Bài viết đưa vào",
       imageUrl: "/about_img/style.jpg", 
     },

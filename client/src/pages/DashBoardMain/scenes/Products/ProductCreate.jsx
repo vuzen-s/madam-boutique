@@ -11,6 +11,7 @@ import 'select2/dist/css/select2.min.css';
 import {csrfTokenReducer} from "../../../../redux/madamBoutiqueSlice";
 import Header from "../../components/Header";
 import './ProductCreate.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductCreate = () => {
     const [name, setName] = useState('');
@@ -24,20 +25,6 @@ const ProductCreate = () => {
     const [brand_id, setBrand_id] = useState(0);
     const [designer_id, setDesigner_id] = useState(0);
     const [category_id, setCategory_id] = useState(0);
-
-    // const [dataProduct, setDataProduct] = useState({
-    //   name: '',
-    //   desc: '',
-    //   price: '',
-    //   color: '',
-    //   avatar: '',
-    //   status: 0,
-    //   feature: 0,
-    //   collection_id: 0,
-    //   brand_id: 0,
-    //   designer_id: 0,
-    //   category_id: 0,
-    // });
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [optionDesigners, setOptionDesigners] = useState([]);

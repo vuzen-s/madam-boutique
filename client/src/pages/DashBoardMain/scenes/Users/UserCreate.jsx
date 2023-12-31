@@ -9,6 +9,7 @@ import "./AvtUserCreate.css";
 import ImgCrop from "antd-img-crop";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import 'react-toastify/dist/ReactToastify.css';
 
 const { TextArea } = Input;
 

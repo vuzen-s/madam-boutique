@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { csrfTokenReducer } from "../../../../redux/madamBoutiqueSlice";
 import Header from "../../components/Header";
+import 'react-toastify/dist/ReactToastify.css';
 
 const CollectionCreate = () => {
   const [dataCategory, setDataCategory] = useState({

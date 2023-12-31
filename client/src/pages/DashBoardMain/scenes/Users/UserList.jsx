@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
 import { colums } from './colums/columsUserList';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserList = () => {
   const theme = useTheme();
