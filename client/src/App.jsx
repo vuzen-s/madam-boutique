@@ -31,12 +31,14 @@ import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Profile from "./pages/Profile/Profile";
 import Shop from "./pages/Shop/Shop";
 import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
+import SignUp1 from "./pages/Account/SignUp1";
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
+       
           {/* ==================== Header Navlink Start here =================== */}
           <Route index element={<Home />}></Route>
           <Route path="/shop" element={<Shop />}></Route>
@@ -51,6 +53,7 @@ const App = () => {
           <Route path="/paymentgateway" element={<Payment />}></Route>
 
           <Route element={<DefaultLayoutProfile />}>
+
             <Route path="/profile" element={<Profile />}></Route>
             {/* <Route path="/profile/:email" element={<Profile />}></Route> */}
           </Route>
@@ -60,6 +63,7 @@ const App = () => {
         <Route element={<GuestLayoutNormal />}>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
+          {/* <Route path="/signup" element={<SignUp1 />}></Route> */}
         </Route>
 
         {/* <Route element={<DefaultLayoutDashboard />}> */}

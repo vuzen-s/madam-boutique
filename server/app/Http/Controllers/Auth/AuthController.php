@@ -168,5 +168,61 @@ class AuthController extends Controller
             'user' => $user,
         ], 201);
     }
+
+    public function updateProfile(Request $request) {
+        // Lấy ID của người dùng hiện tại
+        $userId = auth()->user()->id;
+    
+        // Kiểm tra dữ liệu đầu vào
+        $validator = Validator::make($request->all(), [
+            'fullname' => 'required|string|max:50',
+            'email' => 'required|string|email|max:100|unique:users,email,' . $userId,
+            'gender' => 'nullable',
+            'level' => 'required',
+            'phone' => 'nullable|numeric|digits:10',
+            'Address' => 'nullable|max:250'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ], 400);
+        }
+    
+        // Kiểm tra và cập nhật mật khẩu nếu có
+        if (!empty($request->password)) {
+            $passwordValidator = Validator::make($request->all(), [
+                'password' => 'required|confirmed|min:8',
+            ]);
+    
+            if ($passwordValidator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $passwordValidator->messages()
+                ], 400);
+            }
+    
+            // Cập nhật mật khẩu mới
+            User::where('id', $userId)->update(['password' => bcrypt($request->password)]);
+        }
+    
+        // Cập nhật thông tin người dùng
+        $updateData = [
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'level' => $request->level,
+            'phone' => $request->phone,
+            'address' => $request->Address
+        ];
+    
+        User::where('id', $userId)->update($updateData);
+    
+        return response()->json([
+            'status' => 200,
+            'message' => 'Profile updated successfully'
+        ], 200);
+    }
 }
 

@@ -199,70 +199,6 @@ export const AuthProvider = ({ children }) => {
             }
         }
     }
-
-    // const refresh = async () => {
-    //     const token = localStorage.getItem('token');
-
-    //     if (!token) {
-    //         return null;
-    //     }
-
-    //     try {
-    //         const response = await Axios.post('api/auth/refresh');
-    //         const newToken = response.data.access_token;
-            
-    //         localStorage.setItem('token', newToken);
-            
-    //         return newToken;
-    //     } catch (e) {
-    //         console.log("Error refreshing token:", e);
-    //         if (e.response && e.response.status === 401) {
-    //             return false
-    //         }
-    //     }
-    // }
-
-    // const checkAndRefreshToken = useCallback(async () => {
-    //     const token = localStorage.getItem('token');
-
-    //     if (!token) {
-    //         return false;
-    //     }
-
-    //     // Thư viện jwt-decode biên dịch token để lấy thời gian hết hạn
-    //     const decodedToken = jwtDecode(token);; 
-    //     const expirationTime = decodedToken.exp * 1000; // Convert từ giây sang mili giây
-
-    //     if (Date.now() >= expirationTime) {
-    //         const newToken = await refresh();
-
-    //         if (newToken) {
-    //             await getUserAuth(); // Update user info hoặc state nếu cần
-    //             return true;
-    //         } else {
-    //             return false; // Xử lý khi không thể refresh token
-    //         }
-    //     }
-
-    //     return true;
-    // }, [])
-
-    // useEffect(() => {
-    //     const refreshSuccess = checkAndRefreshToken();
-    
-    //     if (!refreshSuccess) {
-    //         navigate("/signin");
-    //     }
-    
-    //     const intervalToken = setInterval(() => {
-    //         const refreshSuccess = checkAndRefreshToken();
-    //         if (!refreshSuccess) {
-    //             navigate("/signin");
-    //         }
-    //     }, 30 * 60 * 1000);
-    
-    //     return () => clearInterval(intervalToken); 
-    // }, [checkAndRefreshToken, navigate]);
     
 
     useEffect(() => {
@@ -275,7 +211,7 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    return <AuthContext.Provider value={{userAuth, login, register, logout, errorsRegister, errorsLogin, emailNotExist, resetFilterError, errorsUpdate, updateProfile}}>
+    return <AuthContext.Provider value={{userAuth, login, register, logout, csrf, errorsRegister, errorsLogin, emailNotExist, resetFilterError, errorsUpdate, updateProfile}}>
             {children}
         </AuthContext.Provider>
 }

@@ -33,8 +33,9 @@ const UserCreate = () => {
   const handleInputValue = (e) => {
     const name = e.target?.name;
     const value = e.target?.value;
+    console.log(name, value); // In ra để kiểm tra
     setUsers((values) => ({ ...values, [name]: value }));
-  };
+};
 
   const handleCreateUser = (e) => {
     e.preventDefault();

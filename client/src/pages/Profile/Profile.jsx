@@ -10,6 +10,8 @@ const { TextArea } = Input;
 
 const Profile = () => {
   const { userAuth, errorsUpdate, updateProfile } = useAuthContext();
+
+
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -112,11 +114,11 @@ const Profile = () => {
                   />
                 </div>
 
-                {/* {errorsUpdate && (
+                {errorsUpdate && (
                   <span className=" text-sm text-red-500 font-titleFont px-2">
                     {errorsUpdate.fullname}
                   </span>
-                )} */}
+                )}
 
                 {/* level */}
 
