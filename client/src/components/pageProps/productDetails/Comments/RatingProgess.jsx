@@ -17,19 +17,19 @@ const RatingProgess = ({ratings, idProduct}) => {
     //
     function numberStar(starQuantity, ratings) {
         switch (starQuantity) {
-            case 1:
+            case 0:
                 setVote1Quantity(ratings);
                 break;
-            case 2:
+            case 1:
                 setVote2Quantity(ratings);
                 break;
-            case 3:
+            case 2:
                 setVote3Quantity(ratings);
                 break;
-            case 4:
+            case 3:
                 setVote4Quantity(ratings);
                 break;
-            case 5:
+            case 4:
                 setVote5Quantity(ratings);
                 break;
             default:
@@ -52,7 +52,7 @@ const RatingProgess = ({ratings, idProduct}) => {
                     numberStar(starQuantity, data.ratings)
                 })
                 .catch((error) => console.log(error));
-        }, [voteQuantity, idProduct, ratings]);
+        }, [idProduct]);
     }
 
     /// Call 

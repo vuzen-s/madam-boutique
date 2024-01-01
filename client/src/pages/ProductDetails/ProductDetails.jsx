@@ -7,6 +7,8 @@ import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOn
 import Rates from "../../components/pageProps/productDetails/Comments/Rates";
 
 const ProductDetails = () => {
+    const [publicPath, setPublicPath] = useState("");
+
     const location = useLocation();
     const [prevLocation, setPrevLocation] = useState("");
     const [productInfo, setProductInfo] = useState([]);
@@ -31,6 +33,21 @@ const ProductDetails = () => {
             .catch((error) => console.log(error));
     }, [location, id]);
 
+    /// Get path to public in server
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/products-publicPath', {
+            method: "GET", headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((respon) => respon.json())
+            .then((data) => {
+                console.log(data);
+                setPublicPath(data.publicPath);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
     return (
         <div className="w-full mx-auto border-b-[1px] border-b-gray-300">
             <div className="max-w-container mx-auto px-4">
@@ -45,7 +62,7 @@ const ProductDetails = () => {
                     <div className="h-full xl:col-span-2">
                         <img
                             className="w-full h-full object-cover"
-                            src={productInfo && productInfo.avatar}
+                            src={productInfo.avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + '/' + productInfo.avatar}
                             alt={productInfo && productInfo.name}
                         />
                     </div>
