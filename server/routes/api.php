@@ -177,5 +177,6 @@ Route::delete('blogs-destroy/{id}', [BlogController::class, 'destroy'])->name('b
 Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->name('blogs-getPublicPath');
 
 // =================== MAIL ===================
+Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
 // Xác thực lại reCapcha
 Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact') ->middleware('recaptcha');

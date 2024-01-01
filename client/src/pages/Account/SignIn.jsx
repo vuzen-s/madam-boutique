@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import useAuthContext from "../AuthContext/AuthContext";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, errorsLogin, emailNotExist, resetFilterError} = useAuthContext();
   const [checked, setChecked] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState(null);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
 
   const isFormValid = () => {
     return email.trim() !== "" && password.trim() !== "";
@@ -116,6 +122,12 @@ const SignIn = () => {
                 </div>
                 <Link className="text-blue-600">For got password?</Link>
               </div>
+
+              <ReCAPTCHA
+                  sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J"
+                  onChange={handleCaptchaChange}
+                  hl="en"
+              />
 
               <button
                   type="submit"
