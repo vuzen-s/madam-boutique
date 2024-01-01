@@ -182,7 +182,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = DB::table('products')->where('id', $id)->first();
+        $product = ProductModel::with(['designer', 'brand', 'collection', 'category'])
+            ->where('id', $id)
+            ->first();
         $designers = DB::table('designers')->get();
         $brands = DB::table('brands')->get();
         $collections = DB::table('collections')->get();
@@ -200,7 +202,23 @@ class ProductController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $dataCurrent = DB::table('products')->where('id', $id)->first();
-        $dataNew = $request->except(['_token', 'avatar', 'images_old']);
+
+        $data = new ProductModel();
+
+        $data->name = $request->name;
+        $data->price = $request->price;
+        $data->desc = $request->desc;
+        $data->status = $request->status;
+        $data->feature = $request->feature;
+        $data->collection_id = $request->collection_id;
+        $data->brand_id = $request->brand_id;
+        $data->designer_id = $request->designer_id;
+        $data->category_id = $request->category_id;
+
+        // color
+        if ($request->color) {
+            $data->color = $request->color;
+        }
 
         // nếu người dùng có thay đổi avatar
         if (isset($request->avatar)) {
@@ -211,13 +229,14 @@ class ProductController extends Controller
                 unlink($imgPath);
             }
             // thay thế nó bằng file avatar mới được cập nhật
-            $avatar = $request->avatar;
-            $dataNew['avatar'] = $avatar;
-            // $dataNew['avatar'] = time() . $avatar->getClientOriginalName();
-            // $avatar->move(public_path('uploads/'), $dataNew['avatar']);
+            $avatarNew = $request->avatar;
+            $data->avatar = time() . '_' . $avatarNew->getClientOriginalName();
+            $avatarNew->move(public_path('uploads/products/'), $data->avatar);
         }
 
-        DB::table('products')->where('id', $id)->update($dataNew);
+        $data->save();
+
+        DB::table('products')->where('id', $id)->update([$data]);
         return response()->json(['message_success' => 'Data updated successfully']);
     }
 
@@ -226,7 +245,7 @@ class ProductController extends Controller
     {
         $data = DB::table('products')->where('id', $id)->first();
         $avatar = $data->avatar;
-        $imgPath = public_path('uploads/products' . $avatar);
+        $imgPath = public_path('uploads/products/' . $avatar);
 
         DB::table('products')->where('id', $id)->delete();
 
