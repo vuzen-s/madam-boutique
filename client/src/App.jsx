@@ -1,10 +1,11 @@
 import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-  createRoutesFromElements
+    Route,
+    RouterProvider,
+    Routes,
+    createBrowserRouter,
+    createRoutesFromElements
 } from "react-router-dom";
+import {useEffect} from 'react';
 
 // import NavbarBottom from "./components/home/Header/NavbarBottom";
 
@@ -30,43 +31,64 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Profile from "./pages/Profile/Profile";
 import Shop from "./pages/Shop/Shop";
+import {getMessagingToken, onMessageListener} from "./firebase.ts";
+import 'firebase/auth';
+import 'firebase/firestore';
 
 const App = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* ==================== Header Navlink Start here =================== */}
-          <Route index element={<Home />}></Route>
-          <Route path="/shop" element={<Shop />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/blog" element={<BlogList />}></Route>
-          {/* ==================== Header Navlink End here ===================== */}
-          <Route path="/offer" element={<Offer />}></Route>
-          <Route path="/product/:_id" element={<ProductDetails />}></Route>
-          <Route path="/favorite" element={<ProductFavorite />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-          <Route path="/paymentgateway" element={<Payment />}></Route>
+    useEffect(() => {
+        getMessagingToken();
+    }, [])
 
-          <Route element={<DefaultLayoutProfile />}>
-            <Route path="/profile" element={<Profile />}></Route>
-          </Route>
-        </Route>
-        {/* // */}
+    useEffect(() => {
+        onMessageListener().then(data => {
+            console.log("Receive foreground: ", data)
+        })
+    })
 
-        <Route element={<GuestLayoutNormal />}>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/signin" element={<SignIn />}></Route>
-        </Route>
+    useEffect(() => {
+        getMessagingToken();
+        const channel = new BroadcastChannel("notifications");
+        channel.addEventListener("message", (event) => {
+            console.log("Receive background: ", event.data);
+        });
+    }, [])
 
-          {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
-          <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
-        {/* </Route> */}
-        <Route path="/404" element={<Page404 />}></Route>
-      </Routes>
-    </div>
-  );
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    {/* ==================== Header Navlink Start here =================== */}
+                    <Route index element={<Home/>}></Route>
+                    <Route path="/shop" element={<Shop/>}></Route>
+                    <Route path="/about" element={<About/>}></Route>
+                    <Route path="/contact" element={<Contact/>}></Route>
+                    <Route path="/blog" element={<BlogList/>}></Route>
+                    {/* ==================== Header Navlink End here ===================== */}
+                    <Route path="/offer" element={<Offer/>}></Route>
+                    <Route path="/product/:id" element={<ProductDetails/>}></Route>
+                    <Route path="/favorite" element={<ProductFavorite/>}></Route>
+                    <Route path="/cart" element={<Cart/>}></Route>
+                    <Route path="/paymentgateway" element={<Payment/>}></Route>
+
+                    <Route element={<DefaultLayoutProfile/>}>
+                        <Route path="/profile" element={<Profile/>}></Route>
+                    </Route>
+                </Route>
+                {/* // */}
+
+                <Route element={<GuestLayoutNormal/>}>
+                    <Route path="/signup" element={<SignUp/>}></Route>
+                    <Route path="/signin" element={<SignIn/>}></Route>
+                </Route>
+
+                {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
+                <Route path="/dashboard/*" element={<DashBoardMain/>}></Route>
+                {/* </Route> */}
+                <Route path="/404" element={<Page404/>}></Route>
+            </Routes>
+        </div>
+    );
 };
 
 // const router = createBrowserRouter(

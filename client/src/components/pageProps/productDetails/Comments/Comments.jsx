@@ -150,9 +150,6 @@ const Comments = ({ selectedUserId, idProduct }) => {
 
   return (
     <div>
-      <div className="rates">
-        <Rates idProduct={idProduct} />
-      </div>
       <div className="Comments">
         <h3 className="Comments-title">
           {(comments.length === 1 && comments.length !== undefined) ? `1 comment` : `${comments.length} comments`}

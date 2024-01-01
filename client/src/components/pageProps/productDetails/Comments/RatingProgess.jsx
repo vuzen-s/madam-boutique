@@ -1,8 +1,8 @@
 import Rating from '@mui/material/Rating';
-import { Progress } from 'antd';
-import { useEffect, useState } from "react";
+import {Progress} from 'antd';
+import {useEffect, useState} from "react";
 
-const RatingProgess = ({ ratings, idProduct }) => {
+const RatingProgess = ({ratings, idProduct}) => {
     const [vote1Quantity, setVote1Quantity] = useState([1, 2]);
     const [vote2Quantity, setVote2Quantity] = useState([1]);
     const [vote3Quantity, setVote3Quantity] = useState([]);
@@ -65,34 +65,39 @@ const RatingProgess = ({ ratings, idProduct }) => {
     return (
         <>
             {/* 1 star */}
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '12px' }}>
-                {'1'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly />
-                <Progress percent={formatProgessVote(vote1Quantity)} status='exception' showInfo={false} />
-                <p>{vote1Quantity.length} lượt đánh giá ({formatProgessVote(vote1Quantity) % 1 === 0 ? formatProgessVote(vote1Quantity) : formatProgessVote(vote1Quantity).toFixed(2)}%)</p>
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}>
+                {'1'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly/>
+                <Progress percent={formatProgessVote(vote1Quantity)} status='exception' showInfo={false}/>
+                <p>{vote1Quantity.length} lượt đánh giá
+                    ({formatProgessVote(vote1Quantity) % 1 === 0 ? formatProgessVote(vote1Quantity) : formatProgessVote(vote1Quantity).toFixed(2)}%)</p>
             </div>
             {/* 2 star */}
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '12px' }}>
-                {'2'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly />
-                <Progress percent={formatProgessVote(vote2Quantity)} status='exception' showInfo={false} />
-                <p>{vote2Quantity.length} lượt đánh giá ({formatProgessVote(vote2Quantity) % 1 === 0 ? formatProgessVote(vote2Quantity) : formatProgessVote(vote2Quantity).toFixed(2)}%)</p>
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}>
+                {'2'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly/>
+                <Progress percent={formatProgessVote(vote2Quantity)} status='exception' showInfo={false}/>
+                <p>{vote2Quantity.length} lượt đánh giá
+                    ({formatProgessVote(vote2Quantity) % 1 === 0 ? formatProgessVote(vote2Quantity) : formatProgessVote(vote2Quantity).toFixed(2)}%)</p>
             </div>
             {/* 3 star */}
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '12px' }}>
-                {'3'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly />
-                <Progress percent={formatProgessVote(vote3Quantity)} status='exception' showInfo={false} />
-                <p>{vote3Quantity.length} lượt đánh giá ({formatProgessVote(vote3Quantity) % 1 === 0 ? formatProgessVote(vote3Quantity) : formatProgessVote(vote3Quantity).toFixed(2)}%)</p>
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}>
+                {'3'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly/>
+                <Progress percent={formatProgessVote(vote3Quantity)} status='exception' showInfo={false}/>
+                <p>{vote3Quantity.length} lượt đánh giá
+                    ({formatProgessVote(vote3Quantity) % 1 === 0 ? formatProgessVote(vote3Quantity) : formatProgessVote(vote3Quantity).toFixed(2)}%)</p>
             </div>
             {/* 4 star */}
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '12px' }}>
-                {'4'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly />
-                <Progress percent={formatProgessVote(vote4Quantity)} status='exception' showInfo={false} />
-                <p>{vote4Quantity.length} lượt đánh giá ({formatProgessVote(vote4Quantity) % 1 === 0 ? formatProgessVote(vote4Quantity) : formatProgessVote(vote4Quantity).toFixed(2)}%)</p>
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}>
+                {'4'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly/>
+                <Progress percent={formatProgessVote(vote4Quantity)} status='exception' showInfo={false}/>
+                <p>{vote4Quantity.length} lượt đánh giá
+                    ({formatProgessVote(vote4Quantity) % 1 === 0 ? formatProgessVote(vote4Quantity) : formatProgessVote(vote4Quantity).toFixed(2)}%)</p>
             </div>
             {/* 5 star */}
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '12px' }}>
-                {'5'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly />
-                <Progress percent={formatProgessVote(vote5Quantity)} status='exception' showInfo={false} />
-                <p>{vote5Quantity.length} lượt đánh giá ({formatProgessVote(vote5Quantity) % 1 === 0 ? formatProgessVote(vote5Quantity) : formatProgessVote(vote5Quantity).toFixed(2)}%)</p>
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}>
+                {'5'}<Rating name="half-rating-read" max={1} defaultValue={1} precision={0.5} readOnly/>
+                <Progress percent={formatProgessVote(vote5Quantity)} status='exception' showInfo={false}/>
+                <p>{vote5Quantity.length} lượt đánh giá
+                    ({formatProgessVote(vote5Quantity) % 1 === 0 ? formatProgessVote(vote5Quantity) : formatProgessVote(vote5Quantity).toFixed(2)}%)</p>
             </div>
         </>
     );

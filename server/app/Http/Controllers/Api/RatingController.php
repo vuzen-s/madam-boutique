@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RatingModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SmirlTech\LaravelFcm\Facades\LaravelFcm;
 
 class RatingController extends Controller
 {
@@ -36,8 +37,25 @@ class RatingController extends Controller
 
         $data->save();
 
+        // Gửi push notification
+        $deviceTokens = ['cH5RnaynTPA0xvkyWM_rr3:APA91bFutBI5y9kBlhKQIQqRSADfrs8EycmIKqeP4VrgizZjlxyzjAiV51Dc9I5e8pcjmmotplJrxnJocmQvzycXrKUP_x1bI6kev8Ve83GCyLgMrVY96FH20iwC1q6nQ4FxZg8zmQOC'];
+        LaravelFcm::withTitle('Test Title')
+            ->withBody('Test body')
+            ->withImage('https://firebase.google.com/images/social.png')
+            ->withIcon('https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png')
+            ->withSound('default')
+            ->withClickAction('http://localhost:3000/dashboard/')
+            ->withPriority('high')
+            ->withAdditionalData([
+                'color' => '#rrggbb',
+                'badge' => 0,
+            ])
+            ->sendNotification($deviceTokens);
+
+        // response
         return response()->json([
             'ratings' => $data,
+            ['success' => true, 'message' => 'Comment posted successfully']
         ]);
     }
 

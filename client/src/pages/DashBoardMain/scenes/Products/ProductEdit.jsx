@@ -127,9 +127,9 @@ const ProductEdit = () => {
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/products-edit/' + id, {
             method: "GET",
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // }
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
         })
             .then((respon) => respon.json())
             .then((data) => {
@@ -220,168 +220,156 @@ const ProductEdit = () => {
         };
     }, []);
 
-    return (<Box m="20px">
-        <Header title="UPDATE PRODUCT" subtitle="Update a Product"/>
-        <form onSubmit={handleFormUpdate}>
-            <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                sx={{
-                    "& > div": {gridColumn: isNonMobile ? undefined : "span 4"},
-                }}
-            >
-                <div className="mb-3">
-                    <label for="name" className="form-label">Tên sản phẩm:</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
-                           onChange={handleChangeInput} value={name}/>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.name}
-                    </p>
-                </div>
+    return (
+        <Box m="20px">
+            <Header title="UPDATE PRODUCT" subtitle="Update a Product"/>
+            <form onSubmit={handleFormUpdate}>
+                <Box
+                    display="grid"
+                    gap="30px"
+                    gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                    sx={{
+                        "& > div": {gridColumn: isNonMobile ? undefined : "span 4"},
+                    }}
+                >
+                    <div className="mb-3">
+                        <label for="name" className="form-label">Tên sản phẩm:</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                               onChange={handleChangeInput} value={name}/>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.name}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="desc" className="form-label">Dòng mô tả:</label>
-                    <input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc"
-                           onChange={handleChangeInput} value={desc}/>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.desc}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="desc" className="form-label">Dòng mô tả:</label>
+                        <input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc"
+                               onChange={handleChangeInput} value={desc}/>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.desc}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="price" className="form-label">Giá:</label>
-                    <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
-                           onChange={handleChangeInput} value={price}/>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.price}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="price" className="form-label">Giá:</label>
+                        <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
+                               onChange={handleChangeInput} value={price}/>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.price}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="color" className="form-label">Màu sản phẩm (không bắt buộc):</label>
-                    <input class="form-control" type="text" id="color" placeholder="Enter color" name="color"
-                           onChange={handleChangeInput} value={color}/>
-                </div>
+                    <div className="mb-3">
+                        <label for="color" className="form-label">Màu sản phẩm (không bắt buộc):</label>
+                        <input class="form-control" type="text" id="color" placeholder="Enter color" name="color"
+                               onChange={handleChangeInput} value={color}/>
+                    </div>
 
-                <div className="mb-3">
-                    <label className="form-label">Ảnh hiện tại:</label>
-                    <img
-                        src={avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + avatar}
-                        alt={name} width="200px" height="200px"/>
-                </div>
+                    <div className="mb-3">
+                        <label className="form-label">Ảnh hiện tại:</label>
+                        <img
+                            src={avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + avatar}
+                            alt={name} width="200px" height="200px"/>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="avatar" className="form-label">Ảnh đại diện mới: (Nếu cần)</label>
-                    <input class="form-control" type="file" id="avatar" name="avatar"
-                           onChange={handleChangeInput}/>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.avatar}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="avatar" className="form-label">Ảnh đại diện mới: (Nếu cần)</label>
+                        <input class="form-control" type="file" id="avatar" name="avatar"
+                               onChange={handleChangeInput}/>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.avatar}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="status" className="form-label">Trạng thái sản phẩm:</label>
-                    <select className="form-select" name="status" onChange={handleChangeInput} value={status}>
-                        <option value={0}> Hiển thị</option>
-                        <option value={1}> Ẩn</option>
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.status}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="status" className="form-label">Trạng thái sản phẩm:</label>
+                        <select className="form-select" name="status" onChange={handleChangeInput} value={status}>
+                            <option value={0}> Hiển thị</option>
+                            <option value={1}> Ẩn</option>
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.status}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="feature" className="form-label">Feature sản phẩm:</label>
-                    <select className="form-select" name="feature" onChange={handleChangeInput} value={feature}>
-                        <option value={0}> Nổi bật</option>
-                        <option value={1}> Không nổi bật</option>
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.feature}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="feature" className="form-label">Feature sản phẩm:</label>
+                        <select className="form-select" name="feature" onChange={handleChangeInput} value={feature}>
+                            <option value={0}> Nổi bật</option>
+                            <option value={1}> Không nổi bật</option>
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.feature}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="designer_id" className="form-label">Designer:</label>
-                    <select name="designer_id" className="form-select select2ByID" onChange={handleChangeInput}
-                            ref={select2Ref} value={designer_id}>
-                        {optionDesigners.map((item, index) => (<option key={index} value={item.id}>
-                            {item.name}
-                        </option>))}
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.designer_id}
-                    </p>
-                </div>
-
-                <div className="mb-3">
-                    <label for="brand_id" className="form-label">Brand:</label>
-                    <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput}
-                            ref={select2Ref} value={brand_id}>
-                        {optionBrands.map((item, index) => (
-                            <option key={index} value={item.id}>
+                    <div className="mb-3">
+                        <label for="designer_id" className="form-label">Designer:</label>
+                        <select name="designer_id" className="form-select select2ByID" onChange={handleChangeInput}
+                                ref={select2Ref} value={designer_id}>
+                            {optionDesigners.map((item, index) => (<option key={index} value={item.id}>
                                 {item.name}
-                            </option>
-                        ))}
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.brand_id}
-                    </p>
-                </div>
+                            </option>))}
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.designer_id}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="collection_id" className="form-label">Collection:</label>
-                    <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput}
-                            ref={select2Ref} value={collection_id}>
-                        {optionCollections.map((item, index) => (<option key={index} value={item.id}>
-                            {item.name}
-                        </option>))}
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.collection_id}
-                    </p>
-                </div>
+                    <div className="mb-3">
+                        <label for="brand_id" className="form-label">Brand:</label>
+                        <select name="brand_id" className="form-select select2ByID" onChange={handleChangeInput}
+                                ref={select2Ref} value={brand_id}>
+                            {optionBrands.map((item, index) => (
+                                <option key={index} value={item.id}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.brand_id}
+                        </p>
+                    </div>
 
-                <div className="mb-3">
-                    <label for="category_id" className="form-label">Category:</label>
-                    <select name="category_id" className="form-select select2ByID" onChange={handleChangeInput}
-                            ref={select2Ref} value={category_id}>
-                        {optionCategories.map((item, index) => (<option key={index} value={item.id}>
-                            {item.name}
-                        </option>))}
-                    </select>
-                    <p style={{color: "red"}}>
-                        {errorsField && errorsField.category_id}
-                    </p>
-                </div>
-                <div className="mb-3">
-                    <label for="images[]" className="form-label">Hình ảnh sản phẩm:</label>
-                </div>
-            </Box>
-            <Box mt="40px">
-                <button type="submit" className="btn btn-primary" style={{background: "#0a58ca"}}>Cập nhật sản phẩm
-                </button>
-                <button type="button" className="btn btn-danger" style={{background: "#dc3545", marginLeft: "12px"}}
-                        onClick={() => handleBack()}>Quay lại
-                </button>
-            </Box>
-        </form>
-    </Box>);
+                    <div className="mb-3">
+                        <label for="collection_id" className="form-label">Collection:</label>
+                        <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput}
+                                ref={select2Ref} value={collection_id}>
+                            {optionCollections.map((item, index) => (<option key={index} value={item.id}>
+                                {item.name}
+                            </option>))}
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.collection_id}
+                        </p>
+                    </div>
+
+                    <div className="mb-3">
+                        <label for="category_id" className="form-label">Category:</label>
+                        <select name="category_id" className="form-select select2ByID" onChange={handleChangeInput}
+                                ref={select2Ref} value={category_id}>
+                            {optionCategories.map((item, index) => (<option key={index} value={item.id}>
+                                {item.name}
+                            </option>))}
+                        </select>
+                        <p style={{color: "red"}}>
+                            {errorsField && errorsField.category_id}
+                        </p>
+                    </div>
+                    <div className="mb-3">
+                        <label for="images[]" className="form-label">Hình ảnh sản phẩm:</label>
+                    </div>
+                </Box>
+                <Box mt="40px">
+                    <button type="submit" className="btn btn-primary" style={{background: "#0a58ca"}}>Cập nhật sản phẩm
+                    </button>
+                    <button type="button" className="btn btn-danger" style={{background: "#dc3545", marginLeft: "12px"}}
+                            onClick={() => handleBack()}>Quay lại
+                    </button>
+                </Box>
+            </form>
+        </Box>
+    );
 };
-
-// const initialValues = {
-//   name: '',
-//   desc: '',
-//   price: '',
-//   color: '',
-//   avatar: '',
-//   status: 0,
-//   feature: 0,
-//   collection_id: 0,
-//   brand_id: 0,
-//   designer_id: 0,
-//   category_id: 0,
-// };
 
 export default ProductEdit;

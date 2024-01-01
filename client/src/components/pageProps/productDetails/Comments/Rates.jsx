@@ -1,7 +1,7 @@
 import StarIcon from '@mui/icons-material/Star';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
@@ -26,7 +26,7 @@ function getLabelText(value) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-const Rates = ({ idProduct }) => {
+const Rates = ({idProduct}) => {
     const [ratings, setRatings] = useState([]);
     const [contentRating, setContentRating] = useState("");
     const [openModalStore, setOpenModalStore] = useState(false);
@@ -65,7 +65,7 @@ const Rates = ({ idProduct }) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ rating: value, rating_content: contentRating, user_id: 1, product_id: idProduct }), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify({rating: value, rating_content: contentRating, user_id: 1, product_id: idProduct}), // Chuyển đổi FormData thành đối tượng JSON
             })
                 .then((respon) => respon.json())
                 .then((data) => {
@@ -189,12 +189,16 @@ const Rates = ({ idProduct }) => {
             <h3 className="Comments-title">
                 {ratings.length <= 1 ? `${ratings.length} rating` : `${ratings.length} ratings`}
             </h3>
-            <p style={{ margin: '16px', marginTop: '0px', fontStyle: 'italic' }}>{ratings.length === 0 ? 'Hãy là người đầu tiên đánh giá!' : ''}</p>
-            <hr />
+            <p style={{
+                margin: '16px',
+                marginTop: '0px',
+                fontStyle: 'italic'
+            }}>{ratings.length === 0 ? 'Hãy là người đầu tiên đánh giá!' : ''}</p>
+            <hr/>
             <div className='ratings'>
                 <div className='action-rating'>
                     <h4>Đánh giá theo mức độ hài lòng</h4>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                    <div style={{display: 'flex', alignItems: 'center', marginBottom: '12px'}}>
                         <Rating
                             name="hover-feedback"
                             value={value}
@@ -206,19 +210,21 @@ const Rates = ({ idProduct }) => {
                             onChangeActive={(event, newHover) => {
                                 setHover(newHover);
                             }}
-                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                            emptyIcon={<StarIcon style={{opacity: 0.55}} fontSize="inherit"/>}
                         />
                         <span>{value !== null && (
-                            <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+                            <Box sx={{ml: 2}}>{labels[hover !== -1 ? hover : value]}</Box>
                         )}</span>
                     </div>
-                    <button type="submit" class="btn btn-danger" style={{ background: '#dc3545', color: "#fff" }} onClick={() => setOpenModalStore(true)}>Gửi đánh giá</button>
+                    <button type="submit" class="btn btn-danger" style={{background: '#dc3545', color: "#fff"}}
+                            onClick={() => setOpenModalStore(true)}>Gửi đánh giá
+                    </button>
                 </div>
                 <div className='progress-rating'>
                     <RatingProgess ratings={ratings} idProduct={idProduct}/>
                 </div>
             </div>
-            <hr />
+            <hr/>
             <div className="ratings-list">
                 {ratings.slice().reverse().map((rating) => (
                     <Rate
@@ -230,7 +236,7 @@ const Rates = ({ idProduct }) => {
                     />
                 ))}
             </div>
-            <hr />
+            <hr/>
             {/* Modal Edit*/}
             <Modal show={openModalEdit} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -239,7 +245,7 @@ const Rates = ({ idProduct }) => {
                 <Modal.Body>
                     <textarea
                         value={ratingByID.rating_content}
-                        onChange={(e) => setRatingByID((prev) => ({ ...prev, 'rating_content': e.target.value }))}
+                        onChange={(e) => setRatingByID((prev) => ({...prev, 'rating_content': e.target.value}))}
                         name="rating_content"
                         className="Comments-box__input"
                         placeholder="Nhập nội dung"
@@ -249,7 +255,8 @@ const Rates = ({ idProduct }) => {
                     <Button variant="secondary" onClick={() => handleClose()}>
                         Thoát
                     </Button>
-                    <Button variant="primary" onClick={() => handleRatingUpdate(ratingByID.id)} style={{ background: "red", borderColor: "red" }}>
+                    <Button variant="primary" onClick={() => handleRatingUpdate(ratingByID.id)}
+                            style={{background: "red", borderColor: "red"}}>
                         Lưu
                     </Button>
                 </Modal.Footer>
@@ -271,7 +278,8 @@ const Rates = ({ idProduct }) => {
                     <Button variant="secondary" onClick={() => handleClose()}>
                         Thoát
                     </Button>
-                    <Button variant="primary" onClick={() => sendSubmittRating()} style={{ background: "red", borderColor: "red" }}>
+                    <Button variant="primary" onClick={() => sendSubmittRating()}
+                            style={{background: "red", borderColor: "red"}}>
                         Gửi đánh giá
                     </Button>
                 </Modal.Footer>

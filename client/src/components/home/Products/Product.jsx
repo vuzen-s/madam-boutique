@@ -9,8 +9,6 @@ import Image from "../../designLayouts/Image";
 import Badge from './Badge';
 
 const Product = (props) => {
-    const [publicPath, setPublicPath] = useState("");
-
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -24,27 +22,12 @@ const Product = (props) => {
         });
     };
 
-    /// Get path to public in serve
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/products-publicPath', {
-            method: "GET", headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((respon) => respon.json())
-            .then((data) => {
-                console.log(data);
-                setPublicPath(data.publicPath);
-            })
-            .catch((error) => console.log(error));
-    }, []);
-
     return (
         <div className="w-full relative group">
             <div className="max-w-80 max-h-80 relative overflow-y-hidden ">
                 <div>
                     <Image className="w-full h-full"
-                           imgSrc={props.avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + props.avatar}/>
+                           imgSrc={props.avatar}/>
                 </div>
                 <div className="absolute top-6 left-8">
                     {<Badge text={props.category && props.category.name}/>}
