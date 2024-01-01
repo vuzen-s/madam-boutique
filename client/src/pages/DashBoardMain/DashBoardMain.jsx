@@ -24,6 +24,7 @@ import UserList from './scenes/Users/UserList'
 import './scss/style.scss'
 import Dashboard from './views/dashboard/Dashboard'
 import Colors from './views/theme/colors/Colors'
+import UserStatusDetail from './scenes/Users/UserStatusDetail'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -56,7 +57,8 @@ class DashBoardMain extends Component {
                 <Route path="brand/edit/:id" element={<BrandEdit />} />
                 <Route path="user" element={<UserList />} />
                 <Route path="user/create" element={<UserCreate />} />
-                <Route path="user/edit/:id" element={<UserEdit />} />
+                <Route path="user/edit/:id" element={<UserEdit />} /> UserStatusDetail
+                <Route path="user/delete/status" element={<UserStatusDetail />} />
                 <Route path="collection" element={<CollectionList />} />
                 <Route path="collection/create" element={<CollectionCreate />} />
                 <Route path="collection/edit/:id" element={<CollectionEdit />} />

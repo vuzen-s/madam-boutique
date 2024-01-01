@@ -3,10 +3,11 @@ import { Breadcrumb, Input, Select } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { Image } from "antd";
 import "./AvtUser.css";
 import ImgCrop from "antd-img-crop";
-import img from "../../../../../src/assets/images/undefineAvt.png"
+import img from "../../../../../src/assets/images/undefineAvt.png";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -23,10 +24,11 @@ const UserCreate = () => {
     fullname: "",
     email: "",
     phone: "",
-    Address: "",
+    address: "",
     gender: "",
     level: "",
     password: "",
+    status: "",
     password_confirmation: "",
   });
 
@@ -83,7 +85,6 @@ const UserCreate = () => {
   //       // }
   //     });
   // };
-  
 
   const handleImageUpload = (fileList) => {
     if (fileList && fileList.length <= 1) {
@@ -91,7 +92,7 @@ const UserCreate = () => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setAvatar(reader.result)
+        setAvatar(reader.result);
 
         // setHasImageChanged(true);
       };
@@ -110,7 +111,8 @@ const UserCreate = () => {
     formData.append("gender", users.gender);
     formData.append("password", users.password);
     formData.append("phone", users.phone);
-    formData.append("Address", users.Address);
+    formData.append("status", users.status);
+    formData.append("address", users.address);
     formData.append("password_confirmation", users.password_confirmation);
 
     if (avatar) {
@@ -123,7 +125,20 @@ const UserCreate = () => {
       })
       .then((res) => {
         console.log(res.data.error);
-        alert(res.data.message);
+        if (res.status === 200) {
+          setUsers(res.data.user);
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Create User Successfully",
+            // confirmButtonText: "Ok",
+            timer: 5000,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("../user");
+            }
+          });
+        }
       })
       .catch((e) => {
         if (e.response && e.response.status === 400) {
@@ -142,21 +157,19 @@ const UserCreate = () => {
   //   }
   // }
 
-  
-  useEffect(() => {
-    setErrors({});
-  }, [
-    users.fullname,
-    users.email,
-    users.password,
-    users.password_confirmation,
-    users.gender,
-    users.level,
-    users.phone,
-    users.Address,
-  ]);
-
-
+  // useEffect(() => {
+  //   setErrors({});
+  // }, [
+  //   users.fullname,
+  //   users.email,
+  //   users.password,
+  //   users.password_confirmation,
+  //   users.gender,
+  //   users.level,
+  //   users.phone,
+  //   users.address,
+  //   users.status
+  // ]);
 
   return (
     <div>
@@ -264,7 +277,7 @@ const UserCreate = () => {
                 <Input
                   id="fullname"
                   name="fullname"
-                  value={users.fullname}
+                  value={users === undefined ? "" : users.fullname}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. Le Van Truong Anh"
@@ -289,7 +302,7 @@ const UserCreate = () => {
                 <Input
                   id="email"
                   name="email"
-                  value={users.email}
+                  value={users === undefined ? "" : users.email}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. truonganh@gmail.com"
@@ -314,7 +327,7 @@ const UserCreate = () => {
                   type="password"
                   id="password"
                   name="password"
-                  value={users.password}
+                  value={users === undefined ? "" : users.password}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Password"
@@ -339,7 +352,7 @@ const UserCreate = () => {
                   type="password"
                   id="passwordConfirmation"
                   name="password_confirmation"
-                  value={users.password_confirmation}
+                  value={users === undefined ? "" : users.password_confirmation}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Confirm Password"
@@ -355,11 +368,37 @@ const UserCreate = () => {
 
             {/* ---------- Layout cut ---------- */}
 
-            <div className="flex-1 flex flex-col gap-3">
+            <div className="flex-1 flex flex-col gap-2">
+              <div className="flex flex-col gap-.8">
+                <label
+                  htmlFor="status"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
+                  Status
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  value={users === undefined ? "" : users.status}
+                  onChange={handleInputValue}
+                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                >
+                  <option value="Choose Status">Choose Status</option>
+                  <option value="Show">Show</option>
+                  {/* <option value="Hidden">Hidden</option> */}
+                </select>
+                {errors && (
+                <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
+                  {errors.status}
+                </span>
+              )}
+
+              </div>
+
               {/* Gender && Level */}
 
-              <div className="flex flex-raw justify-between">
-                <div className="flex-1 mr-1.5">
+              <div className="flex">
+                <div className="flex-1 mr-1.5 ">
                   <div className="flex flex-col gap-.8 ">
                     <label
                       htmlFor="gender"
@@ -368,24 +407,25 @@ const UserCreate = () => {
                       Gender
                     </label>
                     <select
-                      id="level"
+                      id="gender"
                       name="gender"
-                      value={users.gender}
+                      value={users === undefined ? "" : users.gender}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     >
+                      <option value="Choose Gender">Choose Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                      <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
                         {errors.gender}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex-1 flex flex-col gap-.8 ml-1.5">
+                <div className="flex-1 ml-1.5">
                   <div className="flex flex-col gap-.8">
                     <label
                       htmlFor="phone"
@@ -395,14 +435,14 @@ const UserCreate = () => {
                     </label>
                     <input
                       name="phone"
-                      value={users.phone}
+                      value={users === undefined ? "" : users.phone}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
                       placeholder="Phone Number"
                     />
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                      <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
                         {errors.phone}
                       </span>
                     )}
@@ -421,21 +461,24 @@ const UserCreate = () => {
                 <select
                   id="level"
                   name="level"
-                  value={users.level}
+                  value={users === undefined ? "" : users.level}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
+                  <option value="Choose Level">Choose Level</option>
                   <option value="1">Admin Master</option>
                   <option value="2">Admin Manager</option>
                   <option value="3">Admin Editor</option>
                   <option value="4">Member</option>
                 </select>
+
+                {errors && (
+                  <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
+                    {errors.level}
+                  </span>
+                )}
               </div>
-              {errors && (
-                <span className=" text-sm text-red-500 font-titleFont px-2">
-                  {errors.level}
-                </span>
-              )}
+
               {/* Address */}
               <div className="flex flex-col gap-.8">
                 <label
@@ -445,10 +488,10 @@ const UserCreate = () => {
                   Address
                 </label>
                 <TextArea
-                  name="Address"
-                  value={users.Address}
+                  name="address"
+                  value={users === undefined ? "" : users.address}
                   onChange={handleInputValue}
-                  rows={3}
+                  rows={2}
                   placeholder="Your Address Is Here"
                   maxLength={350}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"

@@ -138,12 +138,18 @@ Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact']
 // =================== USER ===================
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
+// Lấy danh sách user đã delete cho Admin Master
+Route::get('users/detail-delete', [UserController::class, 'showUserDelete']);
+// Khôi phục lại user sau khi delete, chỉ Admin Master mới thao tác phần này 
+Route::put('users/show/{id}', [UserController::class, 'backToShowStatus']);
 // Tạo user
 Route::post('users/create', [UserController::class, 'store']);
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
 Route::put('users/edit/{id}', [UserController::class, 'update']);
+// Xóa User
+Route::delete('destroy/{id}', [UserController::class, 'destroy']);
 
 Route::group([
 

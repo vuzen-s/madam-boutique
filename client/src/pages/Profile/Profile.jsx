@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const { TextArea } = Input;
 
 const Profile = () => {
-  const [userAuth, setUserAuth] = useState({});
+  const [userAuth, setUserAuth] = useState([]);
   const [errorsUpdate, setErrorsUpdate] = useState([]);
   const navigate = useNavigate();
 
@@ -60,9 +60,8 @@ const Profile = () => {
             position: "top-center",
             icon: "success",
             title: "Update Profile Successfully",
-            text: "After changing your profile, you need to SignIn again. Thank you!",
             confirmButtonText: "Ok",
-            timer: 8000,
+            timer: 7000,
           }).then((result) => {
             if (result.isConfirmed) {
               window.location.reload();
@@ -79,15 +78,15 @@ const Profile = () => {
       });
   };
 
-  useEffect(() => {
-    setErrorsUpdate([]);
-  }, [
-    userAuth.fullname,
-    userAuth.password,
-    userAuth.phone,
-    userAuth.address,
-    userAuth.password_confirmation,
-  ]);
+  // useEffect(() => {
+  //   setErrorsUpdate([]);
+  // }, [
+  //   userAuth.fullname,
+  //   userAuth.password,
+  //   userAuth.phone,
+  //   userAuth.address,
+  //   userAuth.password_confirmation,
+  // ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,6 +123,7 @@ const Profile = () => {
                   <input
                     name="email"
                     value={userAuth === undefined ? "" : userAuth.email}
+                    // value={userAuth && userAuth.email ? userAuth.email : ""}
                     onChange={handleChange}
                     disabled
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -149,6 +149,7 @@ const Profile = () => {
                   <input
                     name="fullname"
                     value={userAuth === undefined ? "" : userAuth.fullname}
+                    // value={userAuth && userAuth.fullname ? userAuth.fullname : ""}
                     onChange={handleChange}
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
@@ -175,6 +176,7 @@ const Profile = () => {
                     value={
                       userAuth === undefined ? "" : levelMapping[userAuth.level]
                     }
+                    // value={userAuth && userAuth.level ? levelMapping[userAuth.level] : ""}
                     onChange={handleChange}
                     disabled
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -200,6 +202,7 @@ const Profile = () => {
                     <input
                       name="gender"
                       value={userAuth === undefined ? "" : userAuth.gender}
+                      // value={userAuth && userAuth.gender ? userAuth.gender : ""}
                       onChange={handleChange}
                       disabled
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide bg-gray-300 px-3 text-base text-gray-500 font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -224,6 +227,7 @@ const Profile = () => {
                     <input
                       name="phone"
                       value={userAuth === undefined ? "" : userAuth.phone}
+                      // value={userAuth && userAuth.phone ? userAuth.phone : ""}
                       onChange={handleChange}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
@@ -249,6 +253,7 @@ const Profile = () => {
                   <TextArea
                     name="address"
                     value={userAuth === undefined ? "" : userAuth.address}
+                    // value={userAuth && userAuth.address ? userAuth.address : ""}
                     onChange={handleChange}
                     rows={3}
                     placeholder="Your Address Is Here"
@@ -282,6 +287,7 @@ const Profile = () => {
                   <input
                     name="password"
                     value={userAuth === undefined ? "" : userAuth.password}
+                    // value={userAuth && userAuth.password ? userAuth.password : ""}
                     onChange={handleChange}
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="password"
@@ -309,6 +315,7 @@ const Profile = () => {
                         ? ""
                         : userAuth.password_confirmation
                     }
+                    // value={userAuth && userAuth.password_confirmation ? userAuth.password_confirmation : ""}
                     onChange={handleChange}
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="password"

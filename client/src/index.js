@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-// import { AuthProvider } from "./pages/AuthContext/AuthContext";
+import { AuthProvider } from "./pages/AuthContext/AuthContext";
 import "slick-carousel/slick/slick.css";
 import { BrowserRouter } from 'react-router-dom';
 import App from "./App";
@@ -14,9 +14,9 @@ root.render(
   <BrowserRouter>
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-        {/* <AuthProvider> */}
+        <AuthProvider>
           <App />
-        {/* </AuthProvider> */}
+        </AuthProvider>
     </PersistGate>
   </Provider>
   </BrowserRouter>

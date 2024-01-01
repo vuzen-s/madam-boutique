@@ -83,6 +83,11 @@ const _nav = [
         name: 'Create',
         to: '/dashboard/user/create',
       },
+      {
+        component: CNavItem,
+        name: 'Deleted User',
+        to: '/dashboard/user/delete/status',
+      }
     ]
   },
   // Collection

@@ -23,13 +23,40 @@ export const colums = [
     field: "gender",
     headerName: "Gender",
     headerAlign: "left",
-    flex: 0.5,
+    flex: 0.35,
+
     renderCell: (params) => {
       let backgroundColor = "";
-      if (params.value === "Male") {
-        backgroundColor = "lightblue";
+      let color = "";
+      let displayValue = params.value;
+      if (!params.value) { 
+        displayValue = "null";
+        backgroundColor = "white";
+      } else if (params.value === "Male") {
+        backgroundColor = "#0077b9";
+        color = "white"
       } else if (params.value === "Female") {
-        backgroundColor = "lightpink";
+        backgroundColor = "#FF1490";
+        color = "white"
+      } else {
+        backgroundColor = "white";
+      }
+      return (
+        <div style={{ backgroundColor, color, padding: "5px", borderRadius: "5px" }}>
+          {displayValue}
+        </div>
+      );
+    },
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    // headerAlign: "left",
+    flex: 0.35,
+    renderCell: (params) => {
+      let backgroundColor = "";
+      if (params.value === "Show") {
+        backgroundColor = "#3cb371";
       } else {
         backgroundColor = "white";
       }
@@ -53,10 +80,12 @@ export const colums = [
         case 1:
           levelName = "Admin Master";
           backgroundColor = "#FF0000";
+          color = "white"
           break;
         case 2:
           levelName = "Admin Manager";
           backgroundColor = "#6666FF";
+          color = "white"
           break;
         case 3:
           levelName = "Admin Editor";

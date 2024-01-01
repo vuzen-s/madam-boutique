@@ -89,15 +89,13 @@ const Navbar = () => {
     });
   }, []);
 
-  console.log("User Auth:", userAuth);
-
-  const token = localStorage.getItem('token');
+  // const token = sessionStorage.getItem('token');
 
   const logout = async () => {
     try {
         const response = await api.post('api/auth/logout');
         if (response.status === 200) {
-            localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
             setUserAuth(null);
             navigate('/'); 
         }
@@ -105,7 +103,7 @@ const Navbar = () => {
       if (e.response && e.response.status === 401) {
         console.log("Error logging out:", e);
         setUserAuth(null);
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
       }
     }
 }
@@ -202,7 +200,7 @@ const Navbar = () => {
               className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
             >
               
-              {token ? (
+              {userAuth ? (
                 <>
                 {userAuth && userAuth.level !== 4 ? (
                 <Link to="/dashboard">

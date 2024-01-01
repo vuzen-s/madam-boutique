@@ -56,6 +56,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|between:2,50',
             'email' => 'required|string|email|max:100|unique:users,email',
+            'phone' => 'nullable|numeric|digits:10',
             'password' => 'required|string|confirmed|min:8',
             'gender' => 'required'
         ]);
@@ -69,7 +70,7 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
                     $validator->validated(),
-                    ['phone' => $request->phone],
+                    // ['phone' => $request->phone],
                     ['password' => bcrypt($request->password)]
                 ));
 
@@ -193,7 +194,7 @@ class AuthController extends Controller
             'gender' => 'nullable',
             'level' => 'required',
             'phone' => 'nullable|numeric|digits:10',
-            'Address' => 'nullable|max:250'
+            'address' => 'nullable|max:250'
         ]);
     
         if ($validator->fails()) {
@@ -227,7 +228,7 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'level' => $request->level,
             'phone' => $request->phone,
-            'address' => $request->Address
+            'address' => $request->address
         ];
     
         User::where('id', $userId)->update($updateData);

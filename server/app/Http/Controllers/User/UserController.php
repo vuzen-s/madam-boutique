@@ -14,7 +14,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('created_at', 'DESC')->where('status','!=', 'Hidden')->get();;
+        if($users->count() > 0){
+            return response()->json([
+                'status' => 200,
+                'users' => $users
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => "No users found"
+            ], 404);
+        }
+    }
+    /**
+     * Show User Delete For Master.
+     */
+    public function showUserDelete()
+    {
+        $users = User::orderBy('created_at', 'DESC')->where('status','!=', 'Show')->get();;
         if($users->count() > 0){
             return response()->json([
                 'status' => 200,
@@ -47,8 +65,9 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'nullable',
+            'status' => 'required',
             'phone' => 'nullable|numeric|digits:10',
-            'Address' => 'nullable|max:250',
+            'address' => 'nullable|max:250',
             'avatar' => 'nullable|mimes:jpeg,jpg,png'
             // |mimes:jpeg,jpg,png
         ]);
@@ -63,9 +82,10 @@ class UserController extends Controller
                 'email' => strtolower($request['email']),
                 'password' => bcrypt($request['password']),
                 'level' => $request['level'],
+                'status' => $request['status'],
                 'gender' => $request['gender'],
                 'phone' => $request['phone'],
-                'Address' => $request['Address'],
+                'address' => $request['address'],
             ]);
 
             if ($request->hasFile('avatar')) {
@@ -162,7 +182,7 @@ class UserController extends Controller
             'gender' => 'nullable',
             'level' => 'required',
             'phone' => 'nullable|numeric|digits:10',
-            'Address' => 'nullable|max:250'
+            'address' => 'nullable|max:250'
         ]);
 
         if(!empty($request->password)){
@@ -191,7 +211,7 @@ class UserController extends Controller
             $user->phone = $request['phone'];
             $user->gender = $request['gender'];
             $user->level = $request['level'];
-            $user->Address = $request['Address'];
+            $user->address = $request['address'];
 
             if ($user->save()) {
                 return response()->json([
@@ -212,6 +232,85 @@ class UserController extends Controller
      */
     public function destroy(int $id)
     {
-        //
+        {
+            $user = User::findOrFail($id);
+        
+            if (!$user) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => "User Not Found"
+                ], 404);
+            }
+        
+            $user->status = 'Hidden';
+        
+            if ($user->save()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => "User Deleted Successfully"
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'message' => "Failed To Delete User "
+                ], 500);
+            }
+        
+            // if ($user->delete()) {
+            //     return response()->json([
+            //         'status' => 200,
+            //         'message' => "User Deleted Successfully"
+            //     ], 200);
+            // } else {
+            //     return response()->json([
+            //         'status' => 500,
+            //         'message' => "Failed to Delete User"
+            //     ], 500);
+            // }
+        }
+    }
+
+    
+    /**
+     * Update Status User (Only the master has the right to update)
+     */
+    public function backToShowStatus(int $id)
+    {
+        {
+            $user = User::findOrFail($id);
+        
+            if (!$user) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => "User Not Found"
+                ], 404);
+            }
+        
+            $user->status = 'Show';
+        
+            if ($user->save()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => "User Deleted Successfully"
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'message' => "Failed To Delete User "
+                ], 500);
+            }
+        
+            // if ($user->delete()) {
+            //     return response()->json([
+            //         'status' => 200,
+            //         'message' => "User Deleted Successfully"
+            //     ], 200);
+            // } else {
+            //     return response()->json([
+            //         'status' => 500,
+            //         'message' => "Failed to Delete User"
+            //     ], 500);
+            // }
+        }
     }
 }

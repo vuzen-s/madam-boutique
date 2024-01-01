@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import useAuthContext from "../AuthContext/AuthContext";
+// import useAuthContext from "../AuthContext/AuthContext";
 import axios from "axios";
 
 const SignIn1 = () => {
@@ -36,8 +36,8 @@ const SignIn1 = () => {
         const response = await axios.post('http://localhost:8000/api/auth/login', { email, password });
         const { access_token } = response.data;
   
-        // Store the tokens in localStorage or secure cookie for later use
-        localStorage.setItem('token', access_token);
+        // Store the tokens in sessionStorage or secure cookie for later use
+        sessionStorage.setItem('token', access_token);
 
         console.log(response.data)
 
@@ -46,7 +46,8 @@ const SignIn1 = () => {
       } catch (e) {
 
         if(e.response.data.status === 401) {
-            navigate("/signin")
+          sessionStorage.removeItem('token');
+          navigate("/signin");
         }
 
         if(e.response.data.status === 422) {
