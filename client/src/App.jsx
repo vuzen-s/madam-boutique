@@ -37,6 +37,8 @@ import 'firebase/firestore';
 import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
 import SignUp1 from "./pages/Account/SignUp1";
 import SignIn1 from "./pages/Account/SignIn1";
+import SignUp from "./pages/Account/SignUp";
+import SignIn from "./pages/Account/SignIn";
 
 const App = () => {
     useEffect(() => {
@@ -81,8 +83,8 @@ const App = () => {
                 {/* // */}
 
                 <Route element={<GuestLayoutNormal/>}>
-                    <Route path="/signup" element={<SignUp/>}></Route>
-                    <Route path="/signin" element={<SignIn/>}></Route>
+                    <Route path="/signup" element={<SignUp1/>}></Route>
+                    <Route path="/signin" element={<SignIn1/>}></Route>
                 </Route>
 
                 {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}

@@ -5,42 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="837c7b17-5d70-43c9-b90e-a2056d447881" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Account/SignIn1.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Account/SignUp1.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/AuthContext/api.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/components/configCheckLevel.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserEditStatusForMaster.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserStatusDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/colums/columsStatusDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/database/migrations/2024_01_01_061224_add_status_to_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/home/Header/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/home/Header/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/home/Header/NavbarBottom2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/home/Header/NavbarBottom2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/home/Products/Product.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/home/Products/Product.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/AuthContext/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthContext/AuthContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AuthContext/Axios.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AuthLayout/DefaultLayoutDashboad.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthLayout/DefaultLayoutDashboad.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AuthLayout/DefaultLayoutProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthLayout/DefaultLayoutProfile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AuthLayout/GuestLayoutNormal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthLayout/GuestLayoutNormal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/DashBoardMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/DashBoardMain.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/_nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/_nav.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/components/AppHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/components/AppHeader.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/components/AppSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/components/AppSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/AvtUserCreate.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/AvtUser.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/AvtUserEdit.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserCreate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserCreate.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserEdit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserEdit.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/UserList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/colums/columsUserList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoardMain/scenes/Users/colums/columsUserList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Profile/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app/Http/Controllers/Api/UserController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/app/Http/Controllers/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/Http/Controllers/Auth/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/Http/Controllers/User/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -42,7 +42,7 @@ class AuthController extends Controller
                 'status' => 401,
                 'errors' => 'Account is not registered or the password is incorrect.'
             ], 401);
-        } 
+        }
 
         return $this->createNewToken($token);
     }
@@ -110,18 +110,18 @@ class AuthController extends Controller
     public function userProfile() {
         try {
             $user = auth()->userOrFail(); // Nếu không tìm thấy người dùng báo lỗi
-    
+
             return response()->json([
                 'status' => 200,
                 'user' => $user
             ], 200);
-    
+
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             return response()->json([
                 'status' => 401,
                 'errors' => 'Unauthorized. User not authenticated.'
             ], 401);
-    
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 500,
@@ -151,7 +151,7 @@ class AuthController extends Controller
     //     try {
     //         // Xác thực người dùng từ token
     //         $tokenUser = auth()->user();
-            
+
     //         // So sánh email từ token với email mà bạn truyền vào
     //         if ($tokenUser->email !== $email) {
     //             return response()->json([
@@ -174,19 +174,19 @@ class AuthController extends Controller
 
     //     } catch (\Exception $e) {
     //         return response()->json([
-    //             'status' => 500, 
+    //             'status' => 500,
     //             'errors' => 'Internal Server Error'
     //         ], 500);
     //     }
     // }
 
-    
+
 
     public function updateProfile(Request $request) {
         // Lấy ID của người dùng hiện tại
         $userId = auth()->user()->id;
         // $userId = user()->id;
-    
+
         // Kiểm tra dữ liệu đầu vào
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
@@ -196,31 +196,31 @@ class AuthController extends Controller
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250'
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->messages()
             ], 400);
         }
-    
+
         // Kiểm tra và cập nhật mật khẩu nếu có
         if (!empty($request->password)) {
             $passwordValidator = Validator::make($request->all(), [
                 'password' => 'required|confirmed|min:8',
             ]);
-    
+
             if ($passwordValidator->fails()) {
                 return response()->json([
                     'status' => 400,
                     'errors' => $passwordValidator->messages()
                 ], 400);
             }
-    
+
             // Cập nhật mật khẩu mới
             User::where('id', $userId)->update(['password' => bcrypt($request->password)]);
         }
-    
+
         // Cập nhật thông tin người dùng
         $updateData = [
             'fullname' => $request->fullname,
@@ -230,15 +230,15 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'address' => $request->address
         ];
-    
+
         User::where('id', $userId)->update($updateData);
-    
+
         return response()->json([
             'status' => 200,
             'message' => 'Profile updated successfully'
         ], 200);
     }
-    
-    
+
+
 }
 
