@@ -22,20 +22,20 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
-  // useEffect(() => {
-  //   axiosAuth
-  //     .get(`api/auth/user-profile`)
-  //     .then((res) => {
-  //       console.log(res.data.user);
-  //       setUsersAuthFetch(res.data.user);
-  //     })
-  //     .catch((e) => {
-  //       if (e.response && e.response.status === 401) {
-  //           sessionStorage.removeItem('token');
-  //           navigate("/signin")
-  //       }
-  //     });
-  // }, [token]);
+  useEffect(() => {
+    axiosAuth
+      .get(`api/auth/user-profile`)
+      .then((res) => {
+        console.log(res.data.user);
+        setUsersAuthFetch(res.data.user);
+      })
+      .catch((e) => {
+        if (e.response && e.response.status === 401) {
+            sessionStorage.removeItem('token');
+            navigate("/signin")
+        }
+      });
+  }, [token]);
 
   return (
     <AuthContext.Provider value={{ usersAuthFetch }}>
