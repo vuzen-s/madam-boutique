@@ -120,6 +120,20 @@ class UserController extends Controller
     {
         // Viết view lịch sử thanh toán
         // HasMany table payment
+        $user = User::findOrFail($id);
+
+        if ($user) {
+            return response()->json([
+                'status' => 200,
+                
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => "User Not Found"
+            ], 404);
+        }
     }
 
     /**
