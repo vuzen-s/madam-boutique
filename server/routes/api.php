@@ -9,10 +9,9 @@ use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\TopicController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Mail\ContactMailController;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -139,12 +138,18 @@ Route::delete('ratings-destroy/{id}', [RatingController::class, 'destroy'])->nam
 // =================== USER ===================
 // Lấy danh sách user
 Route::get('users', [UserController::class, 'index']);
+// Lấy danh sách user đã delete cho Admin Master
+Route::get('users/detail-delete', [UserController::class, 'showUserDelete']);
+// Khôi phục lại user sau khi delete, chỉ Admin Master mới thao tác phần này
+Route::put('users/show/{id}', [UserController::class, 'backToShowStatus']);
 // Tạo user
-Route::post('users/create', [UserController::class, 'store']) ->middleware('recaptcha');
+Route::post('users/create', [UserController::class, 'store'])->middleware('recaptcha');
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
 Route::put('users/edit/{id}', [UserController::class, 'update']);
+// Xóa User
+Route::delete('destroy/{id}', [UserController::class, 'destroy']);
 
 Route::group([
 
@@ -158,6 +163,8 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    // Route::get('/showEditProfile/{email}', [AuthController::class, 'showEditProfile']);
+    Route::put('/update-profile', [AuthController::class, 'updateProfile']);
 });
 
 // =================== TOPICS ===================
@@ -179,4 +186,4 @@ Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->nam
 // =================== MAIL ===================
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
 // Xác thực lại reCapcha
-Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact') ->middleware('recaptcha');
+Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact')->middleware('recaptcha');

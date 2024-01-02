@@ -27,6 +27,7 @@ import Colors from './views/theme/colors/Colors'
 import BlogList from "./scenes/Blogs/BlogList";
 import BlogCreate from "./scenes/Blogs/BlogCreate";
 import BlogEdit from "./scenes/Blogs/BlogEdit";
+import UserStatusDetail from './scenes/Users/UserStatusDetail'
 
 const loading = (
     <div className="pt-3 text-center">
@@ -62,7 +63,8 @@ class DashBoardMain extends Component {
                                 <Route path="brand/edit/:id" element={<BrandEdit/>}/>
                                 <Route path="user" element={<UserList/>}/>
                                 <Route path="user/create" element={<UserCreate/>}/>
-                                <Route path="user/edit/:id" element={<UserEdit/>}/>
+                                <Route path="user/edit/:id" element={<UserEdit/>}/> UserStatusDetail
+                                <Route path="user/delete/status" element={<UserStatusDetail/>}/>
                                 <Route path="collection" element={<CollectionList/>}/>
                                 <Route path="collection/create" element={<CollectionCreate/>}/>
                                 <Route path="collection/edit/:id" element={<CollectionEdit/>}/>
@@ -84,6 +86,51 @@ class DashBoardMain extends Component {
             </div>
         );
     }
+
+
+    // render() {
+    //   return (
+    //     <div>
+    //       <AppSidebar />
+    //       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+    //         <AppHeader />
+    //         <div className="body flex-grow-1 px-3">
+    //           {/* <AppContent /> */}
+    //           <Suspense fallback={loading}>
+    //             <Routes>
+    //               {/* <Route path="/*" element={<MainLayout />} /> */}
+    //               <Route path="*" name="Home" element={<Dashboard />} />
+    //               <Route path="designer" element={<DesignerList />} />
+    //               <Route path="designer/create" element={<DesignerCreate />} />
+    //               <Route path="designer/edit/:id" element={<DesignerEdit />} />
+    //               <Route path="brand" element={<BrandList />} />
+    //               <Route path="brand/create" element={<BrandCreate />} />
+    //               <Route path="brand/edit/:id" element={<BrandEdit />} />
+    //               <Route path="user" element={<UserList />} />
+    //               <Route path="user/create" element={<UserCreate />} />
+    //               <Route path="user/edit/:id" element={<UserEdit />} /> UserStatusDetail
+    //               <Route path="user/delete/status" element={<UserStatusDetail />} />
+    //               <Route path="collection" element={<CollectionList />} />
+    //               <Route path="collection/create" element={<CollectionCreate />} />
+    //               <Route path="collection/edit/:id" element={<CollectionEdit />} />
+    //               <Route path="category" element={<CategoryList />} />
+    //               <Route path="category/create" element={<CategoryCreate />} />
+    //               <Route path="category/edit/:id" element={<CategoryEdit />} />
+    //               <Route path="product" element={<ProductList />} />
+    //               <Route path="product/create" element={<ProductCreate />} />
+    //               <Route path="product/edit/:id" element={<ProductEdit />} />
+    //               <Route path="product/comment/" element={<CommentByProduct />} />
+    //               <Route path="product/comment/detail/:id" element={< Details />} />
+    //               {/* //  */}
+    //               <Route path="theme/color" element={<Colors />} />
+    //             </Routes>
+    //           </Suspense>
+    //         </div>
+    //         <AppFooter />
+    //       </div>
+    //     </div>
+    //   );
+    // }
 }
 
 export default DashBoardMain
