@@ -201,7 +201,7 @@ const CheckoutForm = () => {
                       amount: {
                         currency_code: 'USD',
                         
-                        value: totalAmount ,shippingCharge,products,
+                        value: totalAmount ,
                       },
                     },
                   ],
@@ -228,7 +228,7 @@ const CheckoutForm = () => {
       return () => {
         document.body.removeChild(script);
       };
-    }, []);
+    }, [ totalAmount]);
 
     return (
      <div>
