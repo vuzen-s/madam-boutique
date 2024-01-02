@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RatingModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SmirlTech\LaravelFcm\Enums\MessagePriority;
 use SmirlTech\LaravelFcm\Facades\LaravelFcm;
 
 class RatingController extends Controller
@@ -19,6 +20,23 @@ class RatingController extends Controller
         return response()->json([
             'ratings' => $ratings,
         ]);
+    }
+
+    public function sendNotification()
+    {
+        $deviceTokens = ['cH5RnaynTPA0xvkyWM_rr3:APA91bFm1qT7c3uDXhsU3_7tqNSDgl1ruZP40FAWCf4HoDWyYWX82-SpBrVpfBfeh7-EqqQ9WdLDKKbkEJRgA5_gtIqexVTxW93JjSAsJEn7xAFbI9AiXGxFLKOcvafxnFPMSgEqvAV2'];
+        return LaravelFcm::withTitle('Ratings')
+            ->withBody('Vừa có khách hàng rating sản phẩm. Vào xem ngay!')
+            ->withImage('https://firebase.google.com/images/social.png')
+            ->withIcon('https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png')
+            ->withSound('default')
+            ->withClickAction('http://localhost:3000/dashboard/')
+            ->withPriority('high')
+            ->withAdditionalData([
+                'color' => '#rrggbb',
+                'badge' => 0,
+            ])
+            ->sendNotification($deviceTokens);
     }
 
     /**
@@ -38,19 +56,19 @@ class RatingController extends Controller
         $data->save();
 
         // Gửi push notification
-        $deviceTokens = ['cH5RnaynTPA0xvkyWM_rr3:APA91bFutBI5y9kBlhKQIQqRSADfrs8EycmIKqeP4VrgizZjlxyzjAiV51Dc9I5e8pcjmmotplJrxnJocmQvzycXrKUP_x1bI6kev8Ve83GCyLgMrVY96FH20iwC1q6nQ4FxZg8zmQOC'];
-        LaravelFcm::withTitle('Test Title')
-            ->withBody('Test body')
+        $deviceTokens = ['cH5RnaynTPA0xvkyWM_rr3:APA91bFm1qT7c3uDXhsU3_7tqNSDgl1ruZP40FAWCf4HoDWyYWX82-SpBrVpfBfeh7-EqqQ9WdLDKKbkEJRgA5_gtIqexVTxW93JjSAsJEn7xAFbI9AiXGxFLKOcvafxnFPMSgEqvAV2'];
+        LaravelFcm::withTitle('Ratings')
+            ->withBody('Vừa có khách hàng rating sản phẩm. Vào xem ngay!')
             ->withImage('https://firebase.google.com/images/social.png')
             ->withIcon('https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png')
             ->withSound('default')
             ->withClickAction('http://localhost:3000/dashboard/')
-            ->withPriority('high')
+            ->withPriority(MessagePriority::high)
             ->withAdditionalData([
                 'color' => '#rrggbb',
                 'badge' => 0,
             ])
-            ->sendNotification($deviceTokens);
+            ->sendNotification('cH5RnaynTPA0xvkyWM_rr3:APA91bFm1qT7c3uDXhsU3_7tqNSDgl1ruZP40FAWCf4HoDWyYWX82-SpBrVpfBfeh7-EqqQ9WdLDKKbkEJRgA5_gtIqexVTxW93JjSAsJEn7xAFbI9AiXGxFLKOcvafxnFPMSgEqvAV2');
 
         // response
         return response()->json([
