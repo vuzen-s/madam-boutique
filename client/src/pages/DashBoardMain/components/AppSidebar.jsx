@@ -11,11 +11,37 @@ import SimpleBar from 'simplebar-react'
 
 // sidebar nav config
 import navigation from '../_nav'
+import useAuthContext from '../../AuthContext/AuthContext'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const { usersAuthFetch } = useAuthContext();
+
+  console.log(usersAuthFetch.level)
+  console.log(usersAuthFetch)
+
+  const filterNavigation = (items) => {
+    return items.map((item) => {
+      const newItem = { ...item }; // Sao chép item
+      if (newItem.name === 'Deleted User' && usersAuthFetch.level !== 1) {
+        return null; // Loại bỏ mục 'Deleted User' nếu không phải là Admin Master = level 1
+      }
+      if (newItem.items) {
+        newItem.items = filterNavigation(newItem.items); // Lọc các mục con
+      }
+      return newItem; // Trả về item mới
+    }).filter(Boolean); // Loại bỏ các item null sau khi lọc
+  };
+    
+  const filteredNavigation = filterNavigation([...navigation]); // Sao chép mảng navigation trước khi lọc
+  
+  
+
+  console.log(filteredNavigation);
+
 
   return (
     <CSidebar
@@ -34,7 +60,7 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation}/>
+          <AppSidebarNav items={filteredNavigation}/>
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

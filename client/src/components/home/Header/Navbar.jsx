@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 import { HiMenuAlt2 } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import { navBarList } from "../../../constants";
-import useAuthContext from "../../../pages/AuthContext/AuthContext";
+import api from "../../../pages/AuthContext/api";
 
 const Navbar = () => {
   const [productsList, setProductsList] = useState([]);
@@ -29,6 +29,7 @@ const Navbar = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
   
   const products = useSelector((state) => state.madamBoutiqueReducer.products);
   const productsFavorite = useSelector(
@@ -40,10 +41,16 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [userAuth, setUserAuth] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { userAuth, logout } = useAuthContext();
+  // const {userAuth, logout } = useAuthContext();
+
+  const handleEditUser = () => {
+    navigate(`../profile`);
+  }
+
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -67,6 +74,40 @@ const Navbar = () => {
     hiddenLogo();
     window.addEventListener("resize", hiddenLogo);
   }, []); 
+
+  useEffect(() => {
+    api.get(`/api/auth/user-profile`).then((res) => {
+      if(res.data.status === 200) {
+        console.log(res.data.user);
+        setUserAuth(res.data.user);
+      }
+    })
+    .catch((e) => {
+      if (e.response && e.response.status === 401) {
+        navigate('/')
+      }
+    });
+  }, []);
+
+  // const token = sessionStorage.getItem('token');
+
+  const logout = async () => {
+    try {
+        const response = await api.post('api/auth/logout');
+        if (response.status === 200) {
+          sessionStorage.removeItem('token');
+            setUserAuth(null);
+            navigate('/'); 
+        }
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        console.log("Error logging out:", e);
+        setUserAuth(null);
+        sessionStorage.removeItem('token');
+      }
+    }
+}
+
 
   return (
     <header class="text-gray-600 body-font sticky top-0 z-50 bg-white h-full shadow-2xl">
@@ -158,7 +199,7 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
               className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
             >
-               {/* && userAuth.level === 4) */}
+              
               {userAuth ? (
                 <>
                 {userAuth && userAuth.level !== 4 ? (
@@ -166,19 +207,20 @@ const Navbar = () => {
                   <li className="text-slate-200 font-bold text-base w-full px-1 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white bg-gray-600 rounded-t-md hover:text-white duration-300 cursor-pointer">
                     Go To Dashboard
                   </li>
-                </Link> ) : ''}
-                <Link to="/profile">
-                  <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                </Link> 
+                ) : ''}  
+                <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300">
+                  <button onClick={handleEditUser} className="text-gray-400 w-full hover:text-white">
                     Profile
-                  </li>
-                </Link>
+                  </button>
+                </li>
                 <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 rounded-md">
                   <button onClick={logout} className="text-gray-400 w-full hover:text-white">
                     Logout
                   </button>
                 </li>
               </>
-              ) : (
+              ) : ( 
                 <>
                   <Link to="/signin">
                     <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
@@ -191,7 +233,7 @@ const Navbar = () => {
                     </li>
                   </Link>
                 </>
-              )}
+              )} 
             </motion.ul>
           )}
 

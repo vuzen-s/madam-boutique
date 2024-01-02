@@ -42,12 +42,8 @@ const Product = (props) => {
             </li> */}
                         <li
                             onClick={() => dispatch(addToCart({
-                                _id: props.id,
-                                name: props.name,
-                                quantity: 1,
-                                image: props.avatar, // badge: props.badge,
-                                price: props.price,
-                                colors: props.color,
+                                _id: props.id, name: props.name, quantity: 1, image: props.avatar, // badge: props.badge,
+                                price: props.price, colors: props.color,
                             }))}
                             className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
                         >
@@ -67,12 +63,8 @@ const Product = (props) => {
                         </li>
                         <li
                             onClick={() => dispatch(addProductsFavorite({
-                                _id: props.id,
-                                name: props.name,
-                                quantity: 1,
-                                image: props.avatar, // badge: props.badge,
-                                price: props.price,
-                                colors: props.color,
+                                _id: props.id, name: props.name, quantity: 1, image: props.avatar, // badge: props.badge,
+                                price: props.price, colors: props.color,
                             }))}
                             className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
                             Add to Favorite List
@@ -99,7 +91,8 @@ const Product = (props) => {
                     </div>
                 </div>
             </div>
-        </div>);
+        </div>
+    );
 };
 
 export default Product;

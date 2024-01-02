@@ -3,11 +3,11 @@ import { Breadcrumb, Input } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import AvatarProfile from "../../../../components/Avatar/Avatar";
+import Swal from "sweetalert2";
 import { UploadOutlined } from "@ant-design/icons";
 import { Image, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
-import "./AvtUserEdit.css";
+import "./AvtUser.css";
 
 const { TextArea } = Input;
 
@@ -17,22 +17,22 @@ const UserEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [imageSrc, setImageSrc] = useState(
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  );
+  // const [imageSrc, setImageSrc] = useState(
+  //   "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  // );
 
-  const handleImageChange = (fileList) => {
-    if (fileList && fileList.length > 0) {
-      const file = fileList[0];
-      const reader = new FileReader();
+  // const handleImageChange = (fileList) => {
+  //   if (fileList && fileList.length > 0) {
+  //     const file = fileList[0];
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        setImageSrc(reader.result);
-      };
+  //     reader.onloadend = () => {
+  //       setImageSrc(reader.result);
+  //     };
 
-      reader.readAsDataURL(file);
-    }
-  };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/users/edit/${id}`).then((res) => {
@@ -59,6 +59,14 @@ const UserEdit = () => {
     setUsers((values) => ({ ...values, [name]: value }));
   };
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setUserAuth((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleUpdateUser = (e) => {
     e.preventDefault();
 
@@ -69,15 +77,27 @@ const UserEdit = () => {
       gender: users.gender,
       password: users.password,
       phone: users.phone,
-      Address: users.Address,
+      address: users.address,
       password_confirmation: users.password_confirmation,
     };
 
     axios
       .put(`http://localhost:8000/api/users/edit/${id}`, data)
       .then((res) => {
-        console.log(res.data);
-        alert(res.data.message);
+        if (res.status === 200) {
+          setUsers(res.data.user);
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Update User Successfully",
+            // confirmButtonText: "Ok",
+            timer: 5000,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        }
       })
 
       .catch((e) => {
@@ -94,18 +114,18 @@ const UserEdit = () => {
       });
   };
 
-  useEffect(() => {
-    setErrors({});
-  }, [
-    users.fullname,
-    users.email,
-    users.password,
-    users.password_confirmation,
-    users.gender,
-    users.level,
-    users.phone,
-    users.Address,
-  ]);
+  // useEffect(() => {
+  //   setErrors('');
+  // }, [
+  //   users.fullname,
+  //   users.email,
+  //   users.password,
+  //   users.password_confirmation,
+  //   users.gender,
+  //   users.level,
+  //   users.phone,
+  //   users.address,
+  // ]);
 
   const handleBackToList = () => {
     navigate("/dashboard/user");
@@ -113,12 +133,12 @@ const UserEdit = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-md p-2 flex justify-between items-center shadow-md">
+      <div className="bg-white rounded-md py-2 px-2.5 mb-3 flex justify-between items-center shadow-md">
         <Breadcrumb
           style={{ margin: "5px 0", fontSize: "20px", fontWeight: "500" }}
         >
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>User edit</Breadcrumb.Item>
+          <Breadcrumb.Item className="text-2xl">Edit User</Breadcrumb.Item>
+          {/* <Breadcrumb.Item>User edit</Breadcrumb.Item> */}
         </Breadcrumb>
         <Button
           variant="contained"
@@ -132,7 +152,7 @@ const UserEdit = () => {
       <form onSubmit={handleUpdateUser}>
         <div className="max-w-full h-full mt-2 mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
           {/* Update Avavtar */}
-          <div>
+          {/* <div>
             <div className="flex flex-col justify-center gap-3">
               <div className="border-3 border-slate-300 p-1 rounded-full flex mdl:flex-col justify-center mx-auto">
                 <Image
@@ -142,7 +162,7 @@ const UserEdit = () => {
                 />
               </div>
               <div className="flex mdl:flex-col justify-center mx-auto">
-                <ImgCrop rotationSlider>
+                <ImgCrop rotationSlider className="z-50">
                   <Upload
                     onChange={(info) => {
                       if (info.fileList.length > 0) {
@@ -172,7 +192,7 @@ const UserEdit = () => {
                 </ImgCrop>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Cut handle */}
 
@@ -190,7 +210,7 @@ const UserEdit = () => {
                 <Input
                   id="fullname"
                   name="fullname"
-                  value={users.fullname}
+                  value={users === undefined ? "" : users.fullname}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. Le Van Truong Anh"
@@ -215,7 +235,7 @@ const UserEdit = () => {
                 <Input
                   id="email"
                   name="email"
-                  value={users.email}
+                  value={users === undefined ? "" : users.email}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. truonganh@gmail.com"
@@ -240,7 +260,7 @@ const UserEdit = () => {
                   type="password"
                   id="password"
                   name="password"
-                  value={users.password}
+                  value={users === undefined ? "" : users.password}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Password"
@@ -265,7 +285,7 @@ const UserEdit = () => {
                   type="password"
                   id="passwordConfirmation"
                   name="password_confirmation"
-                  value={users.password_confirmation}
+                  value={users === undefined ? "" : users.password_confirmation}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Confirm Password"
@@ -281,11 +301,33 @@ const UserEdit = () => {
 
             {/* ---------- Layout cut ---------- */}
 
-            <div className="flex-1 flex flex-col gap-3">
+            <div className="flex-1 flex flex-col gap-2">
+              <div className="flex flex-col gap-.8">
+                <label
+                  htmlFor="status"
+                  className="font-titleFont text-base font-semibold text-gray-600"
+                >
+                  Status
+                </label>
+                <input
+                  name="status"
+                  value={users === undefined ? "" : users.status}
+                  onChange={handleInputValue}
+                  disabled
+                  className="w-full h-10 bg-gray-300 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                  type="text"
+                  placeholder="Phone Number"
+                />
+                {errors && (
+                  <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
+                    {errors.status}
+                  </span>
+                )}
+              </div>
               {/* Gender && Level */}
 
-              <div className="flex flex-raw justify-between">
-                <div className="flex-1 mr-1.5">
+              <div className="flex">
+                <div className="flex-1 flex-col  mr-1.5">
                   <div className="flex flex-col gap-.8 ">
                     <label
                       htmlFor="gender"
@@ -296,19 +338,21 @@ const UserEdit = () => {
                     <select
                       id="level"
                       name="gender"
-                      value={users.gender}
+                      value={users === undefined ? "" : users.gender}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     >
+                      <option value="Choose Gender">Choose Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                      <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
                         {errors.gender}
                       </span>
                     )}
                   </div>
+                  
                 </div>
 
                 <div className="flex-1 flex flex-col gap-.8 ml-1.5">
@@ -321,14 +365,14 @@ const UserEdit = () => {
                     </label>
                     <input
                       name="phone"
-                      value={users.phone}
+                      value={users === undefined ? "" : users.phone}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
                       placeholder="Phone Number"
                     />
                     {errors && (
-                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                      <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
                         {errors.phone}
                       </span>
                     )}
@@ -347,10 +391,11 @@ const UserEdit = () => {
                 <select
                   id="level"
                   name="level"
-                  value={users.level}
+                  value={users === undefined ? "" : users.level}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
+                  <option value="Chosse Level">Chosse Level</option>
                   <option value="1">Admin Master</option>
                   <option value="2">Admin Manager</option>
                   <option value="3">Admin Editor</option>
@@ -371,10 +416,10 @@ const UserEdit = () => {
                   Address
                 </label>
                 <TextArea
-                  name="Address"
-                  value={users.Address}
+                  name="address"
+                  value={users === undefined ? "" : users.address}
                   onChange={handleInputValue}
-                  rows={3}
+                  rows={2}
                   placeholder="Your Address Is Here"
                   maxLength={350}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"

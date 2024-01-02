@@ -10,8 +10,8 @@ import {useEffect} from 'react';
 // import NavbarBottom from "./components/home/Header/NavbarBottom";
 
 import About from "./pages/About/About";
-import SignIn from "./pages/Account/SignIn";
-import SignUp from "./pages/Account/SignUp";
+// import SignIn from "./pages/Account/SignIn";
+// import SignUp from "./pages/Account/SignUp";
 // import Blog from "./pages/Blog/Blog";
 import BlogList from "./components/BlogList/BlogList";
 import Cart from "./pages/Cart/Cart";
@@ -34,6 +34,9 @@ import Shop from "./pages/Shop/Shop";
 import {getMessagingToken, onMessageListener} from "./firebase.ts";
 import 'firebase/auth';
 import 'firebase/firestore';
+import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
+import SignUp1 from "./pages/Account/SignUp1";
+import SignIn1 from "./pages/Account/SignIn1";
 
 const App = () => {
     useEffect(() => {
@@ -66,7 +69,7 @@ const App = () => {
                     <Route path="/blog" element={<BlogList/>}></Route>
                     {/* ==================== Header Navlink End here ===================== */}
                     <Route path="/offer" element={<Offer/>}></Route>
-                    <Route path="/product/:id" element={<ProductDetails />}></Route>
+                    <Route path="/product/:id" element={<ProductDetails/>}></Route>
                     <Route path="/favorite" element={<ProductFavorite/>}></Route>
                     <Route path="/cart" element={<Cart/>}></Route>
                     <Route path="/paymentgateway" element={<Payment/>}></Route>
@@ -89,6 +92,27 @@ const App = () => {
             </Routes>
         </div>
     );
+    //         {/* <Route element={<DefaultLayoutProfile />}> */}
+    //           <Route path="/profile" element={<Profile />}></Route>
+    //           {/* <Route path="/profile/:fullname" element={<Profile />}></Route> */}
+    //         {/* </Route> */}
+    //       </Route>
+    //       {/* // */}
+    //
+    //       <Route element={<GuestLayoutNormal />}>
+    //         {/* <Route path="/signup" element={<SignUp />}></Route> */}
+    //         {/* <Route path="/signin" element={<SignIn />}></Route> */}
+    //         <Route path="/signin" element={<SignIn1 />}></Route>
+    //         <Route path="/signup" element={<SignUp1 />}></Route>
+    //       </Route>
+    //
+    //       <Route element={<DefaultLayoutDashboard />}>
+    //         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
+    //       </Route>
+    //       <Route path="/404" element={<Page404 />}></Route>
+    //     </Routes>
+    //   </div>
+    // );
 };
 
 // const router = createBrowserRouter(

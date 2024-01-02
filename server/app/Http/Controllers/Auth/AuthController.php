@@ -42,7 +42,7 @@ class AuthController extends Controller
                 'status' => 401,
                 'errors' => 'Account is not registered or the password is incorrect.'
             ], 401);
-        }
+        } 
 
         return $this->createNewToken($token);
     }
@@ -56,6 +56,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|between:2,50',
             'email' => 'required|string|email|max:100|unique:users,email',
+            'phone' => 'nullable|numeric|digits:10',
             'password' => 'required|string|confirmed|min:8',
             'gender' => 'required'
         ]);
@@ -69,7 +70,7 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
                     $validator->validated(),
-                    ['phone' => $request->phone],
+                    // ['phone' => $request->phone],
                     ['password' => bcrypt($request->password)]
                 ));
 
@@ -105,13 +106,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function userProfile() {
-    //     return response()->json(auth()->user());
-    // }
 
     public function userProfile() {
         try {
-            $user = auth()->userOrFail(); // Ném ra một ngoại lệ nếu không tìm thấy người dùng
+            $user = auth()->userOrFail(); // Nếu không tìm thấy người dùng báo lỗi
     
             return response()->json([
                 'status' => 200,
@@ -148,25 +146,99 @@ class AuthController extends Controller
         ]);
     }
 
-    public function changePassWord(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|min:6',
-            'new_password' => 'required|string|confirmed|min:6',
-        ]);
+    // public function showEditProfile(string $email)
+    // {
+    //     try {
+    //         // Xác thực người dùng từ token
+    //         $tokenUser = auth()->user();
+            
+    //         // So sánh email từ token với email mà bạn truyền vào
+    //         if ($tokenUser->email !== $email) {
+    //             return response()->json([
+    //                 'message' => 'Unauthorized'
+    //             ], 401);
+    //         }
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+    //         $user = User::where('email', $email)->first();
+
+    //         if (!$user) {
+    //             return response()->json([
+    //                 'message' => 'User not found'
+    //             ], 404);
+    //         }
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'user' => $user
+    //         ], 200);
+
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 500, 
+    //             'errors' => 'Internal Server Error'
+    //         ], 500);
+    //     }
+    // }
+
+    
+
+    public function updateProfile(Request $request) {
+        // Lấy ID của người dùng hiện tại
         $userId = auth()->user()->id;
-
-        $user = User::where('id', $userId)->update(
-                    ['password' => bcrypt($request->new_password)]
-                );
-
+        // $userId = user()->id;
+    
+        // Kiểm tra dữ liệu đầu vào
+        $validator = Validator::make($request->all(), [
+            'fullname' => 'required|string|max:50',
+            'email' => 'required|string|email|max:100|unique:users,email,' . $userId,
+            'gender' => 'nullable',
+            'level' => 'required',
+            'phone' => 'nullable|numeric|digits:10',
+            'address' => 'nullable|max:250'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ], 400);
+        }
+    
+        // Kiểm tra và cập nhật mật khẩu nếu có
+        if (!empty($request->password)) {
+            $passwordValidator = Validator::make($request->all(), [
+                'password' => 'required|confirmed|min:8',
+            ]);
+    
+            if ($passwordValidator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $passwordValidator->messages()
+                ], 400);
+            }
+    
+            // Cập nhật mật khẩu mới
+            User::where('id', $userId)->update(['password' => bcrypt($request->password)]);
+        }
+    
+        // Cập nhật thông tin người dùng
+        $updateData = [
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'level' => $request->level,
+            'phone' => $request->phone,
+            'address' => $request->address
+        ];
+    
+        User::where('id', $userId)->update($updateData);
+    
         return response()->json([
-            'message' => 'User successfully changed password',
-            'user' => $user,
-        ], 201);
+            'status' => 200,
+            'message' => 'Profile updated successfully'
+        ], 200);
     }
+    
+    
 }
 
