@@ -12,8 +12,8 @@ import { useEffect } from "react";
 import About from "./pages/About/About";
 // import SignIn from "./pages/Account/SignIn";
 // import SignUp from "./pages/Account/SignUp";
-// import Blog from "./pages/Blog/Blog";
-import BlogList from "./components/BlogList/BlogList";
+ import Blog from "./pages/Blog/Blog";
+// import BlogList from "./components/BlogList/BlogList";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
 // import DashboardApp from "./pages/Dashboard/DashboardApp";
@@ -68,7 +68,7 @@ const App = () => {
           <Route path="/shop" element={<Shop />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/blog" element={<BlogList />}></Route>
+          <Route path="/blog" element={<Blog />}></Route>
           {/* ==================== Header Navlink End here ===================== */}
           <Route path="/offer" element={<Offer />}></Route>
           <Route path="/product/:id" element={<ProductDetails />}></Route>
