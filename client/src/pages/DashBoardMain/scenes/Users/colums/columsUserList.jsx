@@ -141,27 +141,27 @@ export const colums = [
     field: "delete",
     headerName: "Delete",
     flex: 0.5,
-    renderCell: (params) => {
-      if (userLevel === 1 && params.value <= 1) {
-        return null;  // Không hiển thị nút delete
-      } 
-      if (userLevel === 2 && params.value <= 2) {
-        return null;  // Không hiển thị nút delete
-      }
-      return (
-        <Button
-          onClick={() => handleDeleteUser(params.id)}
-          sx={{
-            bgcolor: "#d32f2f",
-            color: "white",
-            "&:hover": { bgcolor: "#f44336" },
-            width: "100px",
-          }}
-          startIcon={<DeleteIcon />}
-        >
-          Delete
-        </Button>
-      );
-    },
+    // renderCell: (params) => {
+    //   if (userLevel === 1 && params.value <= 1) {
+    //     return null;  // Không hiển thị nút delete
+    //   }
+    //   if (userLevel === 2 && params.value <= 2) {
+    //     return null;  // Không hiển thị nút delete
+    //   }
+    //   return (
+    //     <Button
+    //       onClick={() => handleDeleteUser(params.id)}
+    //       sx={{
+    //         bgcolor: "#d32f2f",
+    //         color: "white",
+    //         "&:hover": { bgcolor: "#f44336" },
+    //         width: "100px",
+    //       }}
+    //       startIcon={<DeleteIcon />}
+    //     >
+    //       Delete
+    //     </Button>
+    //   );
+    // },
   },
 ];
