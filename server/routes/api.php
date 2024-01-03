@@ -144,6 +144,8 @@ Route::get('users/detail-delete', [UserController::class, 'showUserDelete']);
 Route::put('users/show/{id}', [UserController::class, 'backToShowStatus']);
 // Tạo user
 Route::post('users/create', [UserController::class, 'store']);
+// Lấy thong tin user
+Route::get('users/{id}', [UserController::class, 'show']);
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
 // Update thông tin user edit
