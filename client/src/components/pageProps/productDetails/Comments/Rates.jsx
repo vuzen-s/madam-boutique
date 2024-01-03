@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import Rate from './Rate';
 import './Rates.scss';
 import RatingProgess from './RatingProgess';
+import api from "../../../../pages/AuthContext/api";
 
 const labels = {
     0.5: 'Useless',
@@ -39,6 +40,24 @@ const Rates = ({idProduct}) => {
     const [value, setValue] = useState(2);
     const [hover, setHover] = useState(-1);
 
+    const [userAuth, setUserAuth] = useState(null);
+
+    // get user comment
+    useEffect(() => {
+        api.get(`/api/auth/user-profile`)
+            .then((res) => {
+                if (res.data.status === 200) {
+                    console.log(res.data.user);
+                    setUserAuth(res.data.user);
+                }
+            })
+            .catch((e) => {
+                if (e.response && e.response.status === 401) {
+                    console.log(e);
+                }
+            });
+    }, []);
+
     // call ratings all by idProduct
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/ratings-show/' + idProduct, {
@@ -65,7 +84,12 @@ const Rates = ({idProduct}) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({rating: value, rating_content: contentRating, user_id: 1, product_id: idProduct}), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify({
+                    rating: value,
+                    rating_content: contentRating,
+                    user_id: userAuth.id,
+                    product_id: idProduct
+                }), // Chuyển đổi FormData thành đối tượng JSON
             })
                 .then((respon) => respon.json())
                 .then((data) => {
