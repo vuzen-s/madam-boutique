@@ -8,6 +8,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Image, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import "./AvtUser.css";
+import useAuthContext from "../../../AuthContext/AuthContext";
 
 const { TextArea } = Input;
 
@@ -16,6 +17,11 @@ const UserEdit = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
+  const { usersAuthFetch } = useAuthContext();
+  const userLevel = usersAuthFetch.level; // Lấy level của người dùng đăng nhập hiện tại
+
+  // Nếu đăng nhập là userLevel = 1 thì disable thẻ select level vì không thể hạ cấp của mình được, có thể select level với userLevel = 2, userLevel = 3, userLevel = 4;
+  // Nếu đăng nhập là userLevel = 2 thì cũng disable thẻ select level vì không thể hạ cấp của mình được càng không thể select level userLevel = 1, chỉ có thể select level với userLevel = 3, userLevel = 4;
 
   // const [imageSrc, setImageSrc] = useState(
   //   "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
@@ -71,14 +77,14 @@ const UserEdit = () => {
     e.preventDefault();
 
     const data = {
-      fullname: users.fullname,
-      email: users.email,
-      level: users.level,
-      gender: users.gender,
-      password: users.password,
-      phone: users.phone,
-      address: users.address,
-      password_confirmation: users.password_confirmation,
+      fullname: users?.fullname,
+      email: users?.email,
+      level: users?.level,
+      gender: users?.gender,
+      password: users?.password,
+      phone: users?.phone,
+      address: users?.address,
+      password_confirmation: users?.password_confirmation,
     };
 
     axios
@@ -114,18 +120,22 @@ const UserEdit = () => {
       });
   };
 
-  // useEffect(() => {
-  //   setErrors('');
-  // }, [
-  //   users.fullname,
-  //   users.email,
-  //   users.password,
-  //   users.password_confirmation,
-  //   users.gender,
-  //   users.level,
-  //   users.phone,
-  //   users.address,
-  // ]);
+  const checkBackgroundLogic = () => {
+    return;
+  };
+
+  useEffect(() => {
+    setErrors("");
+  }, [
+    users?.fullname,
+    users?.email,
+    users?.password,
+    users?.password_confirmation,
+    users?.gender,
+    users?.level,
+    users?.phone,
+    users?.address,
+  ]);
 
   const handleBackToList = () => {
     navigate("/dashboard/user");
@@ -210,7 +220,7 @@ const UserEdit = () => {
                 <Input
                   id="fullname"
                   name="fullname"
-                  value={users === undefined ? "" : users.fullname}
+                  value={users === undefined ? "" : users?.fullname}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. Le Van Truong Anh"
@@ -235,7 +245,7 @@ const UserEdit = () => {
                 <Input
                   id="email"
                   name="email"
-                  value={users === undefined ? "" : users.email}
+                  value={users === undefined ? "" : users?.email}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. truonganh@gmail.com"
@@ -260,7 +270,7 @@ const UserEdit = () => {
                   type="password"
                   id="password"
                   name="password"
-                  value={users === undefined ? "" : users.password}
+                  value={users === undefined ? "" : users?.password}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Password"
@@ -285,7 +295,9 @@ const UserEdit = () => {
                   type="password"
                   id="passwordConfirmation"
                   name="password_confirmation"
-                  value={users === undefined ? "" : users.password_confirmation}
+                  value={
+                    users === undefined ? "" : users?.password_confirmation
+                  }
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Confirm Password"
@@ -311,7 +323,7 @@ const UserEdit = () => {
                 </label>
                 <input
                   name="status"
-                  value={users === undefined ? "" : users.status}
+                  value={users === undefined ? "" : users?.status}
                   onChange={handleInputValue}
                   disabled
                   className="w-full h-10 bg-gray-300 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -338,7 +350,7 @@ const UserEdit = () => {
                     <select
                       id="level"
                       name="gender"
-                      value={users === undefined ? "" : users.gender}
+                      value={users === undefined ? "" : users?.gender}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     >
@@ -352,7 +364,6 @@ const UserEdit = () => {
                       </span>
                     )}
                   </div>
-                  
                 </div>
 
                 <div className="flex-1 flex flex-col gap-.8 ml-1.5">
@@ -365,7 +376,7 @@ const UserEdit = () => {
                     </label>
                     <input
                       name="phone"
-                      value={users === undefined ? "" : users.phone}
+                      value={users === undefined ? "" : users?.phone}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
@@ -391,15 +402,33 @@ const UserEdit = () => {
                 <select
                   id="level"
                   name="level"
-                  value={users === undefined ? "" : users.level}
+                  value={users === undefined ? "" : users?.level}
                   onChange={handleInputValue}
-                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                  disabled={
+                    (userLevel === 1 && users?.level < 2) || // Vô hiệu hóa cho userLevel 1 nếu cấp độ người dùng < 2
+                    (userLevel === 2 && users?.level <= 2) // Vô hiệu hóa cho userLevel 2 nếu cấp độ người dùng <= 2
+                  }
+                  className={`w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none ${
+                    (userLevel === 1 && userLevel === 1 && users?.level < 2) ||
+                    (userLevel === 2 && userLevel === 2 && users?.level <= 2)
+                      ? "bg-gray-300"
+                      : ""
+                  }`}
                 >
-                  <option value="Chosse Level">Chosse Level</option>
-                  <option value="1">Admin Master</option>
-                  <option value="2">Admin Manager</option>
-                  <option value="3">Admin Editor</option>
-                  <option value="4">Member</option>
+                  {userLevel === 1 && (
+                    <>
+                      {/* <option value="1">Admin Master</option> */}
+                      <option value="2">Admin Manager</option>
+                      <option value="3">Admin Editor</option>
+                      <option value="4">Member</option>
+                    </>
+                  )}
+                  {userLevel === 2 && (
+                    <>
+                      <option value="3">Admin Editor</option>
+                      <option value="4">Member</option>
+                    </>
+                  )}
                 </select>
               </div>
               {errors && (
@@ -417,7 +446,7 @@ const UserEdit = () => {
                 </label>
                 <TextArea
                   name="address"
-                  value={users === undefined ? "" : users.address}
+                  value={users === undefined ? "" : users?.address}
                   onChange={handleInputValue}
                   rows={2}
                   placeholder="Your Address Is Here"

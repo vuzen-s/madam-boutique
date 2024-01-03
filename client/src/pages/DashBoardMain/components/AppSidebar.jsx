@@ -19,28 +19,29 @@ const AppSidebar = () => {
   const sidebarShow = useSelector((state) => state.sidebarShow)
 
   const { usersAuthFetch } = useAuthContext();
+  const userLevel = usersAuthFetch.level; // Lấy level của user đăng nhập
 
-  console.log(usersAuthFetch.level)
-  console.log(usersAuthFetch)
-
-  const filterNavigation = (items) => {
+  const filterNavigation = (items, userLevel) => {
     return items.map((item) => {
       const newItem = { ...item }; // Sao chép item
-      if (newItem.name === 'Deleted User' && usersAuthFetch.level !== 1) {
-        return null; // Loại bỏ mục 'Deleted User' nếu không phải là Admin Master = level 1
+      if (newItem.name === 'User') {
+        if (userLevel === 3) {
+          return null; // Loại bỏ mục 'User' nếu là Admin Editor = level 3
+        }
+        if (userLevel === 2) {
+          // Lọc các mục con bên trong 'User'
+          newItem.items = newItem.items.filter((subItem) => subItem.name !== 'Deleted User');
+        }
       }
       if (newItem.items) {
-        newItem.items = filterNavigation(newItem.items); // Lọc các mục con
+        newItem.items = filterNavigation(newItem.items, userLevel); // Lọc các mục con
       }
       return newItem; // Trả về item mới
     }).filter(Boolean); // Loại bỏ các item null sau khi lọc
   };
-    
-  const filteredNavigation = filterNavigation([...navigation]); // Sao chép mảng navigation trước khi lọc
   
   
-
-  console.log(filteredNavigation);
+  const filteredNavigation = filterNavigation([...navigation], userLevel); // Sao chép và lọc mảng navigation trước khi lọc
 
 
   return (

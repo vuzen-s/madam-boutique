@@ -90,7 +90,7 @@ const SignUp1 = () => {
                     onChange={(e) => setFullname(e.target.value)}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder="Eg. Le Van Truong Anh"
+                    placeholder="Eg. Truong Anh"
                   />
                 </div>
                 { errorsRegister && (
@@ -108,7 +108,7 @@ const SignUp1 = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="email"
-                    placeholder="Eg. levantruonganh@gmail.com"
+                    placeholder="Eg. truonganh@gmail.com"
                   />
                 </div>
                 {errorsRegister && (

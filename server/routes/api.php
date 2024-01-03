@@ -149,7 +149,7 @@ Route::post('users/create', [UserController::class, 'store']);
 Route::get('users/{id}', [UserController::class, 'show']);
 // Show thông tin user edit
 Route::get('users/edit/{id}', [UserController::class, 'edit']);
-// Update thông tin user edit
+// Update thông tin user
 Route::put('users/edit/{id}', [UserController::class, 'update']);
 // Xóa User
 Route::delete('destroy/{id}', [UserController::class, 'destroy']);

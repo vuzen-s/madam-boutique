@@ -11,6 +11,7 @@ import img from "../../../../../src/assets/images/undefineAvt.png";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import 'react-toastify/dist/ReactToastify.css';
+import useAuthContext from "../../../AuthContext/AuthContext";
 
 const { TextArea } = Input;
 
@@ -19,7 +20,9 @@ const UserCreate = () => {
   // const [hasImageChanged, setHasImageChanged] = useState(false);
   const navigate = useNavigate();
   // const [avatarFile, setAvatarFile] = useState(img);
-  const [avatar, setAvatar] = useState("");
+  // const [avatar, setAvatar] = useState("");
+  const { usersAuthFetch } = useAuthContext();
+  const userLevel = usersAuthFetch.level; // Lấy level của người dùng đăng nhập hiện tại
 
   const [users, setUsers] = useState({
     fullname: "",
@@ -87,38 +90,38 @@ const UserCreate = () => {
   //     });
   // };
 
-  const handleImageUpload = (fileList) => {
-    if (fileList && fileList.length <= 1) {
-      const file = fileList[0];
-      const reader = new FileReader();
+  // const handleImageUpload = (fileList) => {
+  //   if (fileList && fileList.length <= 1) {
+  //     const file = fileList[0];
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        setAvatar(reader.result);
+  //     reader.onloadend = () => {
+  //       setAvatar(reader.result);
 
-        // setHasImageChanged(true);
-      };
+  //       // setHasImageChanged(true);
+  //     };
 
-      reader.readAsDataURL(file);
-    }
-  };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleCreateUser = (e) => {
     e.preventDefault();
 
     let formData = new FormData();
-    formData.append("fullname", users.fullname);
-    formData.append("email", users.email);
-    formData.append("level", users.level);
-    formData.append("gender", users.gender);
-    formData.append("password", users.password);
-    formData.append("phone", users.phone);
-    formData.append("status", users.status);
-    formData.append("address", users.address);
-    formData.append("password_confirmation", users.password_confirmation);
+    formData.append("fullname", users?.fullname);
+    formData.append("email", users?.email);
+    formData.append("level", users?.level);
+    formData.append("gender", users?.gender);
+    formData.append("password", users?.password);
+    formData.append("phone", users?.phone);
+    formData.append("status", users?.status);
+    formData.append("address", users?.address);
+    formData.append("password_confirmation", users?.password_confirmation);
 
-    if (avatar) {
-      formData.append("avatar", avatar);
-    }
+    // if (avatar) {
+    //   formData.append("avatar", avatar);
+    // }
 
     axios
       .post(`http://localhost:8000/api/users/create`, formData, {
@@ -158,19 +161,19 @@ const UserCreate = () => {
   //   }
   // }
 
-  // useEffect(() => {
-  //   setErrors({});
-  // }, [
-  //   users.fullname,
-  //   users.email,
-  //   users.password,
-  //   users.password_confirmation,
-  //   users.gender,
-  //   users.level,
-  //   users.phone,
-  //   users.address,
-  //   users.status
-  // ]);
+  useEffect(() => {
+    setErrors({});
+  }, [
+    users?.fullname,
+    users?.email,
+    users?.password,
+    users?.password_confirmation,
+    users?.gender,
+    users?.level,
+    users?.phone,
+    users?.address,
+    users?.status
+  ]);
 
   return (
     <div>
@@ -278,7 +281,7 @@ const UserCreate = () => {
                 <Input
                   id="fullname"
                   name="fullname"
-                  value={users === undefined ? "" : users.fullname}
+                  value={users === undefined ? "" : users?.fullname}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. Le Van Truong Anh"
@@ -303,7 +306,7 @@ const UserCreate = () => {
                 <Input
                   id="email"
                   name="email"
-                  value={users === undefined ? "" : users.email}
+                  value={users === undefined ? "" : users?.email}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Eg. truonganh@gmail.com"
@@ -328,7 +331,7 @@ const UserCreate = () => {
                   type="password"
                   id="password"
                   name="password"
-                  value={users === undefined ? "" : users.password}
+                  value={users === undefined ? "" : users?.password}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Password"
@@ -353,7 +356,7 @@ const UserCreate = () => {
                   type="password"
                   id="passwordConfirmation"
                   name="password_confirmation"
-                  value={users === undefined ? "" : users.password_confirmation}
+                  value={users === undefined ? "" : users?.password_confirmation}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   placeholder="Confirm Password"
@@ -380,7 +383,7 @@ const UserCreate = () => {
                 <select
                   id="status"
                   name="status"
-                  value={users === undefined ? "" : users.status}
+                  value={users === undefined ? "" : users?.status}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
@@ -410,7 +413,7 @@ const UserCreate = () => {
                     <select
                       id="gender"
                       name="gender"
-                      value={users === undefined ? "" : users.gender}
+                      value={users === undefined ? "" : users?.gender}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     >
@@ -436,7 +439,7 @@ const UserCreate = () => {
                     </label>
                     <input
                       name="phone"
-                      value={users === undefined ? "" : users.phone}
+                      value={users === undefined ? "" : users?.phone}
                       onChange={handleInputValue}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                       type="text"
@@ -462,15 +465,24 @@ const UserCreate = () => {
                 <select
                   id="level"
                   name="level"
-                  value={users === undefined ? "" : users.level}
+                  value={users === undefined ? "" : users?.level}
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
-                  <option value="Choose Level">Choose Level</option>
-                  <option value="1">Admin Master</option>
-                  <option value="2">Admin Manager</option>
-                  <option value="3">Admin Editor</option>
-                  <option value="4">Member</option>
+                  {userLevel === 1 && (
+                    <>
+                      <option value="1">Admin Master</option> // Khi nào thay đổi database và tạo xong Admin Master thì cho ẩn
+                      <option value="2">Admin Manager</option>
+                      <option value="3">Admin Editor</option>
+                      <option value="4">Member</option>
+                    </>
+                  )}
+                  {userLevel === 2 && (
+                    <>
+                      <option value="3">Admin Editor</option>
+                      <option value="4">Member</option>
+                    </>
+                  )}
                 </select>
 
                 {errors && (
@@ -490,7 +502,7 @@ const UserCreate = () => {
                 </label>
                 <TextArea
                   name="address"
-                  value={users === undefined ? "" : users.address}
+                  value={users === undefined ? "" : users?.address}
                   onChange={handleInputValue}
                   rows={2}
                   placeholder="Your Address Is Here"

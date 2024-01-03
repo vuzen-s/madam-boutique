@@ -61,7 +61,14 @@ class UserController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email|max:50|unique:users,email',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:50',
+                'unique:users,email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+            ],
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'nullable',
@@ -71,6 +78,12 @@ class UserController extends Controller
             'avatar' => 'nullable|mimes:jpeg,jpg,png'
             // |mimes:jpeg,jpg,png
         ]);
+
+        $customMessages = [
+            'email.regex' => ' We only accept emails ending with @gmail.com!'
+        ];
+        
+        $validate->setCustomMessages($customMessages);
 
         if($validate->fails()) {
             return response()->json([
