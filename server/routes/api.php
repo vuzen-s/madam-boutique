@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DesignerController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\TopicController;
@@ -189,3 +190,6 @@ Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->nam
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
 // Xác thực lại reCapcha
 Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact')->middleware('recaptcha');
+
+// =================== ORDER ===================
+Route::post('orders-store', [OrderController::class, 'store'])->name('orders-store');

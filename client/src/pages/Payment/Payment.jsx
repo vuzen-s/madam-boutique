@@ -8,6 +8,8 @@ import useAuthContext from '../AuthContext/AuthContext';
 const { Step } = Steps;
 
 const Payment = () => {
+  const [orders, setOrders] = useState({});
+
   const navigate = useNavigate();
   const { state } = useLocation();
   const { authenticatedUser, setAuthenticatedUser } = useAuthContext();
