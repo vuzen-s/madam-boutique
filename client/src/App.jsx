@@ -1,11 +1,11 @@
 import {
-    Route,
-    RouterProvider,
-    Routes,
-    createBrowserRouter,
-    createRoutesFromElements
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+  createRoutesFromElements,
 } from "react-router-dom";
-import {useEffect} from 'react';
+import { useEffect } from "react";
 
 // import NavbarBottom from "./components/home/Header/NavbarBottom";
 
@@ -17,8 +17,7 @@ import BlogList from "./components/BlogList/BlogList";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
 // import DashboardApp from "./pages/Dashboard/DashboardApp";
-import DashBoardMain from './pages/DashBoardMain/DashBoardMain';
-
+import DashBoardMain from "./pages/DashBoardMain/DashBoardMain";
 
 import Layout from "./Layout";
 import DefaultLayoutProfile from "./pages/AuthLayout/DefaultLayoutProfile";
@@ -31,90 +30,92 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Profile from "./pages/Profile/Profile";
 import Shop from "./pages/Shop/Shop";
-import {getMessagingToken, onMessageListener} from "./firebase.ts";
-import 'firebase/auth';
-import 'firebase/firestore';
+import { getMessagingToken, onMessageListener } from "./firebase.ts";
+import "firebase/auth";
+import "firebase/firestore";
 import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
 import SignUp1 from "./pages/Account/SignUp1";
 import SignIn1 from "./pages/Account/SignIn1";
 import SignUp from "./pages/Account/SignUp";
 import SignIn from "./pages/Account/SignIn";
+import ForgotPassword from "./pages/Account/ForgotPassword.jsx";
 
 const App = () => {
-    useEffect(() => {
-        getMessagingToken();
-    }, [])
+  useEffect(() => {
+    getMessagingToken();
+  }, []);
 
-    useEffect(() => {
-        onMessageListener().then(data => {
-            console.log("Receive foreground: ", data)
-        })
-    })
+  useEffect(() => {
+    onMessageListener().then((data) => {
+      console.log("Receive foreground: ", data);
+    });
+  });
 
-    useEffect(() => {
-        getMessagingToken();
-        const channel = new BroadcastChannel("notifications");
-        channel.addEventListener("message", (event) => {
-            console.log("Receive background: ", event.data);
-        });
-    }, [])
+  useEffect(() => {
+    getMessagingToken();
+    const channel = new BroadcastChannel("notifications");
+    channel.addEventListener("message", (event) => {
+      console.log("Receive background: ", event.data);
+    });
+  }, []);
 
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element={<Layout/>}>
-                    {/* ==================== Header Navlink Start here =================== */}
-                    <Route index element={<Home/>}></Route>
-                    <Route path="/shop" element={<Shop/>}></Route>
-                    <Route path="/about" element={<About/>}></Route>
-                    <Route path="/contact" element={<Contact/>}></Route>
-                    <Route path="/blog" element={<BlogList/>}></Route>
-                    {/* ==================== Header Navlink End here ===================== */}
-                    <Route path="/offer" element={<Offer/>}></Route>
-                    <Route path="/product/:id" element={<ProductDetails/>}></Route>
-                    <Route path="/favorite" element={<ProductFavorite/>}></Route>
-                    <Route path="/cart" element={<Cart/>}></Route>
-                    <Route path="/paymentgateway" element={<Payment/>}></Route>
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* ==================== Header Navlink Start here =================== */}
+          <Route index element={<Home />}></Route>
+          <Route path="/shop" element={<Shop />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/blog" element={<BlogList />}></Route>
+          {/* ==================== Header Navlink End here ===================== */}
+          <Route path="/offer" element={<Offer />}></Route>
+          <Route path="/product/:id" element={<ProductDetails />}></Route>
+          <Route path="/favorite" element={<ProductFavorite />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/paymentgateway" element={<Payment />}></Route>
 
-                    <Route element={<DefaultLayoutProfile/>}>
-                        <Route path="/profile" element={<Profile/>}></Route>
-                    </Route>
-                </Route>
-                {/* // */}
+          <Route element={<DefaultLayoutProfile />}>
+            <Route path="/profile" element={<Profile />}></Route>
+          </Route>
+        </Route>
+        {/* // */}
 
-                <Route element={<GuestLayoutNormal/>}>
-                    <Route path="/signup" element={<SignUp1/>}></Route>
-                    <Route path="/signin" element={<SignIn1/>}></Route>
-                </Route>
-
-                {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
-                <Route path="/dashboard/*" element={<DashBoardMain/>}></Route>
-                {/* </Route> */}
-                <Route path="/404" element={<Page404/>}></Route>
-            </Routes>
-        </div>
-    );
-    //         {/* <Route element={<DefaultLayoutProfile />}> */}
-    //           <Route path="/profile" element={<Profile />}></Route>
-    //           {/* <Route path="/profile/:fullname" element={<Profile />}></Route> */}
-    //         {/* </Route> */}
-    //       </Route>
-    //       {/* // */}
-    //
-    //       <Route element={<GuestLayoutNormal />}>
-    //         {/* <Route path="/signup" element={<SignUp />}></Route> */}
-    //         {/* <Route path="/signin" element={<SignIn />}></Route> */}
-    //         <Route path="/signin" element={<SignIn1 />}></Route>
-    //         <Route path="/signup" element={<SignUp1 />}></Route>
-    //       </Route>
-    //
-    //       <Route element={<DefaultLayoutDashboard />}>
-    //         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
-    //       </Route>
-    //       <Route path="/404" element={<Page404 />}></Route>
-    //     </Routes>
-    //   </div>
-    // );
+        <Route element={<GuestLayoutNormal />}>
+          <Route path="/signup" element={<SignUp1 />}></Route>
+          <Route path="/signin" element={<SignIn1 />}></Route>
+        </Route>
+        
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
+        <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
+        {/* </Route> */}
+        <Route path="/404" element={<Page404 />}></Route>
+      </Routes>
+    </div>
+  );
+  //         {/* <Route element={<DefaultLayoutProfile />}> */}
+  //           <Route path="/profile" element={<Profile />}></Route>
+  //           {/* <Route path="/profile/:fullname" element={<Profile />}></Route> */}
+  //         {/* </Route> */}
+  //       </Route>
+  //       {/* // */}
+  //
+  //       <Route element={<GuestLayoutNormal />}>
+  //         {/* <Route path="/signup" element={<SignUp />}></Route> */}
+  //         {/* <Route path="/signin" element={<SignIn />}></Route> */}
+  //         <Route path="/signin" element={<SignIn1 />}></Route>
+  //         <Route path="/signup" element={<SignUp1 />}></Route>
+  //       </Route>
+  //
+  //       <Route element={<DefaultLayoutDashboard />}>
+  //         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
+  //       </Route>
+  //       <Route path="/404" element={<Page404 />}></Route>
+  //     </Routes>
+  //   </div>
+  // );
 };
 
 // const router = createBrowserRouter(

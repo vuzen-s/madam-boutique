@@ -1,8 +1,9 @@
-import {Link, useNavigate} from "react-router-dom";
-import React, {useState, useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 // import useAuthContext from "../AuthContext/AuthContext";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
+import Swal from "sweetalert2";
 
 const SignIn1 = () => {
     const [email, setEmail] = useState("");
@@ -40,21 +41,27 @@ const SignIn1 = () => {
             return;
         }
 
+        // if (!captchaValue) {
+        //     setErrorsLogin(["Please verify that you are not a robot."]);
+        //     return;
+        // }
+
         try {
-            const response = await axios.post('http://localhost:8000/api/auth/login', {email, password});
-            const {access_token} = response.data;
+            const response = await axios.post(
+                "http://localhost:8000/api/auth/login",
+                { email, password }
+            );
+            const { access_token } = response.data;
 
             // Store the tokens in sessionStorage or secure cookie for later use
-            sessionStorage.setItem('token', access_token);
+            sessionStorage.setItem("token", access_token);
 
-            console.log(response.data)
+            console.log(response.data);
 
-            navigate("/")
-
+            navigate("/");
         } catch (e) {
-
             if (e.response.data.status === 401) {
-                sessionStorage.removeItem('token');
+                sessionStorage.removeItem("token");
                 navigate("/signin");
             }
 
@@ -64,6 +71,15 @@ const SignIn1 = () => {
 
             if (e.response.data.status === 401) {
                 setEmailNotExist(e.response.data.errors);
+            }
+
+            if (e.response.data.status === 403) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Your account is currently hidden on the system!",
+                    text: "Please contact us via email for help. Our Email: madamboutique@gmail.com",
+                    confirmButtonText: "Cancle",
+                });
             }
         }
     };
@@ -78,16 +94,15 @@ const SignIn1 = () => {
                 onSubmit={hanldleSubmitLogin}
                 className="w-full lgl:w-[450px] h-screen flex items-center justify-center"
             >
-                <div
-                    className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
+                <div className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
                     <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-2.5">
                         Sign in
                     </h1>
                     <h2 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-sm mdl:text-base mb-2.5">
                         <Link to="/">
-                <span className="hover:text-blue-600 duration-300">
-                  Back To Home
-                </span>
+              <span className="hover:text-blue-600 duration-300">
+                Back To Home
+              </span>
                         </Link>
                     </h2>
                     <div className="flex flex-col gap-2">
@@ -101,7 +116,7 @@ const SignIn1 = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="john@workemail.com"
+                                placeholder="Eg. truonganh@gmail.com"
                             />
                         </div>
 
@@ -123,11 +138,11 @@ const SignIn1 = () => {
                                 Password
                             </p>
                             <input
-                                className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                                className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Create password"
+                                placeholder="Password"
                             />
                         </div>
                         {errorsLogin && (
@@ -152,7 +167,7 @@ const SignIn1 = () => {
                                 />
                                 <span className="text-black text-center"> Remember me</span>
                             </div>
-                            <Link className="text-blue-600">For got password?</Link>
+                            <Link to="/forgot-password" className="text-blue-600">For got password?</Link>
                         </div>
 
                         {/*Captcha*/}
@@ -161,6 +176,7 @@ const SignIn1 = () => {
                             onChange={handleCaptchaChange}
                             hl="en"
                         />
+
 
                         {errorsCaptcha && (
                             <p className="text-red-500 text-sm font-titleFont font-semibold mt-1 px-2 flex items-center gap-1">

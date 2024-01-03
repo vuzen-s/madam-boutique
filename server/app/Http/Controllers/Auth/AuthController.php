@@ -44,6 +44,15 @@ class AuthController extends Controller
             ], 401);
         }
 
+        $user = auth()->user();
+
+        if($user->status === "Hidden") {
+            return response()->json([
+                'status' => 403,
+                'errors' => 'You need to contact us to reactivate your account.'
+            ], 403);
+        }
+
         return $this->createNewToken($token);
     }
 

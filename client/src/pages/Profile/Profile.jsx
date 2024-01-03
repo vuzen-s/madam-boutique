@@ -39,14 +39,14 @@ const Profile = () => {
     e.preventDefault();
 
     const data = {
-      fullname: userAuth.fullname,
-      email: userAuth.email,
-      level: userAuth.level,
-      gender: userAuth.gender,
-      password: userAuth.password,
-      phone: userAuth.phone,
-      address: userAuth.address,
-      password_confirmation: userAuth.password_confirmation,
+      fullname: userAuth?.fullname,
+      email: userAuth?.email,
+      level: userAuth?.level,
+      gender: userAuth?.gender,
+      password: userAuth?.password,
+      phone: userAuth?.phone,
+      address: userAuth?.address,
+      password_confirmation: userAuth?.password_confirmation,
     };
 
     api
@@ -78,15 +78,15 @@ const Profile = () => {
       });
   };
 
-  // useEffect(() => {
-  //   setErrorsUpdate([]);
-  // }, [
-  //   userAuth.fullname,
-  //   userAuth.password,
-  //   userAuth.phone,
-  //   userAuth.address,
-  //   userAuth.password_confirmation,
-  // ]);
+  useEffect(() => {
+    setErrorsUpdate([]);
+  }, [
+    userAuth?.fullname,
+    userAuth?.password,
+    userAuth?.phone,
+    userAuth?.address,
+    userAuth?.password_confirmation,
+  ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,7 +122,7 @@ const Profile = () => {
                   </label>
                   <input
                     name="email"
-                    value={userAuth === undefined ? "" : userAuth.email}
+                    value={userAuth === undefined ? "" : userAuth?.email}
                     // value={userAuth && userAuth.email ? userAuth.email : ""}
                     onChange={handleChange}
                     disabled
@@ -148,7 +148,7 @@ const Profile = () => {
                   </label>
                   <input
                     name="fullname"
-                    value={userAuth === undefined ? "" : userAuth.fullname}
+                    value={userAuth === undefined ? "" : userAuth?.fullname}
                     // value={userAuth && userAuth.fullname ? userAuth.fullname : ""}
                     onChange={handleChange}
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -174,7 +174,7 @@ const Profile = () => {
                   <input
                     name="level"
                     value={
-                      userAuth === undefined ? "" : levelMapping[userAuth.level]
+                      userAuth === undefined ? "" : levelMapping[userAuth?.level]
                     }
                     // value={userAuth && userAuth.level ? levelMapping[userAuth.level] : ""}
                     onChange={handleChange}
@@ -201,7 +201,7 @@ const Profile = () => {
                     </label>
                     <input
                       name="gender"
-                      value={userAuth === undefined ? "" : userAuth.gender}
+                      value={userAuth === undefined ? "" : userAuth?.gender}
                       // value={userAuth && userAuth.gender ? userAuth.gender : ""}
                       onChange={handleChange}
                       disabled
@@ -226,7 +226,7 @@ const Profile = () => {
                     </label>
                     <input
                       name="phone"
-                      value={userAuth === undefined ? "" : userAuth.phone}
+                      value={userAuth === undefined ? "" : userAuth?.phone}
                       // value={userAuth && userAuth.phone ? userAuth.phone : ""}
                       onChange={handleChange}
                       className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -252,7 +252,7 @@ const Profile = () => {
                   </label>
                   <TextArea
                     name="address"
-                    value={userAuth === undefined ? "" : userAuth.address}
+                    value={userAuth === undefined ? "" : userAuth?.address}
                     // value={userAuth && userAuth.address ? userAuth.address : ""}
                     onChange={handleChange}
                     rows={3}
@@ -286,7 +286,7 @@ const Profile = () => {
                   </label>
                   <input
                     name="password"
-                    value={userAuth === undefined ? "" : userAuth.password}
+                    value={userAuth === undefined ? "" : userAuth?.password}
                     // value={userAuth && userAuth.password ? userAuth.password : ""}
                     onChange={handleChange}
                     className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
@@ -313,7 +313,7 @@ const Profile = () => {
                     value={
                       userAuth === undefined
                         ? ""
-                        : userAuth.password_confirmation
+                        : userAuth?.password_confirmation
                     }
                     // value={userAuth && userAuth.password_confirmation ? userAuth.password_confirmation : ""}
                     onChange={handleChange}

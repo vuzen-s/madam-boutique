@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     baseURL: "http://localhost:8000",
     headers: {
       "Content-type": "application/json",
-      Authorization: `bearer ${token}`,
+      "Authorization" : `bearer ${token}`
     },
   });
 

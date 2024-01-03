@@ -29,7 +29,7 @@ export const colums = [
       let backgroundColor = "";
       let color = "";
       let displayValue = params.value;
-      if (!params.value) { 
+      if (!params.value) {
         displayValue = "null";
         backgroundColor = "white";
       } else if (params.value === "Male") {
@@ -42,9 +42,9 @@ export const colums = [
         backgroundColor = "white";
       }
       return (
-        <div style={{ backgroundColor, color, padding: "5px", borderRadius: "5px" }}>
-          {displayValue}
-        </div>
+          <div style={{ backgroundColor, color, padding: "5px", borderRadius: "5px" }}>
+            {displayValue}
+          </div>
       );
     },
   },
@@ -61,9 +61,9 @@ export const colums = [
         backgroundColor = "white";
       }
       return (
-        <div style={{ backgroundColor, padding: "5px", borderRadius: "5px" }}>
-          {params.value}
-        </div>
+          <div style={{ backgroundColor, padding: "5px", borderRadius: "5px" }}>
+            {params.value}
+          </div>
       );
     },
   },
@@ -101,16 +101,16 @@ export const colums = [
           backgroundColor = "white";
       }
       return (
-        <div
-          style={{
-            backgroundColor,
-            color,
-            padding: "5px",
-            borderRadius: "5px",
-          }}
-        >
-          {levelName}
-        </div>
+          <div
+              style={{
+                backgroundColor,
+                color,
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+          >
+            {levelName}
+          </div>
       );
     },
   },
@@ -119,17 +119,17 @@ export const colums = [
     headerName: "Detail",
     flex: 0.4,
     renderCell: (params) => (
-      <Button
-        sx={{
-          bgcolor: "#1565c0",
-          color: "white",
-          "&:hover": { bgcolor: "#1976d2" },
-          width: "90px",
-        }}
-        startIcon={<VisibilityIcon />}
-      >
-        View
-      </Button>
+        <Button
+            sx={{
+              bgcolor: "#1565c0",
+              color: "white",
+              "&:hover": { bgcolor: "#1976d2" },
+              width: "90px",
+            }}
+            startIcon={<VisibilityIcon />}
+        >
+          View
+        </Button>
     ),
   },
   {
@@ -141,5 +141,27 @@ export const colums = [
     field: "delete",
     headerName: "Delete",
     flex: 0.5,
+    // renderCell: (params) => {
+    //   if (userLevel === 1 && params.value <= 1) {
+    //     return null;  // Không hiển thị nút delete
+    //   }
+    //   if (userLevel === 2 && params.value <= 2) {
+    //     return null;  // Không hiển thị nút delete
+    //   }
+    //   return (
+    //     <Button
+    //       onClick={() => handleDeleteUser(params.id)}
+    //       sx={{
+    //         bgcolor: "#d32f2f",
+    //         color: "white",
+    //         "&:hover": { bgcolor: "#f44336" },
+    //         width: "100px",
+    //       }}
+    //       startIcon={<DeleteIcon />}
+    //     >
+    //       Delete
+    //     </Button>
+    //   );
+    // },
   },
 ];
