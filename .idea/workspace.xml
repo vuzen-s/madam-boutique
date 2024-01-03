@@ -6,6 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="837c7b17-5d70-43c9-b90e-a2056d447881" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/home/Header/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/home/Header/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Account/SignIn1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Account/SignIn1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AuthContext/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AuthContext/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Payment/Payment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Payment/Payment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app/Http/Controllers/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/Http/Controllers/Auth/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/Http/Controllers/User/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/api.php" afterDir="false" />
+>>>>>>> 1cc266692cc5d398a116d27de5f8d6a9bf890f72
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

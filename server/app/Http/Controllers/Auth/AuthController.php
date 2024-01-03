@@ -238,7 +238,10 @@ class AuthController extends Controller
             'message' => 'Profile updated successfully'
         ], 200);
     }
-
+    public function payment (Request $request) {
+        // Lấy ID của người dùng hiện tại
+        $userId = auth()->user()->id;
+    }
 
 }
 
