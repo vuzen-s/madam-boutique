@@ -4,56 +4,117 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 
 import useAuthContext from '../AuthContext/AuthContext';
-
+import Swal from "sweetalert2";
+import api from "../AuthContext/api";
 const { Step } = Steps;
-
+const { TextArea } = Input;
 const Payment = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  const [userAuth, setUserAuth] = useState([]);
+  const [errorsUpdate, setErrorsUpdate] = useState([]);
+
+  const levelMapping = {
+    1: "Admin Master",
+    2: "Admin Manager",
+    3: "Admin Editor",
+    4: "Member",
+  };
+
   const { authenticatedUser, setAuthenticatedUser } = useAuthContext();
   const [currentStep, setCurrentStep] = useState(0);
-  const [step1Form] = Form.useForm(); // Sử dụng form cho bước 1
+  const [step1FormValues, setStep1FormValues] = useState({
+    Name: authenticatedUser?.fullname || '',
+    Phone: authenticatedUser?.phone || '',
+    Address: authenticatedUser?.address || '',
+  });
 
   useEffect(() => {
-    fetchData(); // Gọi hàm để lấy dữ liệu người dùng khi component được tạo ra
-  }, []); // Gọi chỉ một lần khi component được tạo ra
+    api
+    .get(`/api/auth/user-profile`)
+    .then((res) => {
+      console.log(res.data.user);
+      setUserAuth(res.data.user);
+    })
+    .catch((e) => {
+      if (e.response && e.response.status === 401) {
+        navigate("/signin");
+      }
+    });
+}, []);
 
-  const fetchData = async () => {
-    try {
-      // Gọi API để lấy dữ liệu người dùng
-      const response = await axios.get(`http://localhost:8000/api/user/${authenticatedUser.id}`);
-      const userData = response.data;
+const handleUpdateProfile = (e) => {
+  e.preventDefault();
 
-      // Cập nhật state và form với dữ liệu mới
-      setAuthenticatedUser(userData);
-      step1Form.setFieldsValue({
-        Name: userData.fullname || '',
-        Phone: userData.phone || '',
-        Address: userData.address || '',
-      });
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
+  const data = {
+    fullname: userAuth.fullname,
+    email: userAuth.email,
+    level: userAuth.level,
+    gender: userAuth.gender,
+    password: userAuth.password,
+    phone: userAuth.phone,
+    address: userAuth.address,
+    password_confirmation: userAuth.password_confirmation,
   };
 
-  const updateUser = async (newUserData) => {
-    try {
-      // Gọi API để cập nhật dữ liệu người dùng
-      await axios.put(`http://localhost:8000/api/user/edit/${authenticatedUser.id}`, newUserData);
-      console.log('User data updated successfully');
-    } catch (error) {
-      console.error('Error updating user data:', error);
-    }
-  };
+  api
+    .put(`api/auth/update-profile`, data)
+    .then((res) => {
+      console.log(res.data);
+
+      if (res.status === 200) {
+        setUserAuth(res.data.user);
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Update Profile Successfully",
+          confirmButtonText: "Ok",
+          timer: 7000,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
+      }
+    })
+
+    .catch((e) => {
+      if (e.response && e.response.status === 400) {
+        setErrorsUpdate(e.response.data.errors);
+        console.log(e.response.data.errors);
+      }
+    });
+};
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setUserAuth((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+
+  // const updateUser = async (newUserData) => {
+  //   try {
+  //     // Gọi API để cập nhật dữ liệu người dùng
+  //     await axios.put(`http://localhost:8000/api/user/edit/${authenticatedUser.id}`, newUserData);
+  //     console.log('User data updated successfully');
+  //   } catch (error) {
+  //     console.error('Error updating user data:', error);
+  //   }
+  // };
 
   const Step1 = () => {
+    const [form] = Form.useForm();
+
     const onFinish = async (values) => {
       const { Name, Phone, Address } = values;
 
-      if (!Name || !Phone || !Address) {
-        message.error('Please fill in all required fields.');
-        return;
-      }
+      // if (!Name || !Phone || !Address) {
+      //   message.error('Please fill in all required fields.');
+      //   return;
+      // }
 
       const updatedUserData = {
         fullname: Name,
@@ -61,30 +122,26 @@ const Payment = () => {
         address: Address,
       };
 
-      // Cập nhật dữ liệu người dùng khi thông tin được thay đổi
-      await updateUser(updatedUserData);
-      // Cập nhật state và form với dữ liệu mới
-      setAuthenticatedUser((prevUser) => ({
-        ...prevUser,
-        ...updatedUserData,
-      }));
-      step1Form.setFieldsValue({
-        ...step1Form.getFieldsValue(),
-        ...updatedUserData,
-      });
+      // // Cập nhật dữ liệu người dùng khi thông tin được thay đổi
+      // await updateUser(updatedUserData);
+      // // Cập nhật state và form với dữ liệu mới
+      // setAuthenticatedUser((prevUser) => ({
+      //   ...prevUser,
+      //   ...updatedUserData,
+      // }));
+      // setStep1FormValues({
+      //   ...step1FormValues,
+      //   ...updatedUserData,
+      // });
 
-      message.success('User information updated successfully');
+      message.success(' Save successfully');
     };
 
     return (
       <Form
-        form={step1Form}
+        form={form}
         onFinish={onFinish}
-        initialValues={{
-          Name: authenticatedUser?.fullname || '',
-          Phone: authenticatedUser?.phone || '',
-          Address: authenticatedUser?.address || '',
-        }}
+        initialValues={step1FormValues}
       >
         <div className="w-full py-8 grid grid-cols-10 h-full max-h-screem gap-4">
           <div className="w-full flex justify-center items-center col-span-6">
@@ -93,27 +150,98 @@ const Payment = () => {
           <div className="flex w-full flex-col items-center col-span-4 gap-8">
             <p className="text-base font-titleFont font-semibold px-2">Delivery information for you</p>
 
-            <Form.Item label="Name" name="Name" rules={[{ required: true, message: 'Please enter your name' }]}>
+            {/* <Form.Item label="Name"  name="fullname"
+                    value={userAuth === undefined ? "" : userAuth.fullname}>
+                      
               <Input />
-            </Form.Item>
+            </Form.Item> */}
 
-            <Form.Item label="Phone" name="Phone" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+                 <div className="flex flex-col gap-.8">
+                  <label
+                    htmlFor="fullname"
+                    className="font-titleFont text-base font-semibold text-gray-600"
+                  >
+                    Full Name
+                  </label>
+                  <input
+                    name="fullname"
+                    value={userAuth === undefined ? "" : userAuth.fullname}
+                    // value={userAuth && userAuth.fullname ? userAuth.fullname : ""}
+                    onChange={handleChange}
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                    type="text"
+                    placeholder="Eg. fullname"
+                    required 
+                  />
+                </div>
+
+            {/* <Form.Item label="Phone"  name="phone"
+                      value={userAuth === undefined ? "" : userAuth.phone}>
               <Input />
-            </Form.Item>
+            </Form.Item> */}
 
-            <Form.Item label="Address" name="Address" rules={[{ required: true, message: 'Please enter your address' }]}>
+                    <div className="flex flex-col gap-.8">
+                    <label
+                      htmlFor="phone"
+                      className="font-titleFont text-base font-semibold text-gray-600"
+                    >
+                      Phone
+                    </label>
+                    <input
+                      name="phone"
+                      //value={userAuth === undefined ? "" : userAuth.phone}
+                       value={userAuth && userAuth.phone ? userAuth.phone : ""}
+                      onChange={handleChange}
+                      className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                      type="text"
+                      placeholder="Phone Number"
+                      required 
+                    />
+                    {errorsUpdate && (
+                      <span className=" text-sm text-red-500 font-titleFont px-2">
+                        {errorsUpdate.phone}
+                      </span>
+                    )}
+                  </div>
+
+
+            {/* <Form.Item label="Address" name="address"
+                    value={userAuth === undefined ? "" : userAuth.address}>
               <Input.TextArea rows={4} />
-            </Form.Item>
+            </Form.Item> */}
+
+                  <div className="flex flex-col gap-.8">
+                  <label
+                    htmlFor="address"
+                    className="font-titleFont text-base font-semibold text-gray-600"
+                  >
+                    Address
+                  </label>
+                  <TextArea
+                    name="address"
+                    //value={userAuth === undefined ? "" : userAuth.address}
+                     value={userAuth && userAuth.address ? userAuth.address : ""}
+                    onChange={handleChange}
+                    rows={3}
+                    placeholder="Your Address Is Here"
+                    required 
+                    maxLength={350}
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                  />
+                </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
                 className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
-                htmlType="submit"
+                htmlType="success"
+                onSubmit={handleUpdateProfile}
               >
+                
                 Save
               </Button>
               <Button
-                onClick={handleNext}
+                 onClick={handleNext}
+              
                 className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
               >
                 Next
