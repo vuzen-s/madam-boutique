@@ -13,6 +13,7 @@ const SignIn1 = () => {
     const [checked, setChecked] = useState(false);
     const navigate = useNavigate();
     const [captchaValue, setCaptchaValue] = useState(null);
+    const [errorsCaptcha, setErrorsCaptcha] = useState(null);
 
     const isFormValid = () => {
         return email.trim() !== "" && password.trim() !== "";
@@ -36,9 +37,14 @@ const SignIn1 = () => {
         e.preventDefault();
 
         if (!captchaValue) {
-            setErrorsLogin(["Please verify that you are not a robot."]);
+            setErrorsCaptcha("Please verify that you are not a robot.");
             return;
         }
+
+        // if (!captchaValue) {
+        //     setErrorsLogin(["Please verify that you are not a robot."]);
+        //     return;
+        // }
 
         try {
             const response = await axios.post(
@@ -170,6 +176,14 @@ const SignIn1 = () => {
                             onChange={handleCaptchaChange}
                             hl="en"
                         />
+
+
+                        {errorsCaptcha && (
+                            <p className="text-red-500 text-sm font-titleFont font-semibold mt-1 px-2 flex items-center gap-1">
+                                <span
+                                    className="text-sm italic font-bold">{errorsCaptcha}</span>
+                            </p>
+                        )}
 
                         <button
                             type="submit"
