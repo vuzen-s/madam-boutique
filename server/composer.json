@@ -13,7 +13,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "smirltech/laravel-fcm": "^1.0",
-        "tymon/jwt-auth": "^2.0"
+        "tymon/jwt-auth": "^2.0",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
