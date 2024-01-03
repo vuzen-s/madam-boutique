@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // import useAuthContext from "../AuthContext/AuthContext";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
+import Swal from "sweetalert2";
 
 const SignIn1 = () => {
   const [email, setEmail] = useState("");
@@ -40,31 +41,41 @@ const SignIn1 = () => {
     }
 
     try {
-        const response = await axios.post('http://localhost:8000/api/auth/login', { email, password });
-        const { access_token } = response.data;
-  
-        // Store the tokens in sessionStorage or secure cookie for later use
-        sessionStorage.setItem('token', access_token);
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/login",
+        { email, password }
+      );
+      const { access_token } = response.data;
 
-        console.log(response.data)
+      // Store the tokens in sessionStorage or secure cookie for later use
+      sessionStorage.setItem("token", access_token);
 
-        navigate("/")
+      console.log(response.data);
 
-      } catch (e) {
-
-        if(e.response.data.status === 401) {
-          sessionStorage.removeItem('token');
-          navigate("/signin");
-        }
-
-        if(e.response.data.status === 422) {
-            setErrorsLogin(e.response.data.errors);
-        }
-
-        if(e.response.data.status === 401) {
-            setEmailNotExist(e.response.data.errors);
-        }
+      navigate("/");
+    } catch (e) {
+      if (e.response.data.status === 401) {
+        sessionStorage.removeItem("token");
+        navigate("/signin");
       }
+
+      if (e.response.data.status === 422) {
+        setErrorsLogin(e.response.data.errors);
+      }
+
+      if (e.response.data.status === 401) {
+        setEmailNotExist(e.response.data.errors);
+      }
+
+      if (e.response.data.status === 403) {
+        Swal.fire({
+          icon: "warning",
+          title: "Your account is currently hidden on the system!",
+          text: "Please contact us via email for help. Our Email: madamboutique@gmail.com",
+          confirmButtonText: "Cancle",
+        });
+      }
+    }
   };
 
   const handleCaptchaChange = (value) => {
@@ -82,11 +93,11 @@ const SignIn1 = () => {
             Sign in
           </h1>
           <h2 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-sm mdl:text-base mb-2.5">
-              <Link to="/">
-                <span className="hover:text-blue-600 duration-300">
-                  Back To Home
-                </span>
-              </Link>
+            <Link to="/">
+              <span className="hover:text-blue-600 duration-300">
+                Back To Home
+              </span>
+            </Link>
           </h2>
           <div className="flex flex-col gap-2">
             {/* Email */}
@@ -99,7 +110,7 @@ const SignIn1 = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="john@workemail.com"
+                placeholder="Eg. truonganh@gmail.com"
               />
             </div>
 
@@ -121,11 +132,11 @@ const SignIn1 = () => {
                 Password
               </p>
               <input
-                className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Create password"
+                placeholder="Password"
               />
             </div>
             {errorsLogin && (
@@ -150,14 +161,14 @@ const SignIn1 = () => {
                 />
                 <span className="text-black text-center"> Remember me</span>
               </div>
-              <Link className="text-blue-600">For got password?</Link>
+              <Link to="/forgot-password" className="text-blue-600">For got password?</Link>
             </div>
 
             {/*Captcha*/}
             <ReCAPTCHA
-                sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J"
-                onChange={handleCaptchaChange}
-                hl="en"
+              sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J"
+              onChange={handleCaptchaChange}
+              hl="en"
             />
 
             <button

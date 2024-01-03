@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -44,6 +44,33 @@ const Navbar = () => {
   const [userAuth, setUserAuth] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const userRef = useRef(null);
+  const searchRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (userRef.current && !userRef.current.contains(event.target)) {
+      setShowUser(false);
+      setSearchQuery("");
+    }
+
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setShowSearch(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showSearch) {
+      setSearchQuery("");
+    }
+  }, [showSearch]);
 
   // const {userAuth, logout } = useAuthContext();
 
@@ -131,6 +158,7 @@ const Navbar = () => {
 
           {showSearch && (
             <motion.div
+              ref={searchRef}
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
@@ -142,7 +170,7 @@ const Navbar = () => {
                   type="text"
                   value={searchQuery}
                   placeholder="Search your products here"
-                  className="w-full relative lg:w-[500px] h-[35px] outline-none text-base bg-gray-300 text-primeColor flex items-center justify-between px-3 rounded-3xl"
+                  className="w-[200px] relative lg:w-[500px] h-[35px] outline-none text-base bg-gray-300 text-primeColor flex items-center justify-between px-3 rounded-3xl placeholder:text-sm"
                 />
               </div>
             </motion.div>
@@ -194,6 +222,7 @@ const Navbar = () => {
           </div>
           {showUser && (
             <motion.ul
+              ref={userRef}
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}

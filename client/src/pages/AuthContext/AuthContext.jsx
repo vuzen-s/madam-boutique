@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
-// import Swal from "sweetalert2";
 
 const AuthContext = createContext({});
 
@@ -18,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     baseURL: "http://localhost:8000",
     headers: {
       "Content-type": "application/json",
-    "Authorization" : `bearer ${token}`
+      "Authorization" : `bearer ${token}`
     },
   });
 
@@ -26,7 +25,6 @@ export const AuthProvider = ({ children }) => {
     axiosAuth
       .get(`api/auth/user-profile`)
       .then((res) => {
-        console.log(res.data.user);
         setUsersAuthFetch(res.data.user);
       })
       .catch((e) => {
