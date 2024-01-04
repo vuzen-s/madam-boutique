@@ -174,14 +174,14 @@ Route::group([
 Route::get('topics', [TopicController::class, 'index'])->name('topics.index');
 
 // =================== BLOGS ===================
-// List data collections
+/
 Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
-// Đẩy data lên table collections
-Route::post('blogs-store', [BlogController::class, 'store'])->name('blogs-store');
-// Update collection
+
+Route::put('blogs-store', [BlogController::class, 'store'])->name('blogs-store');
+
 Route::get('blogs-edit/{id}', [BlogController::class, 'edit'])->name('blogs-edit');
 Route::patch('blogs-update/{id}', [BlogController::class, 'update'])->name('blogs-update');
-// Xóa collection
+
 Route::delete('blogs-destroy/{id}', [BlogController::class, 'destroy'])->name('blogs-destroy');
 // Lấy đường dẫn tới thư mục public/uploads/blogs/
 Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->name('blogs-getPublicPath');

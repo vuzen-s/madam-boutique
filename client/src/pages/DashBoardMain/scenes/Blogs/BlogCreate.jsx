@@ -1,4 +1,4 @@
-import {Editor} from "react-draft-wysiwyg";
+// import Editor from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {EditorState, convertToRaw} from 'draft-js';
 import {useState} from "react";
@@ -8,6 +8,9 @@ import {toast} from "react-toastify";
 import {Box} from "@mui/material";
 import './BlogCreate.scss';
 import 'react-toastify/dist/ReactToastify.css';
+// ckeditor để tạo ô nhập nội dung
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const BlogCreate = () => {
     const [content, setContent] = useState(EditorState.createEmpty());
@@ -64,7 +67,7 @@ const BlogCreate = () => {
         formData.append('user_id', user_id);
         ///
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/blogs-store', formData, {
+            const response = await axios.put('http://127.0.0.1:8000/api/blogs-store', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -91,7 +94,7 @@ const BlogCreate = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div className="mb-8">
                     <label htmlFor="title" className="form-label">Tên bài đăng:</label>
                     <input type="text" className="form-control" id="title" placeholder="Enter title" name="title"
@@ -101,7 +104,7 @@ const BlogCreate = () => {
                     </p>
                 </div>
                 <br/>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                {/* <div style={{display: 'flex', alignItems: 'center'}}>
                     <Editor
                         editorState={content}
                         defaultEditorState={content}
@@ -110,9 +113,30 @@ const BlogCreate = () => {
                         editorClassName="custom-editor"
                         onEditorStateChange={onEditorStateChange}
                     />
-                </div>
+                </div> */}
+                  <div>
+                    <CKEditor
+                    editor={ ClassicEditor }
+                    data="<p>Hello from CKEditor&nbsp;5!</p>"
+                    onReady={ editor => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event ) => {
+                        console.log( event );
+                    } }
+                    onBlur={ ( event, editor ) => {
+                        console.log( 'Blur.', editor );
+                    } }
+                    onFocus={ ( event, editor ) => {
+                        console.log( 'Focus.', editor );
+                    } }
+                />
+                    </div>
                 <Box mt="40px">
-                    <button type="submit" class="btn btn-primary" style={{background: "#0a58ca"}}>Thêm bài viết mới
+                    <button type="submit" class="btn btn-primary" style={{background: "#0a58ca"}} onSubmit={handleSubmit} >
+                        Thêm bài viết mới
+                     
                     </button>
                 </Box>
             </form>
