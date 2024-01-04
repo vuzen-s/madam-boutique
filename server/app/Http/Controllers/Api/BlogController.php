@@ -50,7 +50,19 @@ class BlogController extends Controller
             'blogs' => $data,
         ]);
     }
+    
+    public function create()
+    {
+        $users = DB::table('users')->get();
+        $topics = DB::table('topics')->get();
+       
 
+        return response()->json([
+            'users' => $users,
+            'topics' => $topics,
+           
+        ]);
+    }
     /**
      * Display the specified resource.
      */

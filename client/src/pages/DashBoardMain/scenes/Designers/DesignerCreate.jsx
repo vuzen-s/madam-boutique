@@ -43,8 +43,11 @@ const DesignerCreate = () => {
 
         try {
             await fetch('http://127.0.0.1:8000/api/designers-store', {
+                
                 method: "POST",
+               
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',

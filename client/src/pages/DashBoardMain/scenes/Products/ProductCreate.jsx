@@ -25,7 +25,7 @@ const ProductCreate = () => {
     const [brand_id, setBrand_id] = useState(0);
     const [designer_id, setDesigner_id] = useState(0);
     const [category_id, setCategory_id] = useState(0);
-
+    
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [optionDesigners, setOptionDesigners] = useState([]);
     const [optionBrands, setOptionBrands] = useState([]);
@@ -64,7 +64,7 @@ const ProductCreate = () => {
         formData.append('desc', desc);
         formData.append('price', price);
         formData.append('color', color);
-        formData.append('avatar', avatar);
+        formData.append('avatar', avatar);//blog
         formData.append('status', status);
         formData.append('feature', feature);
         formData.append('collection_id', collection_id);
