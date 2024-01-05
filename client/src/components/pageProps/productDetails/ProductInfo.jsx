@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import Swal from 'sweetalert2';
 import {addToCart} from "../../../redux/madamBoutiqueSlice";
+import SizeOption from "../../../pages/ProductDetails/SizeOption";
 
 const ProductInfo = ({productInfo}) => {
     const [publicPath, setPublicPath] = useState(null);
@@ -36,6 +37,9 @@ const ProductInfo = ({productInfo}) => {
             <p className="font-medium text-lg">
                 <span className="font-normal">{productInfo ? 'Colors:' + productInfo.color : ''}</span>
             </p>
+            <div>
+                <SizeOption />
+            </div>
             <button
                 onClick={() =>
                     dispatch(

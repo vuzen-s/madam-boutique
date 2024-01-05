@@ -78,8 +78,7 @@ const Payment = () => {
     // Call API send mail
     const sendMailOrderNew = () => {
         fetch('http://127.0.0.1:8000/api/sendmail-order', {
-            method: "GET",
-            headers: {
+            method: "GET", headers: {
                 'Content-Type': 'application/json',
             }
         })
@@ -95,16 +94,10 @@ const Payment = () => {
 
         try {
             await fetch('http://127.0.0.1:8000/api/orders-store', {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    total: total,
-                    cart_date: new Date().toString(),
-                    cart_status: 1,
-                    user_id: authenticatedUser.id,
+                method: "POST", headers: {
+                    'Accept': 'application/json', 'Content-Type': 'application/json',
+                }, body: JSON.stringify({
+                    total: total, cart_date: new Date().toString(), cart_status: 1, user_id: authenticatedUser.id,
                 }), // Chuyển đổi FormData thành đối tượng JSON
             })
                 .then((respon) => respon.json())
@@ -140,9 +133,8 @@ const Payment = () => {
             changedFields.forEach((changedField) => {
                 const {name, value} = changedField;
                 console.log(changedField);
-                console.log(changedField.name);
                 // Cập nhật giá trị mới cho trường trong form
-                form.setFieldsValue({[name]: value});
+                // form.setFieldsValue({[name]: value});
                 //
                 switch (changedField.name[0]) {
                     case 'name_customer':
@@ -172,28 +164,23 @@ const Payment = () => {
             }
 
             const updatedUserData = {
-                fullname: Name,
-                phone: Phone,
-                address: Address,
+                fullname: Name, phone: Phone, address: Address,
             };
 
             // Cập nhật dữ liệu người dùng khi thông tin được thay đổi
             await updateUser(updatedUserData);
             // Cập nhật state và form với dữ liệu mới
             setAuthenticatedUser((prevUser) => ({
-                ...prevUser,
-                ...updatedUserData,
+                ...prevUser, ...updatedUserData,
             }));
             step1Form.setFieldsValue({
-                ...step1Form.getFieldsValue(),
-                ...updatedUserData,
+                ...step1Form.getFieldsValue(), ...updatedUserData,
             });
 
             message.success('User information updated successfully');
         };
 
-        return (
-            <Form
+        return (<Form
                 form={step1Form}
                 onFieldsChange={handleFieldsChange}
                 onFinish={onFinish}
@@ -242,8 +229,7 @@ const Payment = () => {
                         </div>
                     </div>
                 </div>
-            </Form>
-        );
+            </Form>);
     };
 
     const Step2 = () => {
@@ -252,8 +238,7 @@ const Payment = () => {
 
         setTotal(totalAmount);
 
-        return (
-            <div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem gap-4'>
+        return (<div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem gap-4'>
                 <div className='w-full flex justify-center items-center col-span-12'>
                     <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[20%] object-contain'/>
                 </div>
@@ -271,8 +256,7 @@ const Payment = () => {
                         </thead>
                         s
                         <tbody>
-                        {products.map((item) => (
-                            <tr key={item._id}>
+                        {products.map((item) => (<tr key={item._id}>
                                 <td className='text-center p-2 border-b-2'>
                                     <input className="text-center p-2 border-b-2" name="$product_ids[]" value={item._id}
                                            disabled={true}/>
@@ -290,8 +274,7 @@ const Payment = () => {
                                     <input className='text-center p-2 border-b-2' name="price" value={item.price}
                                            disabled={true} type="hidden"/>
                                 </td>
-                            </tr>
-                        ))}
+                            </tr>))}
                         </tbody>
                     </table>
 
@@ -320,8 +303,7 @@ const Payment = () => {
                         </Button>
                     </div>
                 </div>
-            </div>
-        );
+            </div>);
     };
 
     const Step3 = () => {
@@ -340,19 +322,13 @@ const Payment = () => {
                         .Buttons({
                             createOrder: (data, actions) => {
                                 return actions.order.create({
-                                    purchase_units: [
-                                        {
-                                            amount: {
-                                                currency_code: 'USD',
-                                                value: totalAmount,
-                                                shippingCharge,
-                                                products,
-                                            },
+                                    purchase_units: [{
+                                        amount: {
+                                            currency_code: 'USD', value: totalAmount, shippingCharge, products,
                                         },
-                                    ],
+                                    },],
                                 });
-                            },
-                            onApprove: (data, actions) => {
+                            }, onApprove: (data, actions) => {
                                 return actions.order.capture().then((details) => {
                                     console.log(details);
                                 });
@@ -373,8 +349,7 @@ const Payment = () => {
             };
         }, []);
 
-        return (
-            <div>
+        return (<div>
                 <div className='w-full flex justify-center items-center col-span-4'>
                     <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
                 </div>
@@ -397,8 +372,7 @@ const Payment = () => {
                         Complete
                     </Button>
                 </div>
-            </div>
-        );
+            </div>);
     };
 
     const handleNext = () => {
@@ -409,34 +383,23 @@ const Payment = () => {
         setCurrentStep(currentStep - 1);
     };
 
-    const steps = [
-        {
-            title: 'Customer information',
-            content: <Step1/>,
-        },
-        {
-            title: 'Confirm information',
-            content: <Step2/>,
-        },
-        {
-            title: 'Payment',
-            content: <Step3/>,
-        },
-    ];
+    const steps = [{
+        title: 'Customer information', content: <Step1/>,
+    }, {
+        title: 'Confirm information', content: <Step2/>,
+    }, {
+        title: 'Payment', content: <Step3/>,
+    },];
 
-    return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '24px'}}>
+    return (<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '24px'}}>
             <Steps current={currentStep} onChange={(step) => setCurrentStep(step)}>
-                {steps.map((item) => (
-                    <Step key={item.title} title={item.title}/>
-                ))}
+                {steps.map((item) => (<Step key={item.title} title={item.title}/>))}
             </Steps>
             <div style={{marginTop: '20px', width: '50%'}}>
                 {steps[currentStep].content}
             </div>
             <ToastContainer/>
-        </div>
-    );
+        </div>);
 };
 
 export default Payment;
