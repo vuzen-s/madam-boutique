@@ -257,6 +257,7 @@ const Rates = ({idProduct}) => {
                         value={rating.rating}
                         handleEditItem={() => handleEditItem(rating.id)}
                         handleDeleteItem={() => handleDeleteItem(rating.id)}
+                        userAuth={userAuth}
                     />
                 ))}
             </div>

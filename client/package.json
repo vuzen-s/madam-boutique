@@ -28,6 +28,7 @@
     "bootstrap-fileinput": "^5.5.2",
     "bootstrap-icons": "^1.11.2",
     "caniuse-lite": "^1.0.30001568",
+    "core-js-compat": "^3.4.7",
     "cropperjs": "^1.6.1",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",

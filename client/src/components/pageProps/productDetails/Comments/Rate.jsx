@@ -1,7 +1,7 @@
 import Rating from '@mui/material/Rating';
 import './Comment.scss';
 
-const Rate = ({ rating, value, handleDeleteItem, handleEditItem }) => {
+const Rate = ({rating, value, handleDeleteItem, handleEditItem, userAuth}) => {
 
     function formatTimeAgo(commentDate) {
         const now = new Date();
@@ -35,7 +35,9 @@ const Rate = ({ rating, value, handleDeleteItem, handleEditItem }) => {
         <div className="Comment">
             <div className="Comment-header">
                 <div className="Comment-avatar">
-                    <img src={rating.user.avatar != null ? rating.user.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVnsLhjbXRN_F--iLPPJ-ED7WP3qqfwhiAkNtgKsONg&s"} alt={rating.user.name} />
+                    <img
+                        src={rating.user.avatar != null ? rating.user.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVnsLhjbXRN_F--iLPPJ-ED7WP3qqfwhiAkNtgKsONg&s"}
+                        alt={rating.user.name}/>
                 </div>
                 <span className="Comment-author">
                     {rating.user.fullname}
@@ -43,14 +45,18 @@ const Rate = ({ rating, value, handleDeleteItem, handleEditItem }) => {
                 <span className="Comment-time">{formatTimeAgo(rating.created_at)}</span>
             </div>
             <div className="Comment-body">
-                <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly />
-                <br />
+                <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly/>
+                <br/>
                 {rating.rating_content == null ? '' : rating.rating_content}
             </div>
-            <div className='Comment-actions'>
-                <button onClick={handleEditItem}>Sửa</button>
-                <button onClick={handleDeleteItem}>Xóa đánh giá</button>
-            </div>
+            {
+                (userAuth.id === rating.user.id)
+                    ? <div className='Comment-actions'>
+                        <button onClick={handleEditItem}>Sửa</button>
+                        <button onClick={handleDeleteItem}>Xóa đánh giá</button>
+                    </div>
+                    : <span></span>
+            }
         </div>
     )
 };

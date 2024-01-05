@@ -193,6 +193,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                             isYou={selectedUserId === comment.user.id}
                             handleEditItem={() => handleEditItem(comment.id)}
                             handleDeleteItem={() => handleDeleteItem(comment.id)}
+                            userAuth={userAuth}
                         />
                     ))}
                 </div>
