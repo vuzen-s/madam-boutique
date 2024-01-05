@@ -29,36 +29,42 @@ class BlogController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $data = new BlogModel();
-        $data->title = $request->title;
-        $data->content = $request->content;
-        $data->status = $request->status;
-        $data->topic_id = $request->topic_id;
-        $data->user_id = $request->user_id;
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'avatar_blog' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|in:0,1',
+            'topic_id' => 'required',
+             'user_id' => 'required',
+        ]);
 
+        // Xử lý lưu dữ liệu vào database
+        $blog = new BlogModel;
+        $blog->title = $request->title;
+        $blog->content = $request->content;
+        $blog->status = $request->status;
+        $blog->topic_id = $request->topic_id;
+        $blog->user_id = $request->user_id;
+
+        // Xử lý ảnh đại diện (nếu có)
         if ($request->hasFile('avatar_blog')) {
-            $avatar_blog = $request->avatar_blog;
-            $data->avatar_blog = time() . '_' . $avatar_blog->getClientOriginalName();
-            $avatar_blog->move(public_path('uploads/blogs/'), $data->avatar_blog);
-        } else {
-            $data->avatar_blog = "https://globaleducation.s3.ap-south-1.amazonaws.com/globaledu/no-image.png";
+            $avatarPath = $request->file('avatar_blog')->store('avatars');
+            $blog->avatar_blog = $avatarPath;
         }
 
-        $data->save();
+        $blog->save();
 
-        return response()->json([
-            'blogs' => $data,
-        ]);
+        return response()->json(['message' => 'Bài viết đã được tạo thành công'], 200);
     }
     
     public function create()
     {
-        $users = DB::table('users')->get();
+         $users = DB::table('users')->get();
         $topics = DB::table('topics')->get();
        
 
         return response()->json([
-            'users' => $users,
+             'users' => $users,
             'topics' => $topics,
            
         ]);
