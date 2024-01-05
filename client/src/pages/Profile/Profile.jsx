@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 // import AvatarProfile from "../../components/Avatar/Avatar";
 import Button from "@mui/material/Button";
 import { Input } from "antd";
-import TableHistoryPayment from "./Table/TablePayment";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../AuthContext/api";
 import Swal from "sweetalert2";
+import { tokens } from "../Dashboard2/theme";
+import { Box, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { colums } from "../Profile/Colum/Colum"
+import { DataPayment } from "../DashBoardMain/scenes/Users/colums/columsPaymentHistory";
 
 const { TextArea } = Input;
 
@@ -13,6 +17,8 @@ const Profile = () => {
   const [userAuth, setUserAuth] = useState([]);
   const [errorsUpdate, setErrorsUpdate] = useState([]);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const levelMapping = {
     1: "Admin Master",
@@ -174,7 +180,9 @@ const Profile = () => {
                   <input
                     name="level"
                     value={
-                      userAuth === undefined ? "" : levelMapping[userAuth?.level]
+                      userAuth === undefined
+                        ? ""
+                        : levelMapping[userAuth?.level]
                     }
                     // value={userAuth && userAuth.level ? levelMapping[userAuth.level] : ""}
                     onChange={handleChange}
@@ -350,7 +358,7 @@ const Profile = () => {
         </form>
       </div>
 
-      {/* ----- ----- */}
+      {/* ----- Payment History ----- */} 
 
       <div className="w-full px-20 mb-5">
         <div className="w-full px-0.5">
@@ -358,7 +366,48 @@ const Profile = () => {
             Payment History
           </h2>
           <div className="mb-1.5">
-            <TableHistoryPayment />
+            <div className="bg-white rounded-md shadow-lg">
+              <Box>
+                <Box
+                  m="8px 0 0 0"
+                  height="53vh"
+                  width="100%"
+                  sx={{
+                    "& .MuiDataGrid-root": {
+                      border: "none",
+                    },
+                    "& .MuiDataGrid-cell": {
+                      borderBottom: "none",
+                    },
+                    "& .name-column--cell": {
+                      color: colors.greenAccent[100],
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: colors.grey[800],
+                      Height: "10px",
+                      borderBottom: "none",
+                      borderRadius: "8px 8px 0 0",
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                      backgroundColor: colors.primary[400],
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                      borderTop: "none",
+                      borderRadius: "0 0 8px 8px",
+                      backgroundColor: colors.grey[800],
+                    },
+                    "& .MuiCheckbox-root": {
+                      color: `${colors.greenAccent[200]} !important`,
+                    },
+                  }}
+                >
+                  <DataGrid
+                    rows={DataPayment} // goi ApI cap nhat trang thai cua bang
+                    columns={colums}
+                  />
+                </Box>
+              </Box>
+            </div>
           </div>
         </div>
         <div className="flex justify-end my-5">

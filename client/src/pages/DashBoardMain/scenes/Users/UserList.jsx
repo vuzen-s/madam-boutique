@@ -1,9 +1,10 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, useTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Modal } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,9 @@ import { colums } from "./colums/columsUserList";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import useAuthContext from "../../../AuthContext/AuthContext";
+import "./View.css";
+import { columsPaymentHistoryDashboard } from "./colums/columsPaymentHistory";
+import { DataPayment } from "./colums/columsPaymentHistory";
 
 const UserList = () => {
   const theme = useTheme();
@@ -22,6 +26,18 @@ const UserList = () => {
   const userLevel = usersAuthFetch.level; // Lấy level của người dùng đăng nhập hiện tại
   const userId = usersAuthFetch.id; // Lấy id của người dùng đăng nhập hiện tại
   console.log(usersAuthFetch);
+  const [isModalVisible, setIsModalVisible] = useState(false); // State để quản lý trạng thái modal
+  const [selectedUserDetails, setSelectedUserDetails] = useState(null); // State để lưu thông tin người dùng được chọn
+
+  // Xử lý khi click vào nút View
+  const handleViewUser = (user) => {
+    setSelectedUserDetails(user); // Cập nhật thông tin người dùng được chọn
+    setIsModalVisible(true); // Mở modal
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false); // Đóng modal
+  };
 
   // Gồm 3 level:
   // level Admin Master: userLevel = 1
@@ -185,6 +201,125 @@ const UserList = () => {
                     } else {
                       return null; // Không hiển thị nút delete cho các trường hợp còn lại
                     }
+                  } else if (column.field === "detail") {
+                    return (
+                      <>
+                        <Button
+                          onClick={() => handleViewUser(params.row)}
+                          sx={{
+                            bgcolor: "#1565c0",
+                            color: "white",
+                            "&:hover": { bgcolor: "#1976d2" },
+                            width: "90px",
+                          }}
+                          startIcon={<VisibilityIcon />}
+                        >
+                          View
+                        </Button>
+
+                        <Modal
+                          visible={isModalVisible}
+                          width={1000}
+                          centered
+                          onCancel={handleCancel}
+                          footer={[
+                            <Button
+                              key="back"
+                              className="mt-2"
+                              onClick={handleCancel}
+                            >
+                              Close
+                            </Button>,
+                          ]}
+                        >
+                          {selectedUserDetails && (
+                            <div className="flex h-[60vh] flex-col gap-2.5 overflow-y-scroll scrollbar-none ">
+                              {/* Thông tin liên hệ của user */}
+                              <div className="text-lg">
+                                <h1 className="text-2xl text-gray-700 mb-2 underline underline-offset-4 decoration-[1px] font-bold">
+                                  Contact Info
+                                </h1>
+                                <div className="px-3">
+                                  <p>
+                                    <strong>ID:</strong>{" "}
+                                    {selectedUserDetails.id}
+                                  </p>
+                                  <p>
+                                    <strong>Email:</strong>{" "}
+                                    {selectedUserDetails.email}
+                                  </p>
+                                  <p>
+                                    <strong>Phone Number:</strong>{" "}
+                                    {selectedUserDetails.phone
+                                      ? selectedUserDetails.phone
+                                      : "null"}
+                                  </p>
+                                  <p>
+                                    <strong>Address:</strong>{" "}
+                                    {selectedUserDetails.address
+                                      ? selectedUserDetails.address
+                                      : "null"}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Lịch sử thanh toán của user */}
+
+                              <div>
+                                <h2 className="text-2xl text-gray-700 mb-3 underline underline-offset-4 decoration-[1px] font-bold">
+                                  Payment History
+                                </h2>
+                                <div className="pb-3">
+                                    <div className="bg-white rounded-md shadow-lg">
+                                      <Box>
+                                        <Box
+                                          m="8px 0 0 0"
+                                          height="53vh"
+                                          width="100%"
+                                          sx={{
+                                            "& .MuiDataGrid-root": {
+                                              border: "none",
+                                            },
+                                            "& .MuiDataGrid-cell": {
+                                              borderBottom: "none",
+                                            },
+                                            "& .name-column--cell": {
+                                              color: colors.greenAccent[100],
+                                            },
+                                            "& .MuiDataGrid-columnHeaders": {
+                                              backgroundColor: colors.grey[800],
+                                              Height: "10px",
+                                              borderBottom: "none",
+                                              borderRadius: "8px 8px 0 0",
+                                            },
+                                            "& .MuiDataGrid-virtualScroller": {
+                                              backgroundColor:
+                                                colors.primary[400],
+                                            },
+                                            "& .MuiDataGrid-footerContainer": {
+                                              borderTop: "none",
+                                              borderRadius: "0 0 8px 8px",
+                                              backgroundColor: colors.grey[800],
+                                            },
+                                            "& .MuiCheckbox-root": {
+                                              color: `${colors.greenAccent[200]} !important`,
+                                            },
+                                          }}
+                                        >
+                                          <DataGrid
+                                            rows={DataPayment} // goi ApI cap nhat trang thai cua bang
+                                            columns={columsPaymentHistoryDashboard}
+                                          />
+                                        </Box>
+                                      </Box>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </Modal>
+                      </>
+                    );
                   }
                   return column.renderCell
                     ? column.renderCell(params)
