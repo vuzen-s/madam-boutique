@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlogModel;
 use App\Models\CategoryModel;
 use App\Models\OrderModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = DB::table('carts')->get();
+        $order_latest = DB::table('carts')->get();
+
+        return response()->json([
+            'orders' => $orders,
+            'order_latest' => $order_latest,
+        ]);
     }
 
     /**
@@ -32,7 +40,32 @@ class OrderController extends Controller
         $data->save();
 
         // Lưu từng cart detail
+        $dataCartDetailList = array();
+        $cart_id = $data->id;
+        $name_customer = $request->name_customer;
+        $phone_customer = $request->phone_customer;
+        $address_customer = $request->address_customer;
+        $quantity = $request->quantity;
+        $price = $request->price;
+        $product_ids = $request->product_ids;
 
+        if ($product_ids != null) {
+            foreach ($product_ids as $product_id) {
+                $dataCartDetailList[] = array(
+                    'name_customer' => $name_customer,
+                    'phone_customer' => $phone_customer,
+                    'address_customer' => $address_customer,
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    'product_id' => $product_id,
+                    'cart_id' => $cart_id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                );
+            }
+        }
+
+        DB::table('cart_detail')->insert($dataCartDetailList);
 
         return response()->json([
             'orders' => $data,

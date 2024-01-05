@@ -11,6 +11,10 @@ import {resetCart} from '../../redux/madamBoutiqueSlice';
 const {Step} = Steps;
 
 const Payment = () => {
+    const [nameCustomer, setNameCustomer] = useState("");
+    const [phoneCustomer, setPhoneCustomer] = useState("");
+    const [addressCustomer, setAddressCustomer] = useState("");
+
     const navigate = useNavigate();
     const {state} = useLocation();
     const {authenticatedUser, setAuthenticatedUser} = useAuthContext();
@@ -33,10 +37,14 @@ const Payment = () => {
             // Cập nhật state và form với dữ liệu mới
             setAuthenticatedUser(userData);
             step1Form.setFieldsValue({
-                Name: userData.fullname || '',
-                Phone: userData.phone || '',
-                Address: userData.address || '',
+                name_customer: userData.fullname || '',
+                phone_customer: userData.phone || '',
+                address_customer: userData.address || '',
             });
+            //
+            setNameCustomer(userData.fullname);
+            setPhoneCustomer(userData.phone);
+            setAddressCustomer(userData.address);
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
@@ -67,6 +75,21 @@ const Payment = () => {
 
     const [total, setTotal] = useState(0);
 
+    // Call API send mail
+    const sendMailOrderNew = () => {
+        fetch('http://127.0.0.1:8000/api/sendmail-order', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => console.log(error));
+    }
+
     // Push order
     const handleFormSubmitPayment = async () => {
 
@@ -94,6 +117,8 @@ const Payment = () => {
                     if (data.errors === undefined) {
                         dispatch(resetCart());
                         showToastMessage();
+                        // send mail
+                        sendMailOrderNew();
                     }
                 })
         } catch (error) {
@@ -108,6 +133,36 @@ const Payment = () => {
     };
 
     const Step1 = () => {
+        const [form] = Form.useForm();
+
+        const handleFieldsChange = (changedFields, allFields) => {
+            // Lặp qua các trường đã thay đổi
+            changedFields.forEach((changedField) => {
+                const {name, value} = changedField;
+                console.log(changedField);
+                console.log(changedField.name);
+                // Cập nhật giá trị mới cho trường trong form
+                form.setFieldsValue({[name]: value});
+                //
+                switch (changedField.name[0]) {
+                    case 'name_customer':
+                        setNameCustomer(changedField['value']);
+                        console.log(changedField['value']);
+                        break;
+                    case 'phone_customer':
+                        setPhoneCustomer(changedField['value']);
+                        console.log(changedField['value']);
+                        break;
+                    case 'address_customer':
+                        setAddressCustomer(changedField['value']);
+                        console.log(changedField['value']);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        };
+
         const onFinish = async (values) => {
             const {Name, Phone, Address} = values;
 
@@ -140,11 +195,12 @@ const Payment = () => {
         return (
             <Form
                 form={step1Form}
+                onFieldsChange={handleFieldsChange}
                 onFinish={onFinish}
                 initialValues={{
-                    Name: authenticatedUser?.fullname || '',
-                    Phone: authenticatedUser?.phone || '',
-                    Address: authenticatedUser?.address || '',
+                    name_customer: authenticatedUser?.fullname || '',
+                    phone_customer: authenticatedUser?.phone || '',
+                    address_customer: authenticatedUser?.address || '',
                 }}
             >
                 <div className="w-full py-8 grid grid-cols-10 h-full max-h-screem gap-4">
@@ -155,17 +211,17 @@ const Payment = () => {
                     <div className="flex w-full flex-col items-center col-span-4 gap-8">
                         <p className="text-base font-titleFont font-semibold px-2">Delivery information for you</p>
 
-                        <Form.Item label="Name" name="Name"
+                        <Form.Item label="Name" name="name_customer"
                                    rules={[{required: true, message: 'Please enter your name'}]}>
                             <Input/>
                         </Form.Item>
 
-                        <Form.Item label="Phone" name="Phone"
+                        <Form.Item label="Phone" name="phone_customer"
                                    rules={[{required: true, message: 'Please enter your phone number'}]}>
                             <Input/>
                         </Form.Item>
 
-                        <Form.Item label="Address" name="Address"
+                        <Form.Item label="Address" name="address_customer"
                                    rules={[{required: true, message: 'Please enter your address'}]}>
                             <Input.TextArea rows={4}/>
                         </Form.Item>
@@ -197,27 +253,43 @@ const Payment = () => {
         setTotal(totalAmount);
 
         return (
-            <div className=' w-full py-8 grid grid-cols-10 h-full max-h-screem gap-4'>
-                <div className='w-full flex justify-center items-center col-span-6'>
-                    <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[100%] object-contain'/>
+            <div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem gap-4'>
+                <div className='w-full flex justify-center items-center col-span-12'>
+                    <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[20%] object-contain'/>
                 </div>
 
-                <div className='flex w-full flex-col items-center col-span-4 gap-8'>
+                <div className='flex w-full flex-col items-center col-span-12 gap-8'>
                     <h2 className='text-2xl font-bold'>Invoice details</h2>
                     <table className='table-auto w-full'>
                         <thead>
                         <tr className='border bg-gray-300 '>
+                            <th className='text-center p-2'>Products ID</th>
                             <th className='text-center p-2'>Products</th>
                             <th className='text-center p-2'>Quantity</th>
                             <th className='text-center p-2'>Price</th>
                         </tr>
                         </thead>
+                        s
                         <tbody>
                         {products.map((item) => (
                             <tr key={item._id}>
-                                <td className='text-center p-2 border-b-2'>{`${item.name}`} </td>
-                                <td className='text-center p-2 border-b-2'>{`${item.quantity}`}</td>
-                                <td className='text-center p-2 border-b-2'>{`${item.price * item.quantity}  USD`}</td>
+                                <td className='text-center p-2 border-b-2'>
+                                    <input className="text-center p-2 border-b-2" name="$product_ids[]" value={item._id}
+                                           disabled={true}/>
+                                </td>
+                                <td className='text-center p-2 border-b-2'>
+                                    <input className='text-center p-2 border-b-2' value={item.name} disabled={true}/>
+                                </td>
+                                <td className='text-center p-2 border-b-2'>
+                                    <input className='text-center p-2 border-b-2' name="quantity" value={item.quantity}
+                                           disabled={true}/>
+                                </td>
+                                <td className='text-center p-2 border-b-2'>
+                                    <input className='text-center p-2 border-b-2' value={item.price * item.quantity}
+                                           disabled={true}/>
+                                    <input className='text-center p-2 border-b-2' name="price" value={item.price}
+                                           disabled={true} type="hidden"/>
+                                </td>
                             </tr>
                         ))}
                         </tbody>

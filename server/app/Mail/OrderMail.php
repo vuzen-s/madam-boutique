@@ -2,13 +2,16 @@
 
 namespace App\Mail;
 
-use Faker\Provider\Address;
+use App\Models\OrderModel;
+use App\Models\ProductModel;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class OrderMail extends Mailable
 {
@@ -19,7 +22,6 @@ class OrderMail extends Mailable
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -38,8 +40,14 @@ class OrderMail extends Mailable
      */
     public function content(): Content
     {
+        $order_latest = OrderModel::with(['user'])
+            ->get()
+            ->last();
         return new Content(
             view: 'mails.orders',
+            with: [
+                'order_latest' => $order_latest,
+            ],
         );
     }
 

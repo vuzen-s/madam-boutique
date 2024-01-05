@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\TopicController;
+use App\Http\Controllers\Mail\OrderMailController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -187,9 +188,13 @@ Route::delete('blogs-destroy/{id}', [BlogController::class, 'destroy'])->name('b
 Route::get('blogs-publicPath', [ProductController::class, 'getPublicPath'])->name('blogs-getPublicPath');
 
 // =================== MAIL ===================
+// send mail contact
 Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact');
 // Xác thực lại reCapcha
 Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact')->middleware('recaptcha');
+// send mail order
+Route::get('sendmail-order', [OrderMailController::class, 'sendMailOrder'])->name('mail.sendMailOrder');
 
 // =================== ORDER ===================
-Route::post('orders-store', [OrderController::class, 'store'])->name('orders-store');
+Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+Route::post('orders-store', [OrderController::class, 'store'])->name('orders.store');
