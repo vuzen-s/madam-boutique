@@ -1,0 +1,18 @@
+.ant-modal-mask {
+    background-color: rgba(0, 0, 0, 0.044) !important;
+    z-index: 100 !important;
+  }
+
+  .ant-modal .ant-modal-content {
+    position: relative;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.01);
+    pointer-events: auto;
+    padding: 20px 24px;
+}
+
+  
+ 

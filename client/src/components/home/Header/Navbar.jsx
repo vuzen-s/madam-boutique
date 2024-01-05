@@ -239,7 +239,7 @@ const Navbar = () => {
                         <FaUser/>
 
                         {/*//*/}
-                        <span>{userAuth && userAuth.fullname}</span>
+                        {/* <span>{userAuth && userAuth.fullname}</span> */}
 
                     </div>
                     {showUser && (

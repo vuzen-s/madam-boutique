@@ -1,4 +1,4 @@
-export const colums= [
+export const columsPaymentHistoryDashboard = [
   {
     field: "id",
     headerName: "Order Number",
@@ -7,7 +7,7 @@ export const colums= [
   {
     field: "datetime",
     headerName: "Date Time",
-    flex: 0.5,
+    flex: 0.6,
   },
 
   {
@@ -18,7 +18,7 @@ export const colums= [
   {
     field: "product",
     headerName: "Product",
-    flex: 1,
+    flex: 0.9,
   },
   {
     field: "quantity",

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export const colums = [
@@ -118,19 +118,6 @@ export const colums = [
     field: "detail",
     headerName: "Detail",
     flex: 0.4,
-    renderCell: (params) => (
-        <Button
-            sx={{
-              bgcolor: "#1565c0",
-              color: "white",
-              "&:hover": { bgcolor: "#1976d2" },
-              width: "90px",
-            }}
-            startIcon={<VisibilityIcon />}
-        >
-          View
-        </Button>
-    ),
   },
   {
     field: "edit",
@@ -141,27 +128,5 @@ export const colums = [
     field: "delete",
     headerName: "Delete",
     flex: 0.5,
-    // renderCell: (params) => {
-    //   if (userLevel === 1 && params.value <= 1) {
-    //     return null;  // Không hiển thị nút delete
-    //   }
-    //   if (userLevel === 2 && params.value <= 2) {
-    //     return null;  // Không hiển thị nút delete
-    //   }
-    //   return (
-    //     <Button
-    //       onClick={() => handleDeleteUser(params.id)}
-    //       sx={{
-    //         bgcolor: "#d32f2f",
-    //         color: "white",
-    //         "&:hover": { bgcolor: "#f44336" },
-    //         width: "100px",
-    //       }}
-    //       startIcon={<DeleteIcon />}
-    //     >
-    //       Delete
-    //     </Button>
-    //   );
-    // },
   },
 ];
