@@ -176,6 +176,8 @@ Route::get('topics', [TopicController::class, 'index'])->name('topics.index');
 // =================== BLOGS ===================
 // List data collections
 Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+// blog
+Route::get('blogs-create', [BlogController::class, 'create'])->name('blogs.blogs-create');
 // Đẩy data lên table collections
 Route::post('blogs-store', [BlogController::class, 'store'])->name('blogs-store');
 // Update collection
