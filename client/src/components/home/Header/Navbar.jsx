@@ -125,7 +125,6 @@ const Navbar = () => {
             if (response.status === 200) {
                 sessionStorage.removeItem('token');
                 setUserAuth(null);
-                navigate('/');
             }
         } catch (e) {
             if (e.response && e.response.status === 401) {
@@ -178,7 +177,7 @@ const Navbar = () => {
                             initial={{x: 30, opacity: 0}}
                             animate={{x: 0, opacity: 1}}
                             transition={{duration: 0.5}}
-                            className="absolute right-40 z-50 h-auto rounded-3xl "
+                            className="absolute right-80 z-50 h-auto rounded-3xl"
                         >
                             <div className="max-w">
                                 <input
@@ -239,7 +238,7 @@ const Navbar = () => {
                         <FaUser/>
 
                         {/*//*/}
-                         <span>{userAuth && userAuth.fullname}</span>
+                        <span>{userAuth && userAuth.fullname}</span>
 
                     </div>
                     {showUser && (

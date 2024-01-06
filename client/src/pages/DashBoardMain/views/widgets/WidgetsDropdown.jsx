@@ -70,7 +70,7 @@ const WidgetsDropdown = () => {
 
   // Get data carts
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/carts', {
+    fetch('http://127.0.0.1:8000/api/orders', {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -78,8 +78,8 @@ const WidgetsDropdown = () => {
     })
       .then((respon) => respon.json())
       .then((data) => {
-        console.log(data.carts);
-        setCartsList(data.carts);
+        console.log(data.orders);
+        setCartsList(data.orders);
       })
       .catch((error) => console.log(error));
   }, []);
