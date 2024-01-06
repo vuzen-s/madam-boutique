@@ -18,7 +18,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = BlogModel::with(['topic'])->get();
+        $blogs = BlogModel::with(['topic', 'user'])->get();
         return response()->json([
             'blogs' => $blogs,
         ]);
@@ -35,11 +35,11 @@ class BlogController extends Controller
             'avatar_blog' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|in:0,1',
             'topic_id' => 'required',
-             'user_id' => 'required',
+            'user_id' => 'required',
         ]);
 
         // Xử lý lưu dữ liệu vào database
-        $blog = new BlogModel;
+        $blog = new BlogModel();
         $blog->title = $request->title;
         $blog->content = $request->content;
         $blog->status = $request->status;
@@ -48,27 +48,37 @@ class BlogController extends Controller
 
         // Xử lý ảnh đại diện (nếu có)
         if ($request->hasFile('avatar_blog')) {
-            $avatarPath = $request->file('avatar_blog')->store('avatars');
-            $blog->avatar_blog = $avatarPath;
+            $avatarPath = $request->avatar_blog;
+            $blog->avatar_blog = time() . '_' . $avatarPath->getClientOriginalName();
+            $avatarPath->move(public_path('uploads/blogs/'), $blog->avatar_blog);
+        } else {
+            $blog->avatar_blog = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
         }
 
         $blog->save();
 
         return response()->json(['message' => 'Bài viết đã được tạo thành công'], 200);
     }
-    
+
+    public function getPublicPath()
+    {
+        $publicPath = asset('uploads/blogs/');
+        return response()->json(['publicPath' => $publicPath]);
+    }
+
     public function create()
     {
-         $users = DB::table('users')->get();
+        $users = DB::table('users')->get();
         $topics = DB::table('topics')->get();
-       
+
 
         return response()->json([
-             'users' => $users,
+            'users' => $users,
             'topics' => $topics,
-           
+
         ]);
     }
+
     /**
      * Display the specified resource.
      */

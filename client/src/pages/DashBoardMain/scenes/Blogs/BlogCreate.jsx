@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import  csrfToken from "../../../../redux/madamBoutiqueSlice";
 
 const BlogCreate = () => {
   const [title, setTitle] = useState("");
@@ -49,11 +48,7 @@ const BlogCreate = () => {
         formData,
         {
           headers: {
-            'X-CSRF-TOKEN': csrfToken,
-            
-            
             "Content-Type": "multipart/form-data",
-                
           },
         }
       );
@@ -158,7 +153,7 @@ const BlogCreate = () => {
           >
             {optionUsers.map((user) => (
               <option key={user.id} value={user.id}>
-                {user.name}
+                {user.fullname}
               </option>
             ))}
           </select>

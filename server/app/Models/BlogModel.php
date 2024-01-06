@@ -18,4 +18,9 @@ class BlogModel extends Model
     {
         return $this->belongsTo(TopicModel::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

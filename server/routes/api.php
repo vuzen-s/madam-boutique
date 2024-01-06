@@ -174,13 +174,15 @@ Route::group([
 Route::get('topics', [TopicController::class, 'index'])->name('topics.index');
 
 // =================== BLOGS ===================
-// List data 
+// List data
 Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+// get path
+Route::get('blogs-public-path', [BlogController::class, 'getPublicPath'])->name('blogs.index');
 // blog
 Route::get('blogs-create', [BlogController::class, 'create'])->name('blogs-create');
-// Đẩy data lên table 
+// Đẩy data lên table
 Route::post('blogs-store', [BlogController::class, 'store'])->name('blogs-store');
-// Update 
+// Update
 Route::get('blogs-edit/{id}', [BlogController::class, 'edit'])->name('blogs-edit');
 
 Route::patch('blogs-update/{id}', [BlogController::class, 'update'])->name('blogs-update');
