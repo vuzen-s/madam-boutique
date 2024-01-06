@@ -127,11 +127,18 @@ const Payment = () => {
                     console.log(data.message);
                     // Xử lý dữ liệu thành công nếu cần
                     if (data.errors === undefined) {
-                        dispatch(resetCart());
+                        Swal.fire({
+                            title: "Đơn hàng của bạn đã được lưu thành công!",
+                            text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+                            icon: "success"
+                        });
+                        // navigate('/cart');
                         // send mail
                         sendMailOrderNew();
                         // send mail client
                         sendMailOrderNewClient();
+                        //
+                        dispatch(resetCart());
                     }
                 })
         } catch (error) {
@@ -163,7 +170,7 @@ const Payment = () => {
                     text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
                     icon: "success"
                 });
-                await handlePushInfoPayment();
+                // await handlePushInfoPayment();
             }
         });
     };
@@ -445,6 +452,9 @@ const Payment = () => {
                             }, onApprove: (data, actions) => {
                                 return actions.order.capture().then((details) => {
                                     console.log(details);
+                                    if (details) {
+                                        handlePushInfoPayment();
+                                    }
                                 });
                             },
                         })
@@ -463,30 +473,31 @@ const Payment = () => {
             };
         }, []);
 
-        return (<div>
-            <div className='w-full flex justify-center items-center col-span-4'>
-                <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
-            </div>
+        return (
+            <div>
+                <div className='w-full flex justify-center items-center col-span-4'>
+                    <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
+                </div>
 
-            <Form className='pl-[20%] w-[80%] items-center '>
-                <div ref={paypalButtonRef}></div>
-            </Form>
+                <Form className='pl-[20%] w-[80%] items-center'>
+                    <div ref={paypalButtonRef}></div>
+                </Form>
 
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
-                <Button
-                    className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                    onClick={handlePrev}
-                >
-                    Previous
-                </Button>
-                <Button
-                    className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                    onClick={handleFormSubmitPayment}
-                >
-                    Complete
-                </Button>
-            </div>
-        </div>);
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
+                    <Button
+                        className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                        onClick={handlePrev}
+                    >
+                        Previous
+                    </Button>
+                    {/*<Button*/}
+                    {/*    className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"*/}
+                    {/*    onClick={handleFormSubmitPayment}*/}
+                    {/*>*/}
+                    {/*    Complete*/}
+                    {/*</Button>*/}
+                </div>
+            </div>);
     };
 
     const handleNext = () => {

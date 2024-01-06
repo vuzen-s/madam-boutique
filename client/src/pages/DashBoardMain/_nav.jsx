@@ -206,7 +206,7 @@ const _nav = [
         component: CNavItem,
         name: 'Orders',
         icon: <CIcon icon={cilAudioDescription} customClassName="nav-icon"/>,
-        to: '/404',
+        to: '/dashboard/order',
     },
 ]
 

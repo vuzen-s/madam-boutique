@@ -2,7 +2,7 @@ import {Box} from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from 'axios';
 import $ from 'jquery';
-import {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {toast} from 'react-toastify';
@@ -12,6 +12,8 @@ import {csrfTokenReducer} from "../../../../redux/madamBoutiqueSlice";
 import Header from "../../components/Header";
 import './ProductCreate.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import {CKEditor} from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const ProductCreate = () => {
     const [name, setName] = useState('');
@@ -121,9 +123,9 @@ const ProductCreate = () => {
             case "name":
                 setName(event.target.value);
                 break;
-            case "desc":
-                setDesc(event.target.value);
-                break;
+            // case "desc":
+            //     setDesc(event.target.value);
+            // break;
             case "price":
                 setPrice(event.target.value);
                 break;
@@ -201,9 +203,16 @@ const ProductCreate = () => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Dòng mô tả:</label>
-                    <input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc"
-                           onChange={handleChangeInput}/>
+                    <label for="desc" class="form-label">Mô tả sản phẩm:</label>
+                    {/*<input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc"*/}
+                    {/*       onChange={handleChangeInput}/>*/}
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data={desc}
+                        onChange={(event, editor) => {
+                            setDesc(editor.getData());
+                        }}
+                    />
                     <p style={{color: "red"}}>
                         {errorsField && errorsField.desc}
                     </p>

@@ -86,6 +86,22 @@ const BlogList = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
+    /// Get path to public in serve
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/blogs-public-path', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((respon) => respon.json())
+            .then((data) => {
+                console.log(data);
+                setPublicPath(data.publicPath);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
     const columns = [
         {field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center",},
         {
@@ -109,8 +125,8 @@ const BlogList = () => {
             align: "center",
             renderCell: (params) => (
                 <img
-                    src={params.value === "https://globaleducation.s3.ap-south-1.amazonaws.com/globaledu/no-image.png" ? "https://globaleducation.s3.ap-south-1.amazonaws.com/globaledu/no-image.png" : publicPath + "/" + params.value}
-                    alt={params.row.name} width="40px"/>
+                    src={params.value === "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" ? "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" : publicPath + "/" + params.value}
+                    alt={params.row.name} width="60px"/>
             ),
             flex: 0.5,
         },

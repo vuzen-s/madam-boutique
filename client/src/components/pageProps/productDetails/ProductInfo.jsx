@@ -31,7 +31,8 @@ const ProductInfo = ({productInfo}) => {
         <div className="flex flex-col gap-5">
             <h2 className="text-4xl font-semibold">{productInfo && productInfo.name}</h2>
             <p className="text-xl font-semibold">${productInfo && productInfo.price}</p>
-            <p className="text-base text-gray-600">{productInfo && productInfo.desc}</p>
+            <div dangerouslySetInnerHTML={{__html: productInfo.desc}}>
+            </div>
             {/* <p className="text-sm">Be the first to leave a review.</p> */}
             <p className="font-medium text-lg">
                 <span className="font-normal">{productInfo ? 'Colors:' + productInfo.color : ''}</span>
