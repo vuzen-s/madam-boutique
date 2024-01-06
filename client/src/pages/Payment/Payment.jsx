@@ -90,6 +90,20 @@ const Payment = () => {
             .catch((error) => console.log(error));
     }
 
+    // Call API send mail client
+    const sendMailOrderNewClient = () => {
+        fetch('http://127.0.0.1:8000/api/sendmail-order-client', {
+            method: "GET", headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => console.log(error));
+    }
+
     const handlePushInfoPayment = async () => {
         try {
             await fetch('http://127.0.0.1:8000/api/orders-store', {
@@ -116,6 +130,8 @@ const Payment = () => {
                         dispatch(resetCart());
                         // send mail
                         sendMailOrderNew();
+                        // send mail client
+                        sendMailOrderNewClient();
                     }
                 })
         } catch (error) {

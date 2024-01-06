@@ -55,7 +55,7 @@ const Navbar = () => {
         }
 
         if (searchRef.current && !searchRef.current.contains(event.target)) {
-            setShowSearch(false);
+            setShowSearch(true);
         }
     };
 
@@ -150,7 +150,6 @@ const Navbar = () => {
             .catch((error) => console.log(error));
     }, []);
 
-
     return (
         <header class="text-gray-600 body-font sticky top-0 z-50 bg-white h-full shadow-2xl">
             <div class="max-w-container mx-auto flex flex-wrap h-16 flex-col md:flex-row justify-center relative">
@@ -193,12 +192,12 @@ const Navbar = () => {
 
                     {searchQuery && (
                         <div
-                            className={` mt-2.5 h-96 bg-white top-12 md:right-40 absolute z-50 overflow-y-scroll shadow-2xl scrollbar-hide cursor-pointer`}
+                            className={`mt-2.5 h-96 bg-white top-12 md:right-40 absolute z-50 overflow-y-scroll shadow-2xl scrollbar-show cursor-pointer`}
                         >
                             {searchQuery &&
                                 filteredProducts.map((item) => (
                                     <div
-                                        onClick={() =>
+                                        onClick={(e) =>
                                             navigate(
                                                 `/product/${item.id}`,
                                                 {
@@ -208,7 +207,7 @@ const Navbar = () => {
                                                 }
                                             ) & setSearchQuery("")
                                         }
-                                        key={item._id}
+                                        key={item.id}
                                         className="max-w-[500px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                                     >
                                         <img className="w-24"

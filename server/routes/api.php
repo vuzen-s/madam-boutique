@@ -194,6 +194,7 @@ Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact']
 Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact')->middleware('recaptcha');
 // send mail order
 Route::get('sendmail-order', [OrderMailController::class, 'sendMailOrder'])->name('mail.sendMailOrder');
+Route::get('sendmail-order-client', [OrderMailController::class, 'sendMailOrderClient'])->name('mail.sendMailOrderClient');
 
 // =================== ORDER ===================
 Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
