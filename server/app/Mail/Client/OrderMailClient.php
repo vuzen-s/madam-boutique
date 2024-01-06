@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderMail extends Mailable
+class OrderMailClient extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class OrderMail extends Mailable
     {
         return new Envelope(
             from: new Address('ducvuglotec@gmail.com', 'MADAM Boutique'),
-            subject: 'KIỂN TRA THÔNG TIN ĐƠN HÀNG VỪA ĐẶT',
+            subject: '[MADAM BOUTIQUE] | VUI LÒNG KIỂN TRA THÔNG TIN ĐƠN HÀNG',
         );
     }
 
@@ -43,7 +43,7 @@ class OrderMail extends Mailable
             ->get()
             ->last();
         return new Content(
-            view: 'mails.client.orders',
+            view: 'client.orders',
             with: [
                 'order_latest' => $order_latest,
             ],

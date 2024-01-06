@@ -18,7 +18,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = BlogModel::with(['topic'])->get();
+        $blogs = BlogModel::with(['topic', 'user'])->get();
         return response()->json([
             'blogs' => $blogs,
         ]);
@@ -48,6 +48,24 @@ class BlogController extends Controller
 
         return response()->json([
             'blogs' => $data,
+        ]);
+    }
+
+    public function getPublicPath()
+    {
+        $publicPath = asset('uploads/blogs/');
+        return response()->json(['publicPath' => $publicPath]);
+    }
+
+    public function create()
+    {
+        $users = DB::table('users')->get();
+        $topics = DB::table('topics')->get();
+
+        return response()->json([
+            'users' => $users,
+            'topics' => $topics,
+
         ]);
     }
 

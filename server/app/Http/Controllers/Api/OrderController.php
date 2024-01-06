@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = DB::table('carts')->get();
+        $orders = OrderModel::with(['user'])->get();
         $order_latest = DB::table('carts')->get();
 
         return response()->json([
