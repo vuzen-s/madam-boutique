@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogModel;
 use App\Models\CategoryModel;
 use App\Models\OrderModel;
+use App\Models\ProductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,6 +79,17 @@ class OrderController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function showOrdersByUserID($user_id)
+    {
+        $orders = OrderModel::with(['user'])
+            ->where('user_id', $user_id)
+            ->get();
+
+        return response()->json([
+            'orders' => $orders,
+        ]);
     }
 
     /**

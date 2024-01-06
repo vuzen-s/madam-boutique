@@ -2,6 +2,7 @@
   "name": "madamboutique",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://vuzen-s.github.io/madam-boutique/",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@coreui/icons": "^3.0.1",
@@ -74,6 +75,8 @@
     "yup": "^1.3.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -100,6 +103,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.8.1",
+    "gh-pages": "^6.1.1",
     "postcss": "^8.4.20",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.5",

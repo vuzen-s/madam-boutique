@@ -15,11 +15,11 @@ class RecaptchaMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-       
+
 function verifyRecaptcha($recaptchaResponse) {
     $recaptchaSecretKey = '6LcBfkApAAAAAKX8B0x7vkRlg9ZlzOKCGl7LnjSL';
     $recaptchaVerificationURL = 'https://www.google.com/recaptcha/api/siteverify';
-    
+
     $data = array(
         'secret' => $recaptchaSecretKey,
         'response' => $recaptchaResponse,
@@ -61,7 +61,7 @@ if (verifyRecaptcha($recaptchaResponse)) {
     http_response_code(403);
     echo json_encode(array('success' => false, 'message' => 'reCAPTCHA verification failed'));
 }
-        
+
         return $next($request);
     }
 }

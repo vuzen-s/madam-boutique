@@ -2,7 +2,7 @@ import { colums } from "../Colum/Colum"
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../Dashboard2/theme";
-import { DataPayment } from "../Colum/Colum";
+// import { DataPayment } from "../Colum/Colum";
 
 const TableHistoryPayment = () => {
 
@@ -45,10 +45,10 @@ const TableHistoryPayment = () => {
               },
             }}
           >
-            <DataGrid
-              rows={DataPayment} // goi ApI cap nhat trang thai cua bang
-              columns={colums}
-            />
+            {/*<DataGrid*/}
+            {/*  rows={DataPayment} // goi ApI cap nhat trang thai cua bang*/}
+            {/*  columns={colums}*/}
+            {/*/>*/}
           </Box>
         </Box>
       </div>

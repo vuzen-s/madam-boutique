@@ -33,8 +33,10 @@ const Cart = () => {
       setShippingCharge(30);
     } else if (totalAmt <= 400) {
       setShippingCharge(25);
-    } else if (totalAmt > 401) {
+    } else if (totalAmt > 401 && totalAmt <= 1000) {
       setShippingCharge(20);
+    } else {
+      setShippingCharge(0);
     }
   }, [totalAmt]);
 

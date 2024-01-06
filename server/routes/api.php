@@ -197,4 +197,7 @@ Route::get('sendmail-order', [OrderMailController::class, 'sendMailOrder'])->nam
 
 // =================== ORDER ===================
 Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+// push orders
 Route::post('orders-store', [OrderController::class, 'store'])->name('orders.store');
+// get order by user_id
+Route::get('orders/{user_id}', [OrderController::class, 'showOrdersByUserID'])->name('orders.showOrdersByUserID');

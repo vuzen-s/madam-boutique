@@ -7,6 +7,7 @@ import useAuthContext from '../AuthContext/AuthContext';
 import {toast, ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {resetCart} from '../../redux/madamBoutiqueSlice';
+import Swal from 'sweetalert2'
 
 const {Step} = Steps;
 
@@ -89,15 +90,19 @@ const Payment = () => {
             .catch((error) => console.log(error));
     }
 
-    // Push order
-    const handleFormSubmitPayment = async () => {
-
+    const handlePushInfoPayment = async () => {
         try {
             await fetch('http://127.0.0.1:8000/api/orders-store', {
                 method: "POST", headers: {
                     'Accept': 'application/json', 'Content-Type': 'application/json',
                 }, body: JSON.stringify({
-                    total: total, cart_date: new Date().toString(), cart_status: 1, user_id: authenticatedUser.id,
+                    total: total,
+                    cart_date: new Date().toString(),
+                    cart_status: 1,
+                    user_id: authenticatedUser.id,
+                    name_customer: nameCustomer,
+                    phone_customer: phoneCustomer,
+                    address_customer: addressCustomer,
                 }), // Chuyển đổi FormData thành đối tượng JSON
             })
                 .then((respon) => respon.json())
@@ -109,7 +114,6 @@ const Payment = () => {
                     // Xử lý dữ liệu thành công nếu cần
                     if (data.errors === undefined) {
                         dispatch(resetCart());
-                        showToastMessage();
                         // send mail
                         sendMailOrderNew();
                     }
@@ -123,10 +127,103 @@ const Payment = () => {
                 console.error('Error:', error);
             }
         }
+    }
+
+    // Push order
+    const handleFormSubmitPayment = async () => {
+
+        Swal.fire({
+            title: "XÁC NHÂN THÔNG TIN",
+            text: "Bạn chắc chắn thông tin cung cấp thanh toán là chính xác ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Vâng, tôi chắc chắn!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đơn hàng của bạn đã được lưu thành công!",
+                    text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+                    icon: "success"
+                });
+                await handlePushInfoPayment();
+            }
+        });
     };
 
     const Step1 = () => {
         const [form] = Form.useForm();
+
+        // return (
+        //     <div className="w-full py-8 grid grid-cols-10 h-full max-h-screem gap-4">
+        //         <div className="w-full flex justify-center items-center col-span-6">
+        //             <img src="/payment-svg/paymentaddress.svg" alt="paymentform"
+        //                  className="w-[100%] object-contain"/>
+        //         </div>
+        //         <div className="flex w-full flex-col items-center col-span-4 gap-8">
+        //             <Formik
+        //                 onSubmit={handleFormSubmit}
+        //                 initialValues={{
+        //                     name_customer: authenticatedUser?.fullname || '',
+        //                     phone_customer: authenticatedUser?.phone || '',
+        //                     address_customer: authenticatedUser?.address || '',
+        //                 }}
+        //                 onChange={handleChangeInput}
+        //             >
+        //                 {({
+        //                       handleSubmit,
+        //                   }) => (
+        //                     <form onSubmit={handleSubmit}>
+        //                         <Box>
+        //                             <div className="mb-4">
+        //                                 <label htmlFor="name_customer" className="form-label">Name:</label>
+        //                                 <input type="text" className="form-control" id="name_customer"
+        //                                        placeholder="Enter name"
+        //                                        name="name_customer" onChange={handleChangeInput}
+        //                                        value={authenticatedUser?.fullname}
+        //                                 />
+        //                             </div>
+        //                             <div className="mb-4">
+        //                                 <label htmlFor="phone_customer" className="form-label">Name:</label>
+        //                                 <input type="text" className="form-control" id="phone_customer"
+        //                                        placeholder="Enter phone"
+        //                                        name="phone_customer" onChange={handleChangeInput}
+        //                                        value={authenticatedUser?.phone}
+        //                                 />
+        //                             </div>
+        //                             <div className="mb-8">
+        //                                 <label htmlFor="address_customer" className="form-label">Name:</label>
+        //                                 <input type="text" className="form-control" id="address_customer"
+        //                                        placeholder="Enter address"
+        //                                        name="address_customer" onChange={handleChangeInput}
+        //                                        value={authenticatedUser?.address}
+        //                                 />
+        //                             </div>
+        //
+        //                         </Box>
+        //                         <Box mt="10px">
+        //                             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        //                                 <Button
+        //                                     className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
+        //                                     htmlType="submit"
+        //                                 >
+        //                                     Save
+        //                                 </Button>
+        //                                 <Button
+        //                                     onClick={handleNext}
+        //                                     className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
+        //                                 >
+        //                                     Next
+        //                                 </Button>
+        //                             </div>
+        //                         </Box>
+        //                     </form>
+        //                 )}
+        //             </Formik>
+        //         </div>
+        //     </div>
+        // );
 
         const handleFieldsChange = (changedFields, allFields) => {
             // Lặp qua các trường đã thay đổi
@@ -167,7 +264,7 @@ const Payment = () => {
                 fullname: Name, phone: Phone, address: Address,
             };
 
-            // Cập nhật dữ liệu người dùng khi thông tin được thay đổi
+            //     // Cập nhật dữ liệu người dùng khi thông tin được thay đổi
             await updateUser(updatedUserData);
             // Cập nhật state và form với dữ liệu mới
             setAuthenticatedUser((prevUser) => ({
@@ -180,7 +277,8 @@ const Payment = () => {
             message.success('User information updated successfully');
         };
 
-        return (<Form
+        return (
+            <Form
                 form={step1Form}
                 onFieldsChange={handleFieldsChange}
                 onFinish={onFinish}
@@ -229,7 +327,8 @@ const Payment = () => {
                         </div>
                     </div>
                 </div>
-            </Form>);
+            </Form>
+        );
     };
 
     const Step2 = () => {
@@ -239,71 +338,70 @@ const Payment = () => {
         setTotal(totalAmount);
 
         return (<div className=' w-full py-8 grid grid-cols-12 h-full max-h-screem gap-4'>
-                <div className='w-full flex justify-center items-center col-span-12'>
-                    <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[20%] object-contain'/>
+            <div className='w-full flex justify-center items-center col-span-12'>
+                <img src="/payment-svg/paymentform.svg" alt="paymentform" className='w-[20%] object-contain'/>
+            </div>
+
+            <div className='flex w-full flex-col items-center col-span-12 gap-8'>
+                <h2 className='text-2xl font-bold'>Invoice details</h2>
+                <table className='table-auto w-full'>
+                    <thead>
+                    <tr className='border bg-gray-300 '>
+                        <th className='text-center p-2'>Products ID</th>
+                        <th className='text-center p-2'>Products</th>
+                        <th className='text-center p-2'>Quantity</th>
+                        <th className='text-center p-2'>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {products.map((item) => (<tr key={item._id}>
+                        <td className='text-center p-2 border-b-2'>
+                            <input className="text-center p-2 border-b-2" name="$product_ids[]" value={item._id}
+                                   disabled={true}/>
+                        </td>
+                        <td className='text-center p-2 border-b-2'>
+                            <input className='text-center p-2 border-b-2' value={item.name} disabled={true}/>
+                        </td>
+                        <td className='text-center p-2 border-b-2'>
+                            <input className='text-center p-2 border-b-2' name="quantity" value={item.quantity}
+                                   disabled={true}/>
+                        </td>
+                        <td className='text-center p-2 border-b-2'>
+                            <input className='text-center p-2 border-b-2' value={item.price * item.quantity}
+                                   disabled={true}/>
+                            <input className='text-center p-2 border-b-2' name="price" value={item.price}
+                                   disabled={true} type="hidden"/>
+                        </td>
+                    </tr>))}
+                    </tbody>
+                </table>
+
+                <div className='flex items-center  flex justify-center gap-8-sm '>
+                    <span className='text-xl pl-2 text-main font-bold flex-col items-center'>Shipping :</span>
+                    <span className='   pl-2 text-xl  text-red-600'>{`${shippingCharge}  USD`}</span>
                 </div>
 
-                <div className='flex w-full flex-col items-center col-span-12 gap-8'>
-                    <h2 className='text-2xl font-bold'>Invoice details</h2>
-                    <table className='table-auto w-full'>
-                        <thead>
-                        <tr className='border bg-gray-300 '>
-                            <th className='text-center p-2'>Products ID</th>
-                            <th className='text-center p-2'>Products</th>
-                            <th className='text-center p-2'>Quantity</th>
-                            <th className='text-center p-2'>Price</th>
-                        </tr>
-                        </thead>
-                        s
-                        <tbody>
-                        {products.map((item) => (<tr key={item._id}>
-                                <td className='text-center p-2 border-b-2'>
-                                    <input className="text-center p-2 border-b-2" name="$product_ids[]" value={item._id}
-                                           disabled={true}/>
-                                </td>
-                                <td className='text-center p-2 border-b-2'>
-                                    <input className='text-center p-2 border-b-2' value={item.name} disabled={true}/>
-                                </td>
-                                <td className='text-center p-2 border-b-2'>
-                                    <input className='text-center p-2 border-b-2' name="quantity" value={item.quantity}
-                                           disabled={true}/>
-                                </td>
-                                <td className='text-center p-2 border-b-2'>
-                                    <input className='text-center p-2 border-b-2' value={item.price * item.quantity}
-                                           disabled={true}/>
-                                    <input className='text-center p-2 border-b-2' name="price" value={item.price}
-                                           disabled={true} type="hidden"/>
-                                </td>
-                            </tr>))}
-                        </tbody>
-                    </table>
-
-                    <div className='flex items-center  flex justify-center gap-8-sm '>
-                        <span className='text-xl pl-2 text-main font-bold flex-col items-center'>Shipping :</span>
-                        <span className='   pl-2 text-xl  text-red-600'>{`${shippingCharge}  USD`}</span>
-                    </div>
-
-                    <div className='flex  flex justify-center gap-8-sm'>
-                        <span className='flex  flex-col items-center text-xl p-auto text-main font-bold'>Total :</span>
-                        <span className=' pl-2 text-xl  text-red-600'>{`${totalAmount}  USD`}</span>
-                    </div>
-
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <Button
-                            className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                            onClick={handlePrev}
-                        >
-                            Previous
-                        </Button>
-                        <Button
-                            onClick={handleNext}
-                            className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                        >
-                            Next
-                        </Button>
-                    </div>
+                <div className='flex  flex justify-center gap-8-sm'>
+                    <span className='flex  flex-col items-center text-xl p-auto text-main font-bold'>Total :</span>
+                    <span className=' pl-2 text-xl  text-red-600'>{`${totalAmount}  USD`}</span>
                 </div>
-            </div>);
+
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Button
+                        className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                        onClick={handlePrev}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        onClick={handleNext}
+                        className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                    >
+                        Next
+                    </Button>
+                </div>
+            </div>
+        </div>);
     };
 
     const Step3 = () => {
@@ -350,29 +448,29 @@ const Payment = () => {
         }, []);
 
         return (<div>
-                <div className='w-full flex justify-center items-center col-span-4'>
-                    <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
-                </div>
+            <div className='w-full flex justify-center items-center col-span-4'>
+                <img src="/payment-svg/payment.svg" alt="paymentform" className='w-[50%] object-contain'/>
+            </div>
 
-                <Form className='pl-[20%] w-[80%] items-center '>
-                    <div ref={paypalButtonRef}></div>
-                </Form>
+            <Form className='pl-[20%] w-[80%] items-center '>
+                <div ref={paypalButtonRef}></div>
+            </Form>
 
-                <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
-                    <Button
-                        className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                        onClick={handlePrev}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                        onClick={handleFormSubmitPayment}
-                    >
-                        Complete
-                    </Button>
-                </div>
-            </div>);
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
+                <Button
+                    className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                    onClick={handlePrev}
+                >
+                    Previous
+                </Button>
+                <Button
+                    className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                    onClick={handleFormSubmitPayment}
+                >
+                    Complete
+                </Button>
+            </div>
+        </div>);
     };
 
     const handleNext = () => {
@@ -392,14 +490,14 @@ const Payment = () => {
     },];
 
     return (<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '24px'}}>
-            <Steps current={currentStep} onChange={(step) => setCurrentStep(step)}>
-                {steps.map((item) => (<Step key={item.title} title={item.title}/>))}
-            </Steps>
-            <div style={{marginTop: '20px', width: '50%'}}>
-                {steps[currentStep].content}
-            </div>
-            <ToastContainer/>
-        </div>);
+        <Steps current={currentStep} onChange={(step) => setCurrentStep(step)}>
+            {steps.map((item) => (<Step key={item.title} title={item.title}/>))}
+        </Steps>
+        <div style={{marginTop: '20px', width: '50%'}}>
+            {steps[currentStep].content}
+        </div>
+        <ToastContainer/>
+    </div>);
 };
 
 export default Payment;
