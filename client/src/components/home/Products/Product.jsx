@@ -77,7 +77,13 @@ const Product = (props) => {
             </div>
             <div className="max-w-80 py-6 flex flex-col gap-1 border-[1px] border-t-0 px-4">
                 <div className="flex items-center justify-between font-titleFont">
-                    <h2 className="text-lg text-primeColor font-bold">
+                    <h2 className="text-lg text-primeColor font-bold" style={{
+                        'height': '32px',
+                        'overflow': 'hidden',
+                        'textOverflow': 'ellipsis',
+                        'whiteSpace': 'nowrap',
+                        'paddingRight': '4px',
+                    }}>
                         {props.name}
                     </h2>
                     <p className="text-[#767676] text-[14px]">${props.price}</p>

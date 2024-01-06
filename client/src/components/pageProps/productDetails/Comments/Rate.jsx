@@ -50,7 +50,7 @@ const Rate = ({rating, value, handleDeleteItem, handleEditItem, userAuth}) => {
                 {rating.rating_content == null ? '' : rating.rating_content}
             </div>
             {
-                (userAuth.id === rating.user.id)
+                (userAuth && userAuth.id === rating.user.id)
                     ? <div className='Comment-actions'>
                         <button onClick={handleEditItem}>Sửa</button>
                         <button onClick={handleDeleteItem}>Xóa đánh giá</button>

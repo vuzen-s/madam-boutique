@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import {
-  bannerImgOne,
-  bannerImgThree,
-  bannerImgTwo,
-} from "../../assets/images";
+// import {
+//   banner1,
+//   banner2,
+//   banner3,
+// } from "../../../";
 import Image from "../designLayouts/Image";
 
 const Banner = () => {
@@ -102,19 +102,19 @@ const Banner = () => {
   return (
     <div className="w-full bg-white">
       <Slider {...settings}>
-        <Link to="/offer">
+        <Link to="/">
           <div>
-            <Image imgSrc={bannerImgOne} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.gif"} height="100px"/>
           </div>
         </Link>
-        <Link to="/offer">
+        <Link to="/">
           <div>
-            <Image imgSrc={bannerImgTwo} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.png"} />
           </div>
         </Link>
-        <Link to="/offer">
+        <Link to="/">
           <div>
-            <Image imgSrc={bannerImgThree} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.png"} />
           </div>
         </Link>
       </Slider>

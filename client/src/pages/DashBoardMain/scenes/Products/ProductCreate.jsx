@@ -27,6 +27,7 @@ const ProductCreate = () => {
     const [brand_id, setBrand_id] = useState(0);
     const [designer_id, setDesigner_id] = useState(0);
     const [category_id, setCategory_id] = useState(0);
+    const [images, setImages] = useState([]);
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [optionDesigners, setOptionDesigners] = useState([]);
@@ -108,6 +109,13 @@ const ProductCreate = () => {
         })
             .then((respon) => respon.json())
             .then((data) => {
+                //
+                setDesigner_id(data.designers[0].id);
+                setBrand_id(data.brands[0].id);
+                setCollection_id(data.collections[0].id);
+                setCategory_id(data.categories[0].id);
+                //
+                console.log(data);
                 // console.log(data);
                 setOptionDesigners(data.designers);
                 setOptionBrands(data.brands);
@@ -140,6 +148,10 @@ const ProductCreate = () => {
                 break;
             case "feature":
                 setFeature(event.target.value);
+                break;
+            case "images":
+                setFeature(event.target.files);
+                console.log(event.target.files);
                 break;
             default:
                 break;
@@ -296,9 +308,11 @@ const ProductCreate = () => {
                     <label for="collection_id" class="form-label">Collection:</label>
                     <select name="collection_id" className="form-select select2ByID" onChange={handleChangeInput}
                             ref={select2Ref}>
-                        {optionCollections.map((item, index) => (<option key={index} value={item.id}>
-                            {item.name}
-                        </option>))}
+                        {optionCollections.map((item, index) => (
+                            <option key={index} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
                     </select>
                     <p style={{color: "red"}}>
                         {errorsField && errorsField.collection_id}
@@ -319,6 +333,14 @@ const ProductCreate = () => {
                 </div>
                 <div className="mb-3">
                     <label for="images[]" class="form-label">Chọn nhiều hình ảnh:</label>
+                    <input className="form-control" type="file" id="images[]" name="images[]"
+                           onChange={handleChangeInput}/>
+                    <input className="form-control" type="file" id="images[]" name="images[]"
+                           onChange={handleChangeInput}/>
+                    <input className="form-control" type="file" id="images[]" name="images[]"
+                           onChange={handleChangeInput}/>
+                    <input className="form-control" type="file" id="images[]" name="images[]"
+                           onChange={handleChangeInput}/>
                 </div>
             </Box>
             <Box mt="40px">
