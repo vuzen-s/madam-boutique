@@ -39,6 +39,7 @@ import SignIn1 from "./pages/Account/SignIn1";
 import SignUp from "./pages/Account/SignUp";
 import SignIn from "./pages/Account/SignIn";
 import ForgotPassword from "./pages/Account/ForgotPassword.jsx";
+import ResetPassword from "./pages/Account/ResetPassword.jsx";
 
 const App = () => {
   useEffect(() => {
@@ -88,6 +89,7 @@ const App = () => {
         </Route>
         
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/reset-password/:token" element={<ResetPassword />}></Route>
         {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
         {/* </Route> */}

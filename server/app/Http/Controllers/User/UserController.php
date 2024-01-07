@@ -76,7 +76,6 @@ class UserController extends Controller
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250',
             'avatar' => 'nullable|mimes:jpeg,jpg,png'
-            // |mimes:jpeg,jpg,png
         ]);
 
         $customMessages = [
@@ -104,8 +103,9 @@ class UserController extends Controller
             if ($request->hasFile('avatar')) {
                 $avatar = $request->file('avatar');
                 $avatarName = time(). '-' . $avatar->getClientOriginalName();
-                $avatar->storeAs('uploads/', $avatarName, 'public');
-    
+                $avatar->move(public_path('uploads/avatars/'), $avatarName);
+
+
                 $user->avatar = $avatarName;
                 $user->save();
             }
@@ -205,12 +205,25 @@ class UserController extends Controller
 
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email|max:100|unique:users,email,'.$id,
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:50',
+                'unique:users,email,' . $id,
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+            ],
             'gender' => 'nullable',
             'level' => 'required',
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250'
         ]);
+
+        $customMessages = [
+            'email.regex' => ' We only accept emails ending with @gmail.com!'
+        ];
+
+        $validate->setCustomMessages($customMessages);
 
         if(!empty($request->password)){
             $passwordValidator = Validator::make($request->all(), [

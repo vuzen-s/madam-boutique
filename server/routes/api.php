@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mail\ContactMailController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotResetPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,6 +154,10 @@ Route::get('users/edit/{id}', [UserController::class, 'edit']);
 Route::put('users/edit/{id}', [UserController::class, 'update']);
 // Xóa User
 Route::delete('destroy/{id}', [UserController::class, 'destroy']);
+// Forgot password
+Route::post('forgot-password', [ForgotResetPassword::class, 'sendResetLinkEmail']);
+// Reset Password
+Route::post('reset-password', [ForgotResetPassword::class, 'resetPassword']);
 
 Route::group([
 
