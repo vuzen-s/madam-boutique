@@ -5,6 +5,7 @@ import Comments from "../../components/pageProps/productDetails/Comments/Comment
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import Rates from "../../components/pageProps/productDetails/Comments/Rates";
 import ProductsImages from "../../components/pageProps/productDetails/ProductsImages";
+import {ImageList} from "@mui/material";
 
 const ProductDetails = () => {
     const [publicPath, setPublicPath] = useState("");
@@ -74,6 +75,9 @@ const ProductDetails = () => {
             </div>
             <div className="rates">
                 <Rates idProduct={id}/>
+            </div>
+            <div className="rates">
+                <img src={process.env.PUBLIC_URL + "/banner/banner_comment_rating.jpg"} height="10px"/>
             </div>
             <div>
                 <Comments idProduct={id}/>

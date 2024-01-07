@@ -99,14 +99,14 @@ const CategoryList = () => {
       ),
       flex: 0.3,
     },
-    {
-      field: "parent_id",
-      headerName: "Danh mục cha",
-      headerAlign: "center",
-      align: "center",
-      flex: 0.5,
-      cellClassName: "name-column--cell",
-    },
+    // {
+    //   field: "parent_id",
+    //   headerName: "Danh mục cha",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   flex: 0.5,
+    //   cellClassName: "name-column--cell",
+    // },
     {
       headerName: "Actions",
       headerAlign: "center",

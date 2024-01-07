@@ -44,6 +44,9 @@ const ItemCard = ({ item }) => {
         <div className="flex w-1/3 items-center text-lg font-semibold">
           ${item.price}
         </div>
+
+        {/*//Todo:Size options*/}
+
         <div className="w-1/3 flex items-center gap-6 text-lg">
           <span
             onClick={() => dispatch(drecreaseQuantity({ _id: item._id }))}

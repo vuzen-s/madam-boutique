@@ -347,7 +347,7 @@ const ProductCreate = () => {
                 </div>
             </Box>
             <Box mt="40px">
-                <button type="submit" class="btn btn-primary" style={{background: "#0a58ca"}}>Thêm sản phẩm mới
+                <button type="submit" className="btn btn-primary" style={{background: "#0a58ca"}}>Thêm sản phẩm mới
                 </button>
             </Box>
         </form>

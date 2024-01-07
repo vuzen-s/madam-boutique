@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import Swal from 'sweetalert2';
 import {addToCart} from "../../../redux/madamBoutiqueSlice";
+import SizeOption from "./SizeOption";
 
 const ProductInfo = ({productInfo}) => {
     const [publicPath, setPublicPath] = useState(null);
@@ -33,7 +34,9 @@ const ProductInfo = ({productInfo}) => {
             <p className="text-xl font-semibold">${productInfo && productInfo.price}</p>
             <div dangerouslySetInnerHTML={{__html: productInfo.desc}}>
             </div>
+
             {/* <p className="text-sm">Be the first to leave a review.</p> */}
+            <SizeOption />
             <p className="font-medium text-lg">
                 <span className="font-normal">{productInfo ? 'Colors: ' + productInfo.color : ''}</span>
             </p>

@@ -145,13 +145,13 @@ const CategoryEdit = () => {
                   {errorsField && errorsField.status}
                 </p>
               </div>
-              <div class="mb-4">
-                <label for="parent_id" class="form-label">Danh mục cha:</label>
-                <input type="text" class="form-control" id="parent_id" placeholder="Enter parent_id" name="parent_id" value={dataCategoryEdit.parent_id} onChange={handleChangeInput} />
-                <p style={{ color: "red" }}>
-                  {errorsField && errorsField.parent_id}
-                </p>
-              </div>
+              {/*<div class="mb-4">*/}
+              {/*  <label for="parent_id" class="form-label">Danh mục cha:</label>*/}
+              {/*  <input type="text" class="form-control" id="parent_id" placeholder="Enter parent_id" name="parent_id" value={dataCategoryEdit.parent_id} onChange={handleChangeInput} />*/}
+              {/*  <p style={{ color: "red" }}>*/}
+              {/*    {errorsField && errorsField.parent_id}*/}
+              {/*  </p>*/}
+              {/*</div>*/}
             </Box>
             <Box mt="10px">
               <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Lưu thay đổi</button>

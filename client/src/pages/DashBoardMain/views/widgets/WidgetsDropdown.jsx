@@ -193,10 +193,10 @@ const WidgetsDropdown = () => {
                 <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <Link to={'/dashboard/product'}>
+                  <CDropdownItem>View Detail</CDropdownItem>
+                </Link>
+                <CDropdownItem disabled>Deleted</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }
@@ -279,10 +279,10 @@ const WidgetsDropdown = () => {
                 <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <Link to={'/dashboard/collection'}>
+                  <CDropdownItem>View Detail</CDropdownItem>
+                </Link>
+                <CDropdownItem disabled>Deleted</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }
@@ -352,10 +352,10 @@ const WidgetsDropdown = () => {
                 <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <Link to={'/dashboard/order'}>
+                  <CDropdownItem>View Detail</CDropdownItem>
+                </Link>
+                <CDropdownItem disabled>Deleted</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }

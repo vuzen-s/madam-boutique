@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogModel;
 use App\Models\CategoryModel;
 use App\Models\OrderModel;
+use App\Models\PaymentModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,8 +47,8 @@ class OrderController extends Controller
         $name_customer = $request->name_customer;
         $phone_customer = $request->phone_customer;
         $address_customer = $request->address_customer;
-        $quantity = $request->quantity;
-        $price = $request->price;
+        $quantities = $request->quantities;
+        $prices = $request->prices;
         $product_ids = $request->product_ids;
 
         if ($product_ids != null) {
@@ -56,8 +57,8 @@ class OrderController extends Controller
                     'name_customer' => $name_customer,
                     'phone_customer' => $phone_customer,
                     'address_customer' => $address_customer,
-                    'quantity' => $quantity[$key],
-                    'price' => $price[$key],
+                    'quantity' => $quantities[$key],
+                    'price' => $prices[$key],
                     'product_id' => $product_id,
                     'cart_id' => $cart_id,
                     'created_at' => now(),
@@ -67,6 +68,18 @@ class OrderController extends Controller
         }
 
         DB::table('cart_detail')->insert($dataCartDetailList);
+
+        // Lưu vào bảng payment
+        $dataPaymentList = new PaymentModel();
+        $method = $request->method;
+        if ($method != null) {
+            $dataPaymentList->method = $method;
+            $dataPaymentList->time_payment = $request->cart_date;
+            $dataPaymentList->cart_id = $data->id;
+            $dataPaymentList->created_at = now();
+            $dataPaymentList->updated_at = now();
+        }
+        $dataPaymentList->save();
 
         return response()->json([
             'orders' => $data,
