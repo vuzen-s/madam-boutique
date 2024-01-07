@@ -71,7 +71,7 @@ const Comment = ({comment, handleDeleteItem, handleEditItem, userAuth}) => {
 
             <div className='Comment-actions'>
                 {
-                    (comment.status !== 0 && userAuth.id === comment.user.id)
+                    (userAuth && comment.status !== 0 && userAuth.id === comment.user.id)
                     ? <div>
                         <button onClick={handleEditItem}>Chỉnh sửa</button>
                         <button onClick={handleDeleteItem}>Xóa</button>

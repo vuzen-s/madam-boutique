@@ -116,6 +116,23 @@ class ProductController extends Controller
         ]);
     }
 
+    public function showImagesByProductID($product_id)
+    {
+        $product_images = DB::table('product_images')
+            ->where('product_id', $product_id)
+            ->get();
+
+        return response()->json([
+            'product_images' => $product_images,
+        ]);
+    }
+
+    public function getPublicProductImagesPath()
+    {
+        $publicProductImagesPath = asset('uploads/product_images/');
+        return response()->json(['publicProductImagesPath' => $publicProductImagesPath]);
+    }
+
     public function getPublicPath()
     {
         $publicPath = asset('uploads/products/');
@@ -244,9 +261,23 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $data = DB::table('products')->where('id', $id)->first();
+        $dataImages = DB::table('product_images')->where('product_id', $id)->get();
+
         $avatar = $data->avatar;
         $imgPath = public_path('uploads/products/' . $avatar);
 
+        if ($dataImages) {
+            foreach ($dataImages as $value) {
+                $imageItem = $value->file_name;
+                $imageItemPath = public_path('uploads/product_images/' . $imageItem);
+                // xóa ảnh trong thư mục product_images
+                if (file_exists($imageItemPath)) {
+                    unlink($imageItemPath);
+                }
+            }
+        }
+
+        DB::table('product_images')->where('product_id', $id)->delete();
         DB::table('products')->where('id', $id)->delete();
 
         // xóa ảnh trong thư mục public

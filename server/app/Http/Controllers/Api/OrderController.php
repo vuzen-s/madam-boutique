@@ -51,13 +51,13 @@ class OrderController extends Controller
         $product_ids = $request->product_ids;
 
         if ($product_ids != null) {
-            foreach ($product_ids as $product_id) {
+            foreach ($product_ids as $key => $product_id) {
                 $dataCartDetailList[] = array(
                     'name_customer' => $name_customer,
                     'phone_customer' => $phone_customer,
                     'address_customer' => $address_customer,
-                    'quantity' => $quantity,
-                    'price' => $price,
+                    'quantity' => $quantity[$key],
+                    'price' => $price[$key],
                     'product_id' => $product_id,
                     'cart_id' => $cart_id,
                     'created_at' => now(),

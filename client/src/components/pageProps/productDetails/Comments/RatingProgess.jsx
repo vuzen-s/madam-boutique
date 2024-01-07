@@ -11,6 +11,9 @@ const RatingProgess = ({ratings, idProduct}) => {
 
     // format
     function formatProgessVote(quantity) {
+        if (ratings.length === 0) {
+            return 0;
+        }
         return ((quantity.length / ratings.length) * 100);
     }
 

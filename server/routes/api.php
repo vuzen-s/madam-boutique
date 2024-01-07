@@ -61,6 +61,11 @@ Route::delete('products-destroy/{id}', [ProductController::class, 'destroy'])->n
 Route::get('products-edit/{id}', [ProductController::class, 'edit'])->name('products.product-edit');
 Route::patch('products-update/{id}', [ProductController::class, 'update'])->name('products.product-update');
 
+// =================== PRODUCTS IMAGES ===================
+// Lấy thông tin product images theo iproduct_id
+Route::get('products-images/{product_id}', [ProductController::class, 'showImagesByProductID'])->name('products.showImagesByProductID');
+// Lấy đường dẫn tới thư mục public/uploads/product_images/
+Route::get('products-images-publicPath', [ProductController::class, 'getPublicProductImagesPath'])->name('products.product-getPublicPath');
 
 // =================== COLLECTIONS ===================
 // List data collections

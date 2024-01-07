@@ -74,6 +74,9 @@ const ProductCreate = () => {
         formData.append('brand_id', brand_id);
         formData.append('designer_id', designer_id);
         formData.append('category_id', category_id);
+        images.forEach((image, index) => {
+            formData.append(`images[${index}]`, image);
+        });
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/products-store', formData, {
                 headers: {
@@ -149,9 +152,9 @@ const ProductCreate = () => {
             case "feature":
                 setFeature(event.target.value);
                 break;
-            case "images":
-                setFeature(event.target.files);
-                console.log(event.target.files);
+            case "images[]":
+                setImages([...images, ...event.target.files]);
+                console.log(event.target.name);
                 break;
             default:
                 break;
@@ -332,14 +335,14 @@ const ProductCreate = () => {
                     </p>
                 </div>
                 <div className="mb-3">
-                    <label for="images[]" class="form-label">Chọn nhiều hình ảnh:</label>
-                    <input className="form-control" type="file" id="images[]" name="images[]"
+                    <label htmlFor="images" className="form-label">Chọn nhiều hình ảnh:</label>
+                    <input className="form-control" type="file" id="image1" name="images[]"
                            onChange={handleChangeInput}/>
-                    <input className="form-control" type="file" id="images[]" name="images[]"
+                    <input className="form-control" type="file" id="image2" name="images[]"
                            onChange={handleChangeInput}/>
-                    <input className="form-control" type="file" id="images[]" name="images[]"
+                    <input className="form-control" type="file" id="image3" name="images[]"
                            onChange={handleChangeInput}/>
-                    <input className="form-control" type="file" id="images[]" name="images[]"
+                    <input className="form-control" type="file" id="image4" name="images[]"
                            onChange={handleChangeInput}/>
                 </div>
             </Box>

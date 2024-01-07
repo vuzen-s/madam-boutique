@@ -16,6 +16,10 @@ const Payment = () => {
     const [phoneCustomer, setPhoneCustomer] = useState("");
     const [addressCustomer, setAddressCustomer] = useState("");
 
+    const [productIds, setProductIds] = useState([]);
+    const [listQuantity, setistQuantity] = useState([]);
+    const [listPrice, setListPrice] = useState([]);
+
     const navigate = useNavigate();
     const {state} = useLocation();
     const {authenticatedUser, setAuthenticatedUser} = useAuthContext();
@@ -104,20 +108,52 @@ const Payment = () => {
             .catch((error) => console.log(error));
     }
 
+    const onChangeProductIds = (event) => {
+        setProductIds([...productIds, ...event.target.value]);
+    }
+
+    const onChangeListQuantity = (event) => {
+        setistQuantity([...listQuantity, ...event.target.value]);
+    }
+
+    const onChangeListPrice = (event) => {
+        setListPrice([...listPrice, ...event.target.value]);
+    }
+
     const handlePushInfoPayment = async () => {
+        const formData = new FormData();
+        formData.append('total', total);
+        formData.append('cart_date', new Date().toString());
+        formData.append('cart_status', 1);
+        // item cart detail
+        formData.append('user_id', authenticatedUser.id);
+        formData.append('name_customer', nameCustomer);
+        formData.append('phone_customer', phoneCustomer);
+        formData.append('address_customer', addressCustomer);
+        listQuantity.forEach((quantity, index) => {
+            formData.append(`quantity[${index}]`, quantity);
+        });
+        listPrice.forEach((price, index) => {
+            formData.append(`price[${index}]`, price);
+        });
+        productIds.forEach((product_id, index) => {
+            formData.append(`product_ids[${index}]`, product_id);
+        });
+
         try {
             await fetch('http://127.0.0.1:8000/api/orders-store', {
                 method: "POST", headers: {
                     'Accept': 'application/json', 'Content-Type': 'application/json',
-                }, body: JSON.stringify({
-                    total: total,
-                    cart_date: new Date().toString(),
-                    cart_status: 1,
-                    user_id: authenticatedUser.id,
-                    name_customer: nameCustomer,
-                    phone_customer: phoneCustomer,
-                    address_customer: addressCustomer,
-                }), // Chuyển đổi FormData thành đối tượng JSON
+                    // }, body: JSON.stringify({
+                    //     total: total,
+                    //     cart_date: new Date().toString(),
+                    //     cart_status: 1,
+                    //     user_id: authenticatedUser.id,
+                    //     name_customer: nameCustomer,
+                    //     phone_customer: phoneCustomer,
+                    //     address_customer: addressCustomer,
+                    // }), // Chuyển đổi FormData thành đối tượng JSON
+                }, body: formData,
             })
                 .then((respon) => respon.json())
                 .then((data) => {
@@ -153,27 +189,27 @@ const Payment = () => {
     }
 
     // Push order
-    const handleFormSubmitPayment = async () => {
-
-        Swal.fire({
-            title: "XÁC NHÂN THÔNG TIN",
-            text: "Bạn chắc chắn thông tin cung cấp thanh toán là chính xác ?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Vâng, tôi chắc chắn!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Đơn hàng của bạn đã được lưu thành công!",
-                    text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
-                    icon: "success"
-                });
-                // await handlePushInfoPayment();
-            }
-        });
-    };
+    // const handleFormSubmitPayment = async () => {
+    //
+    //     Swal.fire({
+    //         title: "XÁC NHÂN THÔNG TIN",
+    //         text: "Bạn chắc chắn thông tin cung cấp thanh toán là chính xác ?",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Vâng, tôi chắc chắn!"
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire({
+    //                 title: "Đơn hàng của bạn đã được lưu thành công!",
+    //                 text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+    //                 icon: "success"
+    //             });
+    //             // await handlePushInfoPayment();
+    //         }
+    //     });
+    // };
 
     const Step1 = () => {
         const [form] = Form.useForm();
@@ -379,20 +415,21 @@ const Payment = () => {
                     <tbody>
                     {products.map((item) => (<tr key={item._id}>
                         <td className='text-center p-2 border-b-2'>
-                            <input className="text-center p-2 border-b-2" name="$product_ids[]" value={item._id}
+                            <input className="text-center p-2 border-b-2" name="product_ids[]" value={item._id}
+                                   disabled={true} onChange={onChangeProductIds}/>
+                        </td>
+                        <td className='text-center p-2 border-b-2'>
+                            <input type="text" className='text-center p-2 border-b-2' value={item.name}
                                    disabled={true}/>
                         </td>
                         <td className='text-center p-2 border-b-2'>
-                            <input className='text-center p-2 border-b-2' value={item.name} disabled={true}/>
-                        </td>
-                        <td className='text-center p-2 border-b-2'>
-                            <input className='text-center p-2 border-b-2' name="quantity" value={item.quantity}
+                            <input className='text-center p-2 border-b-2' name="quantity[]" value={item.quantity}
                                    disabled={true}/>
                         </td>
                         <td className='text-center p-2 border-b-2'>
                             <input className='text-center p-2 border-b-2' value={item.price * item.quantity}
                                    disabled={true}/>
-                            <input className='text-center p-2 border-b-2' name="price" value={item.price}
+                            <input className='text-center p-2 border-b-2' name="price[]" value={item.price}
                                    disabled={true} type="hidden"/>
                         </td>
                     </tr>))}
@@ -486,7 +523,7 @@ const Payment = () => {
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                     <Button
                         className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                        onClick={handlePrev}
+                        onClick={handlePushInfoPayment}
                     >
                         Previous
                     </Button>

@@ -3,8 +3,8 @@ import {useLocation, useParams} from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import Comments from "../../components/pageProps/productDetails/Comments/Comments";
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
-import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOnSale";
 import Rates from "../../components/pageProps/productDetails/Comments/Rates";
+import ProductsImages from "../../components/pageProps/productDetails/ProductsImages";
 
 const ProductDetails = () => {
     const [publicPath, setPublicPath] = useState("");
@@ -57,7 +57,7 @@ const ProductDetails = () => {
                 <div
                     className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-4 h-full -mt-5 xl:-mt-8 pb-10 bg-gray-100 p-4">
                     <div className="h-full">
-                        <ProductsOnSale/>
+                        <ProductsImages/>
                     </div>
                     <div className="h-full xl:col-span-2">
                         <img
