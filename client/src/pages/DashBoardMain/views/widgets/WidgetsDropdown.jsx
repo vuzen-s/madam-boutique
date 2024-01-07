@@ -12,6 +12,7 @@ import {
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import { getStyle } from '@coreui/utils'
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 
 const WidgetsDropdown = () => {
 
@@ -105,10 +106,10 @@ const WidgetsDropdown = () => {
                 <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <Link to={'/dashboard/user'}>
+                  <CDropdownItem>View Detail</CDropdownItem>
+                </Link>
+                <CDropdownItem disabled>Deleted</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }

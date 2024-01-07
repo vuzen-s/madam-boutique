@@ -144,16 +144,16 @@ const Payment = () => {
             await fetch('http://127.0.0.1:8000/api/orders-store', {
                 method: "POST", headers: {
                     'Accept': 'application/json', 'Content-Type': 'application/json',
-                    // }, body: JSON.stringify({
-                    //     total: total,
-                    //     cart_date: new Date().toString(),
-                    //     cart_status: 1,
-                    //     user_id: authenticatedUser.id,
-                    //     name_customer: nameCustomer,
-                    //     phone_customer: phoneCustomer,
-                    //     address_customer: addressCustomer,
-                    // }), // Chuyển đổi FormData thành đối tượng JSON
-                }, body: formData,
+                    }, body: JSON.stringify({
+                        total: total,
+                        cart_date: new Date().toString(),
+                        cart_status: 1,
+                        user_id: authenticatedUser.id,
+                        name_customer: nameCustomer,
+                        phone_customer: phoneCustomer,
+                        address_customer: addressCustomer,
+                    }), // Chuyển đổi FormData thành đối tượng JSON
+                // }, body: formData,
             })
                 .then((respon) => respon.json())
                 .then((data) => {

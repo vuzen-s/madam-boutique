@@ -30,7 +30,7 @@ class OrderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('ducvuglotec@gmail.com', 'MADAM Boutique'),
+            from: new Address('boutiquemadam338@gmail.com', 'MADAM Boutique'),
             subject: 'VỪA CÓ 1 ĐƠN HÀNG MỚI [ĐANG CHỜ DUYỆT]',
         );
     }

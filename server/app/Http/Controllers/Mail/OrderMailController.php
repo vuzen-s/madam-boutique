@@ -14,7 +14,7 @@ class OrderMailController extends Controller
 {
     function sendMailOrder()
     {
-        Mail::to('ducvuglotec@gmail.com')->send(new OrderMail());
+        Mail::to('boutiquemadam338@gmail.com')->send(new OrderMail());
     }
 
     function sendMailOrderClient()

@@ -29,7 +29,7 @@ class OrderMailClient extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('ducvuglotec@gmail.com', 'MADAM Boutique'),
+            from: new Address('boutiquemadam338@gmail.com', 'MADAM Boutique'),
             subject: '[MADAM BOUTIQUE] | VUI LÒNG KIỂN TRA THÔNG TIN ĐƠN HÀNG',
         );
     }
