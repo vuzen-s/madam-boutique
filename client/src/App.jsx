@@ -50,7 +50,8 @@ const App = () => {
 
     <TawkMessengerReact
         propertyId="659ae1748d261e1b5f507f2f"
-        widgetId="1hjig1bvs"/>
+        widgetId="1hjig1bvs"
+        ref={tawkMessengerRef}/>
 
     useEffect(() => {
         getMessagingToken();
