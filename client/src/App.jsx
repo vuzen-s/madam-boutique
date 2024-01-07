@@ -1,18 +1,18 @@
 import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
+    Route,
+    RouterProvider,
+    Routes,
+    createBrowserRouter,
+    createRoutesFromElements,
 } from "react-router-dom";
-import { useEffect } from "react";
+import {useEffect, useRef} from "react";
 
 // import NavbarBottom from "./components/home/Header/NavbarBottom";
 
 import About from "./pages/About/About";
 // import SignIn from "./pages/Account/SignIn";
 // import SignUp from "./pages/Account/SignUp";
- import Blog from "./pages/Blog/Blog";
+import Blog from "./pages/Blog/Blog";
 // import BlogList from "./components/BlogList/BlogList";
 import Cart from "./pages/Cart/Cart";
 import Contact from "./pages/Contact/Contact";
@@ -30,7 +30,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductFavorite from "./pages/ProductFavorite/ProductFavorite";
 import Profile from "./pages/Profile/Profile";
 import Shop from "./pages/Shop/Shop";
-import { getMessagingToken, onMessageListener } from "./firebase.ts";
+import {getMessagingToken, onMessageListener} from "./firebase.ts";
 import "firebase/auth";
 import "firebase/firestore";
 import DefaultLayoutDashboard from "./pages/AuthLayout/DefaultLayoutDashboad";
@@ -39,83 +39,94 @@ import SignIn1 from "./pages/Account/SignIn1";
 import SignUp from "./pages/Account/SignUp";
 import SignIn from "./pages/Account/SignIn";
 import ForgotPassword from "./pages/Account/ForgotPassword.jsx";
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 const App = () => {
-  useEffect(() => {
-    getMessagingToken();
-  }, []);
+    const tawkMessengerRef = useRef();
 
-  useEffect(() => {
-    onMessageListener().then((data) => {
-      console.log("Receive foreground: ", data);
+    const handleMinimize = () => {
+        tawkMessengerRef.current.minimize();
+    };
+
+    <TawkMessengerReact
+        propertyId="659ae1748d261e1b5f507f2f"
+        widgetId="1hjig1bvs"/>
+
+    useEffect(() => {
+        getMessagingToken();
+    }, []);
+
+    useEffect(() => {
+        onMessageListener().then((data) => {
+            console.log("Receive foreground: ", data);
+        });
     });
-  });
 
-  useEffect(() => {
-    getMessagingToken();
-    const channel = new BroadcastChannel("notifications");
-    channel.addEventListener("message", (event) => {
-      console.log("Receive background: ", event.data);
-    });
-  }, []);
+    useEffect(() => {
+        getMessagingToken();
+        const channel = new BroadcastChannel("notifications");
+        channel.addEventListener("message", (event) => {
+            console.log("Receive background: ", event.data);
+        });
+    }, []);
 
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* ==================== Header Navlink Start here =================== */}
-          <Route index element={<Home />}></Route>
-          <Route path="/shop" element={<Shop />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/blog" element={<Blog />}></Route>
-          {/* ==================== Header Navlink End here ===================== */}
-          <Route path="/offer" element={<Offer />}></Route>
-          <Route path="/product/:id" element={<ProductDetails />}></Route>
-          <Route path="/favorite" element={<ProductFavorite />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-          <Route path="/paymentgateway" element={<Payment />}></Route>
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    {/* ==================== Header Navlink Start here =================== */}
+                    <Route index element={<Home/>}></Route>
+                    <Route path="/shop" element={<Shop/>}></Route>
+                    <Route path="/about" element={<About/>}></Route>
+                    <Route path="/contact" element={<Contact/>}></Route>
+                    <Route path="/blog" element={<Blog/>}></Route>
+                    {/* ==================== Header Navlink End here ===================== */}
+                    <Route path="/offer" element={<Offer/>}></Route>
+                    <Route path="/product/:id" element={<ProductDetails/>}></Route>
+                    <Route path="/favorite" element={<ProductFavorite/>}></Route>
+                    <Route path="/cart" element={<Cart/>}></Route>
+                    <Route path="/paymentgateway" element={<Payment/>}></Route>
 
-          <Route element={<DefaultLayoutProfile />}>
-            <Route path="/profile" element={<Profile />}></Route>
-          </Route>
-        </Route>
-        {/* // */}
+                    <Route element={<DefaultLayoutProfile/>}>
+                        <Route path="/profile" element={<Profile/>}></Route>
+                    </Route>
+                </Route>
+                {/* // */}
 
-        <Route element={<GuestLayoutNormal />}>
-          <Route path="/signup" element={<SignUp1 />}></Route>
-          <Route path="/signin" element={<SignIn1 />}></Route>
-        </Route>
-        
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-        {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
-        <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
-        {/* </Route> */}
-        <Route path="/404" element={<Page404 />}></Route>
-      </Routes>
-    </div>
-  );
-  //         {/* <Route element={<DefaultLayoutProfile />}> */}
-  //           <Route path="/profile" element={<Profile />}></Route>
-  //           {/* <Route path="/profile/:fullname" element={<Profile />}></Route> */}
-  //         {/* </Route> */}
-  //       </Route>
-  //       {/* // */}
-  //
-  //       <Route element={<GuestLayoutNormal />}>
-  //         {/* <Route path="/signup" element={<SignUp />}></Route> */}
-  //         {/* <Route path="/signin" element={<SignIn />}></Route> */}
-  //         <Route path="/signin" element={<SignIn1 />}></Route>
-  //         <Route path="/signup" element={<SignUp1 />}></Route>
-  //       </Route>
-  //
-  //       <Route element={<DefaultLayoutDashboard />}>
-  //         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
-  //       </Route>
-  //       <Route path="/404" element={<Page404 />}></Route>
-  //     </Routes>
-  //   </div>
-  // );
+                <Route element={<GuestLayoutNormal/>}>
+                    <Route path="/signup" element={<SignUp1/>}></Route>
+                    <Route path="/signin" element={<SignIn1/>}></Route>
+                </Route>
+
+                <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
+                {/* <Route path="/dashboard/*" element={<Dashboard2App />}></Route> */}
+                <Route path="/dashboard/*" element={<DashBoardMain/>}></Route>
+                {/* </Route> */}
+                <Route path="/404" element={<Page404/>}></Route>
+            </Routes>
+        </div>
+    );
+    //         {/* <Route element={<DefaultLayoutProfile />}> */}
+    //           <Route path="/profile" element={<Profile />}></Route>
+    //           {/* <Route path="/profile/:fullname" element={<Profile />}></Route> */}
+    //         {/* </Route> */}
+    //       </Route>
+    //       {/* // */}
+    //
+    //       <Route element={<GuestLayoutNormal />}>
+    //         {/* <Route path="/signup" element={<SignUp />}></Route> */}
+    //         {/* <Route path="/signin" element={<SignIn />}></Route> */}
+    //         <Route path="/signin" element={<SignIn1 />}></Route>
+    //         <Route path="/signup" element={<SignUp1 />}></Route>
+    //       </Route>
+    //
+    //       <Route element={<DefaultLayoutDashboard />}>
+    //         <Route path="/dashboard/*" element={<DashBoardMain />}></Route>
+    //       </Route>
+    //       <Route path="/404" element={<Page404 />}></Route>
+    //     </Routes>
+    //   </div>
+    // );
 };
 
 // const router = createBrowserRouter(
