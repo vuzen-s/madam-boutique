@@ -25,7 +25,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){
-    	$validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:8',
         ]);
@@ -64,11 +64,24 @@ class AuthController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|between:2,50',
-            'email' => 'required|string|email|max:100|unique:users,email',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:50',
+                'unique:users,email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+            ],
             'phone' => 'nullable|numeric|digits:10',
             'password' => 'required|string|confirmed|min:8',
             'gender' => 'required'
         ]);
+
+        $customMessages = [
+            'email.regex' => ' We only accept emails ending with @gmail.com!'
+        ];
+
+        $validator->setCustomMessages($customMessages);
 
         if($validator->fails()){
             return response()->json([
@@ -78,10 +91,10 @@ class AuthController extends Controller
         }
 
         $user = User::create(array_merge(
-                    $validator->validated(),
-                    // ['phone' => $request->phone],
-                    ['password' => bcrypt($request->password)]
-                ));
+            $validator->validated(),
+            // ['phone' => $request->phone],
+            ['password' => bcrypt($request->password)]
+        ));
 
         return response()->json([
             'message' => 'User successfully registered',
@@ -253,4 +266,3 @@ class AuthController extends Controller
     }
 
 }
-

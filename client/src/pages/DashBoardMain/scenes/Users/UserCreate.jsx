@@ -32,7 +32,7 @@ const UserCreate = () => {
     gender: "",
     level: "",
     password: "",
-    status: "",
+    // status: "",
     password_confirmation: "",
   });
 
@@ -115,7 +115,7 @@ const UserCreate = () => {
     formData.append("gender", users?.gender);
     formData.append("password", users?.password);
     formData.append("phone", users?.phone);
-    formData.append("status", users?.status);
+    // formData.append("status", users?.status);
     formData.append("address", users?.address);
     formData.append("password_confirmation", users?.password_confirmation);
 
@@ -373,31 +373,31 @@ const UserCreate = () => {
             {/* ---------- Layout cut ---------- */}
 
             <div className="flex-1 flex flex-col gap-2">
-              <div className="flex flex-col gap-.8">
-                <label
-                  htmlFor="status"
-                  className="font-titleFont text-base font-semibold text-gray-600"
-                >
-                  Status
-                </label>
-                <select
-                  id="status"
-                  name="status"
-                  value={users === undefined ? "" : users?.status}
-                  onChange={handleInputValue}
-                  className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                >
-                  <option value="Choose Status">Choose Status</option>
-                  <option value="Show">Show</option>
-                  {/* <option value="Hidden">Hidden</option> */}
-                </select>
-                {errors && (
-                <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
-                  {errors.status}
-                </span>
-              )}
+              {/*<div className="flex flex-col gap-.8">*/}
+              {/*  <label*/}
+              {/*    htmlFor="status"*/}
+              {/*    className="font-titleFont text-base font-semibold text-gray-600"*/}
+              {/*  >*/}
+              {/*    Status*/}
+              {/*  </label>*/}
+              {/*  <select*/}
+              {/*    id="status"*/}
+              {/*    name="status"*/}
+              {/*    value={users === undefined ? "" : users?.status}*/}
+              {/*    onChange={handleInputValue}*/}
+              {/*    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"*/}
+              {/*  >*/}
+              {/*    <option value="Choose Status">Choose Status</option>*/}
+              {/*    <option value="Show">Show</option>*/}
+              {/*    /!* <option value="Hidden">Hidden</option> *!/*/}
+              {/*  </select>*/}
+              {/*  {errors && (*/}
+              {/*  <span className="mt-2 text-sm text-red-500 font-titleFont px-2">*/}
+              {/*    {errors.status}*/}
+              {/*  </span>*/}
+              {/*)}*/}
 
-              </div>
+              {/*</div>*/}
 
               {/* Gender && Level */}
 

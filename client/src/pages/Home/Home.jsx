@@ -7,6 +7,9 @@ import Sale from "../../components/home/Sale/Sale";
 import SpecialOffers from "../../components/home/SpecialOffers/SpecialOffers";
 import YearProduct from "../../components/home/YearProduct/YearProduct";
 import BlogList from "../../components/home/BlogList/BlogList";
+import SlideLogo from "../../components/home/SlideLogo/SlideLogo";
+import FeedbackList from "../../components/home/FeedbackList/FeedbackList";
+import Statistics from "../../components/home/Statistics/Statistics";
 
 const Home = () => {
     return (
@@ -18,8 +21,11 @@ const Home = () => {
                 <NewArrivals/>
                 <BestSellers/>
                 <YearProduct/>
+                <SlideLogo />
+                <Statistics />
+                <FeedbackList />
                 <BlogList />
-                <SpecialOffers/>
+                {/*<SpecialOffers/>*/}
             </div>
         </div>
     );

@@ -234,10 +234,11 @@ const Navbar = () => {
                         onClick={() => setShowUser(!showUser)}
                         class="mr-5 hover:text-gray-900 flex cursor-pointer"
                     >
-                        <FaUser/>
+                        {userAuth ? <span>{userAuth && userAuth.fullname}</span> : (<FaUser/>)}
+
 
                         {/*//*/}
-                        <span>{userAuth && userAuth.fullname}</span>
+
 
                     </div>
                     {showUser && (

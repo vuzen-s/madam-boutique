@@ -72,17 +72,16 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'nullable',
-            'status' => 'required',
+            // 'status' => 'required',
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250',
             'avatar' => 'nullable|mimes:jpeg,jpg,png'
-            // |mimes:jpeg,jpg,png
         ]);
 
         $customMessages = [
             'email.regex' => ' We only accept emails ending with @gmail.com!'
         ];
-        
+
         $validate->setCustomMessages($customMessages);
 
         if($validate->fails()) {
@@ -95,7 +94,7 @@ class UserController extends Controller
                 'email' => strtolower($request['email']),
                 'password' => bcrypt($request['password']),
                 'level' => $request['level'],
-                'status' => $request['status'],
+                // 'status' => $request['status'],
                 'gender' => $request['gender'],
                 'phone' => $request['phone'],
                 'address' => $request['address'],
@@ -104,8 +103,9 @@ class UserController extends Controller
             if ($request->hasFile('avatar')) {
                 $avatar = $request->file('avatar');
                 $avatarName = time(). '-' . $avatar->getClientOriginalName();
-                $avatar->storeAs('uploads/', $avatarName, 'public');
-    
+                $avatar->move(public_path('uploads/avatars/'), $avatarName);
+
+
                 $user->avatar = $avatarName;
                 $user->save();
             }
@@ -124,7 +124,7 @@ class UserController extends Controller
         }
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -138,7 +138,7 @@ class UserController extends Controller
         if ($user) {
             return response()->json([
                 'status' => 200,
-                
+
                 'user' => $user
             ], 200);
         } else {
@@ -205,18 +205,31 @@ class UserController extends Controller
 
         $validate = Validator::make($request->all(), [
             'fullname' => 'required|string|max:50',
-            'email' => 'required|string|email|max:100|unique:users,email,'.$id,
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:50',
+                'unique:users,email,' . $id,
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+            ],
             'gender' => 'nullable',
             'level' => 'required',
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250'
         ]);
 
+        $customMessages = [
+            'email.regex' => ' We only accept emails ending with @gmail.com!'
+        ];
+
+        $validate->setCustomMessages($customMessages);
+
         if(!empty($request->password)){
             $passwordValidator = Validator::make($request->all(), [
                 'password'=>'required|confirmed|min:8',
             ]);
-    
+
             if ($passwordValidator->fails()) {
                 return response()->json([
                     'status' => 400,
@@ -261,16 +274,16 @@ class UserController extends Controller
     {
         {
             $user = User::findOrFail($id);
-        
+
             if (!$user) {
                 return response()->json([
                     'status' => 404,
                     'message' => "User Not Found"
                 ], 404);
             }
-        
+
             $user->status = 'Hidden';
-        
+
             if ($user->save()) {
                 return response()->json([
                     'status' => 200,
@@ -282,7 +295,7 @@ class UserController extends Controller
                     'message' => "Failed To Delete User "
                 ], 500);
             }
-        
+
             // if ($user->delete()) {
             //     return response()->json([
             //         'status' => 200,
@@ -297,7 +310,7 @@ class UserController extends Controller
         }
     }
 
-    
+
     /**
      * Update Status User (Only the master has the right to update)
      */
@@ -305,16 +318,16 @@ class UserController extends Controller
     {
         {
             $user = User::findOrFail($id);
-        
+
             if (!$user) {
                 return response()->json([
                     'status' => 404,
                     'message' => "User Not Found"
                 ], 404);
             }
-        
+
             $user->status = 'Show';
-        
+
             if ($user->save()) {
                 return response()->json([
                     'status' => 200,
@@ -326,7 +339,7 @@ class UserController extends Controller
                     'message' => "Failed To Delete User "
                 ], 500);
             }
-        
+
             // if ($user->delete()) {
             //     return response()->json([
             //         'status' => 200,

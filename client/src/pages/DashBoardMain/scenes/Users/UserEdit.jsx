@@ -314,28 +314,28 @@ const UserEdit = () => {
             {/* ---------- Layout cut ---------- */}
 
             <div className="flex-1 flex flex-col gap-2">
-              <div className="flex flex-col gap-.8">
-                <label
-                  htmlFor="status"
-                  className="font-titleFont text-base font-semibold text-gray-600"
-                >
-                  Status
-                </label>
-                <input
-                  name="status"
-                  value={users === undefined ? "" : users?.status}
-                  onChange={handleInputValue}
-                  disabled
-                  className="w-full h-10 bg-gray-300 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                  type="text"
-                  placeholder="Phone Number"
-                />
-                {errors && (
-                  <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
-                    {errors.status}
-                  </span>
-                )}
-              </div>
+              {/*<div className="flex flex-col gap-.8">*/}
+              {/*  <label*/}
+              {/*    htmlFor="status"*/}
+              {/*    className="font-titleFont text-base font-semibold text-gray-600"*/}
+              {/*  >*/}
+              {/*    Status*/}
+              {/*  </label>*/}
+              {/*  <input*/}
+              {/*    name="status"*/}
+              {/*    value={users === undefined ? "" : users?.status}*/}
+              {/*    onChange={handleInputValue}*/}
+              {/*    disabled*/}
+              {/*    className="w-full h-10 bg-gray-300 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"*/}
+              {/*    type="text"*/}
+              {/*    placeholder="Phone Number"*/}
+              {/*  />*/}
+              {/*  {errors && (*/}
+              {/*    <span className="mt-2 text-sm text-red-500 font-titleFont px-2">*/}
+              {/*      {errors.status}*/}
+              {/*    </span>*/}
+              {/*  )}*/}
+              {/*</div>*/}
               {/* Gender && Level */}
 
               <div className="flex">
