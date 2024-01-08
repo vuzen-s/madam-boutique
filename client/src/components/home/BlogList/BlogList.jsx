@@ -90,7 +90,7 @@ function BlogList() {
                     <CardMedia
                         component="img"
                         height="194"
-                        image="https://cafefcdn.com/zoom/370_232/203337114487263232/2024/1/7/avatar1681742388755-1681742389211274595413-170461164042661524152.png"
+                        image="https://www.fiege.com/sites/default/files/styles/hero_fullsize/public/2022-09/industry-fashion-lifestyle-fiege.jpg?itok=NzRKvbAn"
                         alt="Paella dish"
                     />
                     <CardContent>
@@ -126,44 +126,7 @@ function BlogList() {
                     <CardMedia
                         component="img"
                         height="194"
-                        image="https://cafefcdn.com/zoom/370_232/203337114487263232/2024/1/7/avatar1681742388755-1681742389211274595413-170461164042661524152.png"
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Typography variant="body10" color="text.secondary">
-                            {blogs.title}
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon/>
-                        </IconButton>
-                        <IconButton aria-label="share">
-                            <ShareIcon/>
-                        </IconButton>
-                    </CardActions>
-                </Card>
-
-
-                <Card sx={{maxWidth: 345}}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-                                R
-                            </Avatar>
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon/>
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image="https://cafefcdn.com/zoom/370_232/203337114487263232/2024/1/7/avatar1681742388755-1681742389211274595413-170461164042661524152.png"
+                        image="https://assets.teenvogue.com/photos/5b3ceaea155483623a883817/16:9/w_2580,c_limit/how-to-be-a-fashion-blogger-keiko-lynn-fb.jpg"
                         alt="Paella dish"
                     />
                     <CardContent>
@@ -200,7 +163,44 @@ function BlogList() {
                     <CardMedia
                         component="img"
                         height="194"
-                        image="https://cafefcdn.com/zoom/370_232/203337114487263232/2024/1/7/avatar1681742388755-1681742389211274595413-170461164042661524152.png"
+                        image="https://img-c.udemycdn.com/course/750x422/442714_0bd4_4.jpg"
+                        alt="Paella dish"
+                    />
+                    <CardContent>
+                        <Typography variant="body10" color="text.secondary">
+                            {blogs.title}
+                        </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                        <IconButton aria-label="add to favorites">
+                            <FavoriteIcon/>
+                        </IconButton>
+                        <IconButton aria-label="share">
+                            <ShareIcon/>
+                        </IconButton>
+                    </CardActions>
+                </Card>
+
+
+                <Card sx={{maxWidth: 345}}>
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
+                                R
+                            </Avatar>
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon/>
+                            </IconButton>
+                        }
+                        title="Shrimp and Chorizo Paella"
+                        subheader="September 14, 2016"
+                    />
+                    <CardMedia
+                        component="img"
+                        height="194"
+                        image="https://images.unsplash.com/opengraph/1x1.png?blend=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1519748771451-a94c596fad67%3Fblend%3D000000%26blend-alpha%3D10%26blend-mode%3Dnormal%26crop%3Dfaces%252Cedges%26h%3D630%26mark%3Dhttps%253A%252F%252Fimages.unsplash.com%252Fopengraph%252Fsearch-input.png%253Fh%253D84%2526txt%253Dlifestyle%252Bfashion%2526txt-align%253Dmiddle%25252Cleft%2526txt-clip%253Dellipsis%2526txt-color%253D000000%2526txt-pad%253D80%2526txt-size%253D40%2526txt-width%253D660%2526w%253D750%2526auto%253Dformat%2526fit%253Dcrop%2526q%253D60%26mark-align%3Dmiddle%252Ccenter%26mark-w%3D750%26w%3D1200%26auto%3Dformat%26fit%3Dcrop%26q%3D60%26ixid%3DM3wxMjA3fDB8MXxzZWFyY2h8M3x8bGlmZXN0eWxlJTIwZmFzaGlvbnxlbnwwfHx8fDE3MDQ1OTMyODh8MA%26ixlib%3Drb-4.0.3&blend-w=1&h=630&mark=https%3A%2F%2Fimages.unsplash.com%2Fopengraph%2Flogo.png&mark-align=top%2Cleft&mark-pad=50&mark-w=64&w=1200&auto=format&fit=crop&q=60"
                         alt="Paella dish"
                     />
                     <CardContent>

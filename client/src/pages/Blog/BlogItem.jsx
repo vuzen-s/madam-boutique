@@ -1,8 +1,10 @@
-import { Button } from 'antd';
+import {Button} from 'antd';
 import React from "react";
 import './BlogItem.scss';
 
 const BlogItem = (blogs, publicPath) => {
+    console.log(blogs);
+
     return (
         <>
             {/* post-news */}
@@ -27,25 +29,28 @@ const BlogItem = (blogs, publicPath) => {
             {/*        </div>*/}
             {/*    </div>*/}
             {/*</div>*/}
-            <hr className='hr-blogs' />
+            <hr className='hr-blogs'/>
             {/* blogs */}
-            <div className='blogs'>
-                {blogs && blogs.map((blog, key) => {
-                    return (
-                        <div key={key} className='post-item' data-aos="fade-right">
-                            <div className="post-img">
-                                <img src={blog.avatar_blog} alt="" />
+            <div className=''>
+                {blogs.length != 0
+                    ? blogs.map((blog, key) => {
+                        return (
+                            <div key={key} className='post-item' data-aos="fade-right">
+                                <div className="post-img">
+                                    <img src={blog.avatar_blog} alt=""/>
+                                </div>
+                                <div className="post-content" data-aos="fade-left">
+                                    <h2 className='post-title'>{blog.title}</h2>
+                                    <i className='post-info'>{blog.created_at}</i>
+                                    <p className="post-desc">{blog.content}</p>
+                                    <Button classNames={'btnn'} type="primary" className='post-btn'>Read more</Button>
+                                </div>
                             </div>
-                            <div className="post-content" data-aos="fade-left">
-                                <h2 className='post-title'>{blog.title}</h2>
-                                <i className='post-info'>{blog.created_at}</i>
-                                <p className="post-desc">{blog.content}</p>
-                                <Button classNames={'btnn'} type="primary" className='post-btn'>Read more</Button>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div >
+                        );
+                    })
+                    : null
+                }
+            </div>
         </>
     )
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\BlogModel;
 use App\Models\CategoryModel;
+use App\Models\OrderDetailModel;
 use App\Models\OrderModel;
 use App\Models\PaymentModel;
 use App\Models\ProductModel;
@@ -96,7 +97,7 @@ class OrderController extends Controller
 
     public function showDetailByID($cart_id)
     {
-        $order_details = DB::table('cart_detail')
+        $order_details = OrderDetailModel::with(['product'])
             ->where('cart_id', $cart_id)
             ->get();
 
@@ -114,6 +115,12 @@ class OrderController extends Controller
         return response()->json([
             'orders' => $orders,
         ]);
+    }
+
+    public function updateStatus($id)
+    {
+        DB::table('orders')->where('id', $id)->update(['cart_status' => 1]);
+        return response()->json(['message_success' => 'Data updated successfully']);
     }
 
     /**

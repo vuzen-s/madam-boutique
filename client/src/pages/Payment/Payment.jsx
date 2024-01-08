@@ -110,11 +110,118 @@ const Payment = () => {
             .catch((error) => console.log(error));
     }
 
-    const handlePushInfoPayment = async () => {
+    const handlePushInfoPayment0 = async () => {
         const formData = new FormData();
         formData.append('total', total);
         formData.append('cart_date', new Date().toString());
-        formData.append('cart_status', method === 1 ? 1 : 0);
+        formData.append('cart_status', 0);
+        // item cart detail
+        formData.append('user_id', authenticatedUser.id);
+        formData.append('name_customer', nameCustomer != null ? nameCustomer : authenticatedUser?.fullname);
+        formData.append('phone_customer', phoneCustomer != null ? phoneCustomer : authenticatedUser?.phone);
+        formData.append('address_customer', addressCustomer != null ? addressCustomer : authenticatedUser?.address);
+        quantities.forEach((quantity, index) => {
+            formData.append(`quantities[${index}]`, quantity);
+        });
+        prices.forEach((price, index) => {
+            formData.append(`prices[${index}]`, price);
+        });
+        product_ids.forEach((product_id, index) => {
+            formData.append(`product_ids[${index}]`, product_id);
+        });
+        // payment
+        formData.append('method', method);
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/orders-store', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            console.log(formData);
+            if (response.data.errors) {
+                console.log(response.data.errors);
+            } else {
+                Swal.fire({
+                    title: "XÁC NHÂN THÔNG TIN",
+                    text: "Bạn chắc chắn thông tin cung cấp thanh toán là chính xác ?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Vâng, tôi chắc chắn!"
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Đơn hàng của bạn đã được lưu thành công!",
+                            text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+                            icon: "success"
+                        });
+                        // navigate('/cart');
+                        // send mail
+                        sendMailOrderNew();
+                        // send mail client
+                        sendMailOrderNewClient();
+                        //
+                        dispatch(resetCart());
+                    }
+                });
+            }
+            //
+            // await fetch('http://127.0.0.1:8000/api/orders-store', {
+            //     method: "POST",
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         // }, body: JSON.stringify({
+            //         //     total: total,
+            //         //     cart_date: new Date().toString(),
+            //         //     cart_status: 1,
+            //         //     user_id: authenticatedUser.id,
+            //         //     name_customer: nameCustomer,
+            //         //     phone_customer: phoneCustomer,
+            //         //     address_customer: addressCustomer,
+            //         // }), // Chuyển đổi FormData thành đối tượng JSON
+            //     }, body: formData,
+            // })
+            //     .then((respon) => respon.json())
+            //     .then((data) => {
+            //         // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+            //         console.log(data.errors);
+            //         // message
+            //         console.log(data.message);
+            //         // Xử lý dữ liệu thành công nếu cần
+            //         if (data.errors === undefined) {
+            //             Swal.fire({
+            //                 title: "Đơn hàng của bạn đã được lưu thành công!",
+            //                 text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+            //                 icon: "success"
+            //             });
+            //             // navigate('/cart');
+            //             // send mail
+            //             sendMailOrderNew();
+            //             // send mail client
+            //             sendMailOrderNewClient();
+            //             //
+            //             dispatch(resetCart());
+            //         }
+            //     })
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                console.log(error);
+            } else {
+                // Xử lý lỗi khác nếu có
+                console.error('Error:', error);
+            }
+        }
+    }
+
+
+    const handlePushInfoPayment1 = async () => {
+        const formData = new FormData();
+        formData.append('total', total);
+        formData.append('cart_date', new Date().toString());
+        formData.append('cart_status', 1);
         // item cart detail
         formData.append('user_id', authenticatedUser.id);
         formData.append('name_customer', nameCustomer != null ? nameCustomer : authenticatedUser?.fullname);
@@ -203,6 +310,7 @@ const Payment = () => {
             }
         }
     }
+
 
     // Push order
     // const handleFormSubmitPayment = async () => {
@@ -526,7 +634,7 @@ const Payment = () => {
                                 return actions.order.capture().then((details) => {
                                     console.log(details);
                                     if (details) {
-                                        handlePushInfoPayment();
+                                        handlePushInfoPayment1();
                                     }
                                 });
                             },
@@ -553,37 +661,18 @@ const Payment = () => {
                          className='w-[50%] object-contain'/>
                 </div>
 
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="method" id="flexRadioDefault1"
-                           onChange={e => setMethod(e.target.value)}
-                           value="0"
-                    />
-                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                        Payment on delivery
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="method" id="flexRadioDefault2"
-                           onChange={e => setMethod(e.target.value)}
-                           value="1"
-                    />
-                    <label className="form-check-label" htmlFor="flexRadioDefault2">
-                        Pay with PayPal
-                    </label>
-                </div>
+                <Button
+                    style={{textAlign: 'center'}}
+                    className="items-center w-100 mb-10 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                    onClick={handlePushInfoPayment0}
+                >
+                    Payment on delivery
+                </Button>
 
-                {
-                    method === 0
-                        ? <Button
-                            className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
-                            onClick={handlePushInfoPayment}
-                        >
-                            Complete
-                        </Button>
-                        : <Form className='pl-[20%] w-[80%] items-center'>
-                            <div ref={paypalButtonRef}></div>
-                        </Form>
-                }
+                <Form className='pl-[20%] w-[80%] items-center'>
+                    <div ref={paypalButtonRef}></div>
+                </Form>
+
 
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                     <Button

@@ -217,5 +217,7 @@ Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('orders-detail/{cart_id}', [OrderController::class, 'showDetailByID'])->name('orders.showDetailByID');
 // push orders
 Route::post('orders-store', [OrderController::class, 'store'])->name('orders.store');
+// push orders
+Route::patch('orders-update-status/{id}', [OrderController::class, 'updateStatus'])->name('orders.store');
 // get order by user_id
 Route::get('orders/{user_id}', [OrderController::class, 'showOrdersByUserID'])->name('orders.showOrdersByUserID');

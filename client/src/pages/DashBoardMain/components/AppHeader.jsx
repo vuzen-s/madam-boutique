@@ -13,6 +13,7 @@ import {
 import React, {useState, useEffect, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Link, NavLink, useNavigate} from 'react-router-dom'
+import { Tag } from 'antd';
 
 import {logo} from '../assets/brand/logo'
 import {AppHeaderDropdown} from './header/index'
@@ -69,6 +70,23 @@ const AppHeader = () => {
         }
     }
 
+    const showLevel = () => {
+        switch (userAuth && userAuth.level) {
+            case 1:
+                return 'Admin Master';
+                break;
+            case 2:
+                return 'Admin Manager';
+                break;
+            case 3:
+                return 'Admin Editor';
+                break;
+            default:
+                return 'Member';
+                break;
+        }
+    }
+
     return (
         <CHeader position="sticky" className="mb-3">
             <CContainer fluid>
@@ -95,8 +113,11 @@ const AppHeader = () => {
                 <div
                     onClick={() => setShowUser(!showUser)}
                     class="mr-5 hover:text-gray-900 flex cursor-pointer"
+                    style={{display: 'flex', alignItems: 'center', columnGap: '12px'}}
                 >
-                    <FaUser/>
+                    <Tag color="processing">
+                        {showLevel()}
+                    </Tag>
 
                     {/*//*/}
                     <span>{userAuth && userAuth.fullname}</span>
@@ -123,7 +144,7 @@ const AppHeader = () => {
                                 <li className="text-gray-400 px-4 py-1.5 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300">
                                     <Link to={`/dashboard/user/edit/${userAuth.id}`}>
                                         <button
-                                                className="text-gray-400 w-full hover:text-white">
+                                            className="text-gray-400 w-full hover:text-white">
                                             Account
                                         </button>
                                     </Link>
