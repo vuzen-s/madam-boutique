@@ -38,7 +38,7 @@ const Banner = () => {
           i === dotActive
             ? {
                 width: "30px",
-                color: "#262626",
+                color: "#c2c2c2",
                 borderRight: "3px #262626 solid",
                 padding: "8px 0",
                 cursor: "pointer",
@@ -78,7 +78,7 @@ const Banner = () => {
                 i === dotActive
                   ? {
                       width: "25px",
-                      color: "#262626",
+                      color: "#e3e3e3",
                       borderRight: "3px #262626 solid",
                       cursor: "pointer",
                       fontSize: "12px",
@@ -104,17 +104,17 @@ const Banner = () => {
       <Slider {...settings}>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.gif"} height="100px"/>
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.jpg"} height="100px"/>
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.png"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.jpg"} />
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.png"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.jpg"} />
           </div>
         </Link>
       </Slider>

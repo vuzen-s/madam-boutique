@@ -24,8 +24,8 @@ const Comments = ({selectedUserId, idProduct}) => {
     const navigate = useNavigate();
 
     // get user comment
-    useEffect( () => {
-         api.get(`/api/auth/user-profile`)
+    useEffect(() => {
+        api.get(`/api/auth/user-profile`)
             .then((res) => {
                 if (res.data.status === 200) {
                     console.log(res.data.user);
@@ -38,6 +38,20 @@ const Comments = ({selectedUserId, idProduct}) => {
                 }
             });
     }, []);
+
+    // Call API send mail
+    const sendMailCommentNew = () => {
+        fetch('http://127.0.0.1:8000/api/sendmail-new-comment', {
+            method: "GET", headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => console.log(error));
+    }
 
     const sendComment = async () => {
         try {
@@ -86,6 +100,8 @@ const Comments = ({selectedUserId, idProduct}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await sendComment();
+        // send mail
+        sendMailCommentNew();
         setContent("");
     }
 
@@ -214,6 +230,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                         </p>
                         <button type="submit" class="btn btn-dark">Đăng</button>
                     </form>
+                    <p style={{paddingTop: '12px'}}>Your comments will be reviewed before posting.</p>
                 </div>
                 {/* Modal Edit */}
                 <div

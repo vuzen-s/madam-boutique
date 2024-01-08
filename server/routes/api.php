@@ -15,6 +15,7 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mail\ContactMailController;
+use App\Http\Controllers\Mail\CommentAndRatingMailController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -203,11 +204,17 @@ Route::get('sendmail-contact', [ContactMailController::class, 'sendMailContact']
 Route::post('sendmail-contact', [ContactMailController::class, 'sendMailContact'])->name('mail.sendMailContact')->middleware('recaptcha');
 // send mail order
 Route::get('sendmail-order', [OrderMailController::class, 'sendMailOrder'])->name('mail.sendMailOrder');
+// send mail new comment
+Route::get('sendmail-new-comment', [CommentAndRatingMailController::class, 'sendMailNewComment'])->name('mail.sendMailNewComment');
+// send mail new comment
+Route::get('sendmail-new-rating', [CommentAndRatingMailController::class, 'sendMailNewRating'])->name('mail.sendMailNewRating');
 // send mail order client
 Route::get('sendmail-order-client', [OrderMailController::class, 'sendMailOrderClient'])->name('mail.sendMailOrderClient');
 
 // =================== ORDER ===================
 Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+// get order detail by order_id
+Route::get('orders-detail/{cart_id}', [OrderController::class, 'showDetailByID'])->name('orders.showDetailByID');
 // push orders
 Route::post('orders-store', [OrderController::class, 'store'])->name('orders.store');
 // get order by user_id

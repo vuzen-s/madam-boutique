@@ -31,12 +31,11 @@ const OrderList = () => {
     const navigate = useNavigate();
 
     const handleAcceptItem = (idOrder) => {
-        // navigate
-        // navigate('/dashboard/blog/edit/' + idBlog);
+        // update status cart on 1
     }
 
     const handleDetailItem = (idOrder) => {
-
+        navigate('/dashboard/order/' + idOrder);
     }
 
     /// Get path to public in serve

@@ -94,6 +94,17 @@ class OrderController extends Controller
         //
     }
 
+    public function showDetailByID($cart_id)
+    {
+        $order_details = DB::table('cart_detail')
+            ->where('cart_id', $cart_id)
+            ->get();
+
+        return response()->json([
+            'order_details' => $order_details,
+        ]);
+    }
+
     public function showOrdersByUserID($user_id)
     {
         $orders = OrderModel::with(['user'])

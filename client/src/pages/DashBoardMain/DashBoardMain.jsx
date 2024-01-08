@@ -29,6 +29,7 @@ import BlogCreate from "./scenes/Blogs/BlogCreate";
 import BlogEdit from "./scenes/Blogs/BlogEdit";
 import UserStatusDetail from './scenes/Users/UserStatusDetail'
 import OrderList from "./scenes/Orders/OrderList";
+import OrderDetail from "./scenes/Orders/OrderDetail";
 
 const loading = (
     <div className="pt-3 text-center">
@@ -78,6 +79,7 @@ class DashBoardMain extends Component {
                                 <Route path="product/comment/" element={<CommentByProduct/>}/>
                                 <Route path="product/comment/detail/:id" element={< Details/>}/>
                                 <Route path="order" element={< OrderList/>}/>
+                                <Route path="order/:id" element={< OrderDetail/>}/>
                                 {/* //  */}
                                 <Route path="theme/color" element={<Colors/>}/>
                             </Routes>

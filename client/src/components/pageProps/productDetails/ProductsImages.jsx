@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {SplOfferData} from "../../../constants";
 import {useParams} from "react-router-dom";
 
-const ProductsImages = () => {
+const ProductsImages = (handleClickImageItem) => {
     const [publicPath, setPublicPath] = useState("");
     const [productsImages, setProductsImages] = useState("");
 
@@ -53,7 +53,7 @@ const ProductsImages = () => {
                         className="flex items-center gap-4 border-b-[1px] border-b-gray-300 py-1"
                     >
                         <div>
-                            <img className="w-24" src={publicPath + '/' + item.file_name} alt={item.filename}/>
+                            <img width="150px" src={publicPath + '/' + item.file_name} alt={item.filename}/>
                         </div>
                         {/*<div className="flex flex-col gap-2 font-titleFont">*/}
                         {/*    <p className="text-base font-medium">{item.productName}</p>*/}

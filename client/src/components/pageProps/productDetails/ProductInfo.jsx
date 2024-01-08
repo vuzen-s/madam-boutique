@@ -36,7 +36,7 @@ const ProductInfo = ({productInfo}) => {
             </div>
 
             {/* <p className="text-sm">Be the first to leave a review.</p> */}
-            <SizeOption />
+            <SizeOption/>
             <p className="font-medium text-lg">
                 <span className="font-normal">{productInfo ? 'Colors: ' + productInfo.color : ''}</span>
             </p>

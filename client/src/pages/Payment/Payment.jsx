@@ -16,7 +16,7 @@ const Payment = () => {
     const [nameCustomer, setNameCustomer] = useState("");
     const [phoneCustomer, setPhoneCustomer] = useState("");
     const [addressCustomer, setAddressCustomer] = useState("");
-    const [method, setMethod] = useState(0);
+    const [method, setMethod] = useState(1);
 
     const [product_ids, setProduct_ids] = useState([]);
     const [quantities, setQuantities] = useState([]);
@@ -114,7 +114,7 @@ const Payment = () => {
         const formData = new FormData();
         formData.append('total', total);
         formData.append('cart_date', new Date().toString());
-        formData.append('cart_status', 1);
+        formData.append('cart_status', method === 1 ? 1 : 0);
         // item cart detail
         formData.append('user_id', authenticatedUser.id);
         formData.append('name_customer', nameCustomer != null ? nameCustomer : authenticatedUser?.fullname);
@@ -553,9 +553,37 @@ const Payment = () => {
                          className='w-[50%] object-contain'/>
                 </div>
 
-                <Form className='pl-[20%] w-[80%] items-center'>
-                    <div ref={paypalButtonRef}></div>
-                </Form>
+                <div className="form-check">
+                    <input className="form-check-input" type="radio" name="method" id="flexRadioDefault1"
+                           onChange={e => setMethod(e.target.value)}
+                           value="0"
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                        Payment on delivery
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="radio" name="method" id="flexRadioDefault2"
+                           onChange={e => setMethod(e.target.value)}
+                           value="1"
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Pay with PayPal
+                    </label>
+                </div>
+
+                {
+                    method === 0
+                        ? <Button
+                            className="w-36 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-400"
+                            onClick={handlePushInfoPayment}
+                        >
+                            Complete
+                        </Button>
+                        : <Form className='pl-[20%] w-[80%] items-center'>
+                            <div ref={paypalButtonRef}></div>
+                        </Form>
+                }
 
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                     <Button
@@ -602,8 +630,15 @@ const Payment = () => {
             })
             setProduct_ids(product_ids);
         }
-        // next
-        setCurrentStep(currentStep + 1);
+
+        if (nameCustomer === "" || phoneCustomer === "" || addressCustomer === "") {
+            message.error('Please fill in all required fields.');
+            setCurrentStep(currentStep - 1);
+        } else {
+            // next
+            setCurrentStep(currentStep + 1);
+            message.success('User information updated successfully');
+        }
     }
 
     const handleNextStep1 = () => {
@@ -619,12 +654,7 @@ const Payment = () => {
         setPhoneCustomer(phone_file.value);
         setAddressCustomer(address_field.value);
 
-        if (nameCustomer === "" || phoneCustomer === "" || addressCustomer === "") {
-            message.error('Please fill in all required fields.');
-        } else {
-            setCurrentStep(currentStep + 1);
-            message.success('User information updated successfully');
-        }
+        setCurrentStep(currentStep + 1);
     }
 
     const handleNext = () => {

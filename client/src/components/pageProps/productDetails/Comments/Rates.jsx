@@ -115,11 +115,27 @@ const Rates = ({idProduct}) => {
         setOpenModalEdit(false);
     }
 
+    // Call API send mail
+    const sendMailRatingNew = () => {
+        fetch('http://127.0.0.1:8000/api/sendmail-new-rating', {
+            method: "GET", headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => console.log(error));
+    }
+
     const sendSubmittRating = async () => {
         if (value == null) {
             showErrorRatings();
         } else {
             await sendContentRating();
+            // send mail
+            sendMailRatingNew();
         }
     }
 

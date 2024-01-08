@@ -73,6 +73,9 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
+            <div className="rates" style={{display: 'flex', alignItems: 'center', padding: '16px 0'}}>
+                <img width="550px" src={process.env.PUBLIC_URL + '/product_detail/size.png'} alt="Size"/>
+            </div>
             <div className="rates">
                 <Rates idProduct={id}/>
             </div>
