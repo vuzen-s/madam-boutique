@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ResetPassword;
+use Illuminate\Mail\Message;
+
+// use Illuminate\Support\Facades\Mail;
+// use App\Mail\ResetPassword;
 
 class ForgotResetPassword extends Controller
 {
@@ -34,11 +36,6 @@ class ForgotResetPassword extends Controller
             ], 403);
         }
 
-
-        $token = Password::getRepository()->create($user);
-
-        Mail::to($user->email)->send(new ResetPassword($token));
-
         $response = Password::sendResetLink($request->only('email'));
 
         return $response === Password::RESET_LINK_SENT
@@ -51,7 +48,13 @@ class ForgotResetPassword extends Controller
                     'errors' => ['email' => trans($response)]
                 ], 403);
 
-}
+    }
+
+    protected function getEmailSubject()
+    {
+        return 'Your Password Reset Link';
+    }
+
 
     public function resetPassword(Request $request)
     {

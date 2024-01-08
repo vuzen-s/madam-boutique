@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -10,6 +15,7 @@ const ResetPassword = () => {
   const [errors, setErrors] = useState([]);
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { token } = useParams();
 
@@ -23,30 +29,35 @@ const ResetPassword = () => {
   };
 
   const isFormValid = () => {
-    return password.trim() !== "" && password_confirmation.trim !== "";
+    return password.trim() !== "" && password_confirmation.trim() !== "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
     try {
-      await axios
-        .post(`http://localhost:8000/api/reset-password`, {
+      const response = await axios.post(
+        "http://localhost:8000/api/reset-password",
+        {
           email,
           token,
           password,
           password_confirmation,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            Swal.fire({
-              icon: "success",
-              title: "Reset Password Successfully",
-              confirmButtonText: "Ok",
-              timer: 7000,
-            });
+        }
+      );
+
+      if (response.data.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Reset Password Successfully",
+          // confirmButtonText: "Ok",
+          timer: 3000,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/signin");
           }
         });
+      }
     } catch (e) {
       if (e.response.data.status === 422) {
         setErrors(e.response.data.errors);
@@ -56,7 +67,10 @@ const ResetPassword = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="w-full lgl:w-[450px] h-screen flex items-center justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full lgl:w-[450px] h-screen flex items-center justify-center"
+      >
         <div className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
           <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-2xl mdl:text-3xl mb-2">
             Forgot Password?
@@ -66,7 +80,6 @@ const ResetPassword = () => {
           </p>
 
           <div className="flex flex-col gap-2">
-
             {/* Password */}
             <div className="flex flex-col gap-.6">
               <label className="font-titleFont text-base font-semibold text-gray-600">

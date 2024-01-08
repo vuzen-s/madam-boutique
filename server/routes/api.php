@@ -155,9 +155,9 @@ Route::put('users/edit/{id}', [UserController::class, 'update']);
 // Xóa User
 Route::delete('destroy/{id}', [UserController::class, 'destroy']);
 // Forgot password
-Route::post('forgot-password', [ForgotResetPassword::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [ForgotResetPassword::class, 'sendResetLinkEmail'])->name('password.email');
 // Reset Password
-Route::post('reset-password', [ForgotResetPassword::class, 'resetPassword']);
+Route::post('reset-password', [ForgotResetPassword::class, 'resetPassword'])->name('password.reset');
 
 Route::group([
 

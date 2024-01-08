@@ -5,13 +5,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const ForgotPassword = () => {
-  const [captchaValue, setCaptchaValue] = useState(null);
+  // const [captchaValue, setCaptchaValue] = useState(null);
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
   const [isValidEmail, setIsValidEmail] = useState("");
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
-  };
+
+
+  // const handleCaptchaChange = (value) => {
+  //   setCaptchaValue(value);
+  // };
 
   const isFormValid = () => {
     return email.trim() !== "";
@@ -23,7 +25,7 @@ const ForgotPassword = () => {
     setIsValidEmail("");
     try {
       const response = await axios.post(
-      "http://localhost:8000/api/forgot-password",
+        "http://localhost:8000/api/forgot-password",
         { email }
       );
       if (response.data.status === 200) {
@@ -75,7 +77,7 @@ const ForgotPassword = () => {
                 placeholder="Eg. truonganh@gmail.com"
               />
             </div>
-            {errors && (
+            {errors && typeof errors.email === "string" && (
               <span className="text-sm text-red-500 font-titleFont px-2">
                 {errors.email}
               </span>
@@ -88,12 +90,12 @@ const ForgotPassword = () => {
             )}
 
             {/*Captcha*/}
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey="6LcBfkApAAAAAIHaou6Qlk5E0qZfPXhfwLr_iV5J"
               onChange={handleCaptchaChange}
               hl="en"
               className="w-full"
-            />
+            /> */}
 
             <button
               type="submit"

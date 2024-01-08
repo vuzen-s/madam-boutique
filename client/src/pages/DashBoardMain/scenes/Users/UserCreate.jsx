@@ -236,7 +236,7 @@ const UserCreate = () => {
             {/* ---------- Layout cut ---------- */}
 
             <div className="flex-1 flex flex-col gap-2">
-              <div className="flex flex-col gap-.8">
+              {/* <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="status"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -253,13 +253,13 @@ const UserCreate = () => {
                   <option value="Choose Status">Choose Status</option>
                   <option value="Show">Show</option>
                   {/* <option value="Hidden">Hidden</option> */}
-                </select>
+                {/* </select>
                 {errors && (
                   <span className="mt-2 text-sm text-red-500 font-titleFont px-2">
                     {errors.status}
                   </span>
                 )}
-              </div>
+              </div> */}
 
               {/* Gender && Level */}
 

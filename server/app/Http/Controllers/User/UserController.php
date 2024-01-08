@@ -72,7 +72,7 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
             'level' => 'required',
             'gender' => 'nullable',
-            'status' => 'required',
+            // 'status' => 'required',
             'phone' => 'nullable|numeric|digits:10',
             'address' => 'nullable|max:250',
             'avatar' => 'nullable|mimes:jpeg,jpg,png'
@@ -94,7 +94,7 @@ class UserController extends Controller
                 'email' => strtolower($request['email']),
                 'password' => bcrypt($request['password']),
                 'level' => $request['level'],
-                'status' => $request['status'],
+                // 'status' => $request['status'],
                 'gender' => $request['gender'],
                 'phone' => $request['phone'],
                 'address' => $request['address'],

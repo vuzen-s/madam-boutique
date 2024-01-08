@@ -314,7 +314,7 @@ const UserEdit = () => {
             {/* ---------- Layout cut ---------- */}
 
             <div className="flex-1 flex flex-col gap-2">
-              <div className="flex flex-col gap-.8">
+              {/* <div className="flex flex-col gap-.8">
                 <label
                   htmlFor="status"
                   className="font-titleFont text-base font-semibold text-gray-600"
@@ -335,7 +335,7 @@ const UserEdit = () => {
                     {errors.status}
                   </span>
                 )}
-              </div>
+              </div> */}
               {/* Gender && Level */}
 
               <div className="flex">

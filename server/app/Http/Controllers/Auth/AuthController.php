@@ -81,7 +81,7 @@ class AuthController extends Controller
             'email.regex' => ' We only accept emails ending with @gmail.com!'
         ];
 
-        $validate->setCustomMessages($customMessages);
+        $validator->setCustomMessages($customMessages);
 
         if($validator->fails()){
             return response()->json([
