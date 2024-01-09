@@ -55,11 +55,13 @@ const ProductList = () => {
                     .then((data) => {
                         console.log(data);
                         console.log(idProduct);
+                        Swal.fire("Deleted!", "", "success");
+                        window.location.reload();
                     })
-                    .catch((error) => console.log(error));
-                // handle event
-                Swal.fire("Deleted!", "", "success");
-                window.location.reload();
+                    .catch((error) => {
+                        console.log(error)
+                        Swal.fire("This value cannot be deleted because it is a foreign key!", "", "error");
+                    });                // handle event
             }
         });
     }

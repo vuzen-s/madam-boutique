@@ -59,7 +59,7 @@ const BrandList = () => {
           })
           .catch((error) => {
             console.log(error)
-            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+            Swal.fire("This value cannot be deleted because it is a foreign key!", "", "error");
           });
       }
     });

@@ -68,7 +68,7 @@ const Payment = () => {
     };
 
     const showToastMessage = () => {
-        toast.success('Đơn hàng của bạn đã được lưu thành công!', {
+        toast.success('Your order has been saved successfully!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -143,18 +143,18 @@ const Payment = () => {
                 console.log(response.data.errors);
             } else {
                 Swal.fire({
-                    title: "XÁC NHÂN THÔNG TIN",
-                    text: "Bạn chắc chắn thông tin cung cấp thanh toán là chính xác ?",
+                    title: "CONFIRMED INFORMATION",
+                    text: "Are you sure the payment information provided is correct ?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Vâng, tôi chắc chắn!"
+                    confirmButtonText: "Yes I am sure!"
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
-                            title: "Đơn hàng của bạn đã được lưu thành công!",
-                            text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+                            title: "Your order has been saved successfully!",
+                            text: "CHECK your order information in your EMAIL NOW.",
                             icon: "success"
                         });
                         // navigate('/cart');
@@ -250,8 +250,8 @@ const Payment = () => {
                 console.log(response.data.errors);
             } else {
                 Swal.fire({
-                    title: "Đơn hàng của bạn đã được lưu thành công!",
-                    text: "KIỂM TRA NGAY thông tin đơn hàng trong EMAIL của bạn.",
+                    title: "Your order has been saved successfully!",
+                    text: "CHECK your order information in your EMAIL NOW.",
                     icon: "success"
                 });
                 // navigate('/cart');

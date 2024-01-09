@@ -11,14 +11,14 @@
 
 <img src="https://t3.ftcdn.net/jpg/02/32/62/88/360_F_232628884_45sn8uMipdksssl7QZhT4KyVasUtZthU.jpg" width="200px">
 
-<h2>Thông tin đơn hàng của bạn:</h2>
+<h2>Your order information:</h2>
 
 <table class="table">
     <thead>
     <tr>
-        <th scope="col" style="margin: 0 16px">Tên tài khoản</th>
-        <th scope="col" style="margin: 0 16px">Tổng thanh toán</th>
-        <th scope="col" style="margin: 0 16px">Trạng thái thanh toán</th>
+        <th scope="col" style="margin: 0 16px">Account name</th>
+        <th scope="col" style="margin: 0 16px">Total</th>
+        <th scope="col" style="margin: 0 16px">Payment status</th>
     </tr>
     </thead>
     <tbody>
@@ -29,10 +29,6 @@
     </tr>
     </tbody>
 </table>
-
-<h2>Chi tiết đơn hàng:</h2>
-
-
 
 </body>
 </html>

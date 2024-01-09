@@ -30,7 +30,7 @@ class OrderMailClient extends Mailable
     {
         return new Envelope(
             from: new Address('boutiquemadam338@gmail.com', 'MADAM Boutique'),
-            subject: '[MADAM BOUTIQUE] | VUI LÒNG KIỂN TRA THÔNG TIN ĐƠN HÀNG',
+            subject: '[MADAM BOUTIQUE] | PLEASE CHECK YOUR ORDER INFORMATION',
         );
     }
 
