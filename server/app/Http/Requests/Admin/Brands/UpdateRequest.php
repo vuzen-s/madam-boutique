@@ -29,8 +29,8 @@ class UpdateRequest extends FormRequest
     public function messages():array
     {
         return [
-            'name.required' => 'Mục tên thương hiệu là bắt buộc. Vui lòng nhập lại.',
-            'name.unique' => 'Tên thương hiệu không được trùng nhau. Vui lòng nhập lại.',
+            'name.required' => 'The brand name field is mandatory. Please re-enter.',
+            'name.unique' => 'The brand name must be unique. Please enter a different name..',
         ];
     }
 }

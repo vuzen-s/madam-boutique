@@ -17,7 +17,7 @@ const columns = [
     },
     {
         field: "name_customer",
-        headerName: "Tên người đặt",
+        headerName: "Name",
         headerAlign: "center",
         align: "center",
         flex: 0.5,
@@ -25,35 +25,35 @@ const columns = [
 
     {
         field: "phone_customer",
-        headerName: "Số điện thoại",
+        headerName: "Phone",
         headerAlign: "center",
         align: "center",
         flex: 0.4,
     },
     {
         field: "address_customer",
-        headerName: "Địa chỉ",
+        headerName: "Address",
         headerAlign: "center",
         align: "center",
         flex: 0.3,
     },
     {
         field: "quantity",
-        headerName: "Số lượng",
+        headerName: "Quantity",
         headerAlign: "center",
         align: "center",
         flex: 0.3,
     },
     {
         field: "price",
-        headerName: "Giá",
+        headerName: "Price",
         headerAlign: "center",
         align: "center",
         flex: 0.3,
     },
     {
         field: "product",
-        headerName: "Tên sản phẩm",
+        headerName: "Product",
         headerAlign: "center",
         align: "center",
         renderCell: (params) => (
@@ -63,7 +63,7 @@ const columns = [
     },
     {
         field: "price",
-        headerName: "Giá",
+        headerName: "Price",
         headerAlign: "center",
         align: "center",
         flex: 0.3,

@@ -30,7 +30,7 @@ class ContactMail extends Mailable
     {
         return new Envelope(
             from: new Address('boutiquemadam338@gmail.com', 'MADAM Boutique'),
-            subject: 'THÔNG BÁO THÔNG TIN LIÊN HỆ',
+            subject: 'CONTACT INFORMATION ANNOUNCEMENT',
         );
     }
 
@@ -45,7 +45,7 @@ class ContactMail extends Mailable
             with: [
                 'name' => $user->fullname,
                 'email' => $user->email,
-                'content' => 'Tôi muốn mua hàng. Hãy liên hệ với tôi.'
+                'content' => 'I would like to make a purchase. Please contact me.'
             ],
         );
     }

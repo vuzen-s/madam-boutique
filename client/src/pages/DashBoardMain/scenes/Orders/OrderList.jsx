@@ -32,7 +32,7 @@ const OrderList = () => {
     const navigate = useNavigate();
 
     const showToastMessage = () => {
-        toast.success('Update trạng thái đơn hàng thành công!', {
+        toast.success('Successfully updated the order status!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -115,8 +115,8 @@ const OrderList = () => {
                 <p>
                     {
                         params.value === 1
-                            ? <Tag color="success">Đã thanh toán</Tag>
-                            : <Tag color="processing">Chờ thanh toán</Tag>
+                            ? <Tag color="success">Payment completed</Tag>
+                            : <Tag color="processing">Pending payment</Tag>
                     }
                 </p>
             ),

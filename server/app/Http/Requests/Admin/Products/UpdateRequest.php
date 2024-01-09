@@ -38,18 +38,18 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Mục tên sản phẩm là bắt buộc. Vui lòng nhập lại.',
-            'name.unique' => 'Tên sản phẩm không được trùng nhau. Vui lòng nhập lại.',
-            'price.required' => 'Mục giá cả là bắt buộc. Vui lòng nhập lại.',
-            'price.numeric' => 'Mục giá cả phải là kiểu số. Vui lòng nhập lại.',
-            'desc.required' => 'Mục desc là bắt buộc. Vui lòng nhập lại.',
-//            'avatar.mimes' => 'Mục avatar phải là tệp thuộc loại: jpg, png, jpeg. Vui lòng nhập lại.',
-            'status.required' => 'Mục status là bắt buộc. Vui lòng nhập lại.',
-            'user_id.required' => 'Mục user là bắt buộc. Vui lòng nhập lại.',
-            'collection_id.required' => 'Mục collection là bắt buộc. Vui lòng nhập lại.',
-            'brand_id.required' => 'Mục brand là bắt buộc. Vui lòng nhập lại.',
-            'designer_id.required' => 'Mục designer là bắt buộc. Vui lòng nhập lại.',
-            'category_id.required' => 'Mục category là bắt buộc. Vui lòng nhập lại.',
+            'name.required' => 'You must enter this field.',
+            'name.unique' => 'Not allowed to have duplicate names.',
+            'price.required' => 'You must enter this field..',
+            'price.numeric' => 'You must enter this field..',
+            'desc.required' => 'You must enter this field..',
+            // 'avatar.mimes' => 'The avatar file must be of type: jpg, png, jpeg. Please re-enter',
+            'status.required' => 'You must enter this field..',
+            'feature.required' => 'You must enter this field.',
+            'collection_id.required' => 'You must enter this field.',
+            'brand_id.required' => 'You must enter this field.',
+            'designer_id.required' => 'You must enter this field.',
+            'category_id.required' => 'You must enter this field.',
         ];
     }
 }

@@ -36,10 +36,10 @@ const CollectionList = () => {
 
   const handleDeleteItem = (idCollection) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa bộ sưu tập này?",
+      title: "Are you sure you want to delete this collection?",
       showDenyButton: false,
       showCancelButton: true,
-      confirmButtonText: "Xóa",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -54,12 +54,12 @@ const CollectionList = () => {
             console.log(data);
             console.log(idCollection);
             // handle event
-            Swal.fire("Đã xóa!", "", "success");
+            Swal.fire("Deleted!", "", "success");
             window.location.reload();
           })
           .catch((error) => {
             console.log(error)
-            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+            Swal.fire("Cannot delete this value as it is a foreign key!", "", "error");
           });
       }
     });
@@ -72,7 +72,7 @@ const CollectionList = () => {
     { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Tên Bộ sưu tập",
+      headerName: "Name Collection",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
@@ -85,10 +85,10 @@ const CollectionList = () => {
       renderCell: (params) => (
         <div style={{ display: 'flex', columnGap: '4px' }}>
           <button type="button" class="btn btn-warning" style={{ background: '#ffc107' }} onClick={() => handleEditItem(params.row.id)}>
-            Sửa
+            Edit
           </button>
           <button type="button" class="btn btn-danger" style={{ background: '#dc3545' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Xóa
+            Delete
           </button>
         </div>
       ),

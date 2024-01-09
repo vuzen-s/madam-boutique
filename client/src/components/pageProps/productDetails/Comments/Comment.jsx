@@ -21,19 +21,19 @@ const Comment = ({comment, handleDeleteItem, handleEditItem, userAuth}) => {
         const days = Math.floor(hours / 24);
 
         if (seconds < 60) {
-            return 'Vừa xong';
+            return 'Done';
         } else if (minutes === 1) {
-            return '1 phút trước';
+            return 'One minute ago';
         } else if (minutes < 60) {
-            return `${minutes} phút trước`;
+            return `${minutes} minute`;
         } else if (hours === 1) {
-            return '1 giờ trước';
+            return '1 Hour';
         } else if (hours < 24) {
-            return `${hours} giờ trước`;
+            return `${hours} Hour ago`;
         } else if (days === 1) {
-            return '1 ngày trước';
+            return '1 day';
         } else if (days < 31) {
-            return `${days} ngày trước`;
+            return `${days} Day ago`;
         } else {
             return commentTime.toLocaleString('vi-VN');
         }
@@ -61,7 +61,7 @@ const Comment = ({comment, handleDeleteItem, handleEditItem, userAuth}) => {
                     ? comment.content
                     : <div style={{fontSize: '15px', color: 'grey', fontStyle: 'italic'}}>
                         {comment.content}
-                        <span> - Trạng thái: Đang chờ duyệt.</span>
+                        <span> - Status: Pending approval</span>
                         <Tag bordered={false} color="magenta">
                             Hidden
                         </Tag>
@@ -73,8 +73,8 @@ const Comment = ({comment, handleDeleteItem, handleEditItem, userAuth}) => {
                 {
                     (userAuth && comment.status !== 0 && userAuth.id === comment.user.id)
                     ? <div>
-                        <button onClick={handleEditItem}>Chỉnh sửa</button>
-                        <button onClick={handleDeleteItem}>Xóa</button>
+                        <button onClick={handleEditItem}>Edit</button>
+                        <button onClick={handleDeleteItem}>Delete</button>
                     </div>
                     : ''
                 }

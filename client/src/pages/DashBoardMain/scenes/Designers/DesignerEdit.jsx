@@ -26,7 +26,7 @@ const DesignerEdit = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
     const showToastMessage = () => {
-        toast.success('Update Nhà thiết kế thành công!', {
+        toast.success('Update Designer Successfully!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -66,12 +66,12 @@ const DesignerEdit = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(dataDesigner), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify(dataDesigner), 
             })
                 .then((respon) => respon.json())
                 .then((data) => {
                     console.log(dataDesigner);
-                    // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                    
                     console.log(data.errors);
                     setErrorsField(data.errors);
                     // message
@@ -85,7 +85,7 @@ const DesignerEdit = () => {
                 })
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                
                 console.log(error);
             } else {
                 // Xử lý lỗi khác nếu có
@@ -124,14 +124,14 @@ const DesignerEdit = () => {
                     <form onSubmit={handleSubmit}>
                         <Box>
                             <div class="mb-6">
-                                <label for="name" class="form-label">Tên bộ sưu tập:</label>
+                                <label for="name" class="form-label">Name Designer:</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value={dataDesigner.name} onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.name}
                                 </p>
                             </div>
                             <div class="mb-6">
-                                <label for="address" class="form-label">Địa chỉ:</label>
+                                <label for="address" class="form-label">Address:</label>
                                 <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" value={dataDesigner.address} onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.address}
@@ -139,8 +139,8 @@ const DesignerEdit = () => {
                             </div>
                         </Box>
                         <Box mt="10px">
-                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Lưu thay đổi</button>
-                            <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Quay lại</button>
+                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Save</button>
+                            <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Back</button>
                         </Box>
                     </form>
                 )}

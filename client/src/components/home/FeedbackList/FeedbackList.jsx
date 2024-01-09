@@ -9,7 +9,7 @@ const FeedbackList = () => {
             <div className="grid wide">
                 <div className="feedback" id="reviews">
                     <h2 className="feedback_title">
-                        <span>Consectetur</span> adipiscing elit
+                        <span>Consectetur</span> Adipiscing elit
                     </h2>
                     <div className="row">
                         <div className="col l-4 m-4 c-12">

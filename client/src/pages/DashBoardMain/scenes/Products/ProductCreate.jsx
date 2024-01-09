@@ -43,7 +43,7 @@ const ProductCreate = () => {
     const select2Ref = useRef();
 
     const showToastMessage = () => {
-        toast.success('Thêm sản phẩm thành công!', {
+        toast.success('Successfully Product!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -209,7 +209,7 @@ const ProductCreate = () => {
             >
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Tên sản phẩm:</label>
+                    <label for="name" class="form-label">Name Product:</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
                            onChange={handleChangeInput}/>
                     <p style={{color: "red"}}>
@@ -218,7 +218,7 @@ const ProductCreate = () => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Mô tả sản phẩm:</label>
+                    <label for="desc" class="form-label">Desc:</label>
                     {/*<input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc"*/}
                     {/*       onChange={handleChangeInput}/>*/}
                     <CKEditor
@@ -234,7 +234,7 @@ const ProductCreate = () => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label">Giá:</label>
+                    <label for="price" class="form-label">Price:</label>
                     <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
                            onChange={handleChangeInput}/>
                     <p style={{color: "red"}}>
@@ -243,13 +243,13 @@ const ProductCreate = () => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="color" class="form-label">Màu sản phẩm (không bắt buộc):</label>
+                    <label for="color" class="form-label">Color:</label>
                     <input class="form-control" type="text" id="color" placeholder="Enter color" name="color"
                            onChange={handleChangeInput}/>
                 </div>
 
                 <div class="mb-3">
-                    <label for="avatar" class="form-label">Ảnh đại diện sản phẩm:</label>
+                    <label for="avatar" class="form-label">Avatar:</label>
                     <input class="form-control" type="file" id="avatar" name="avatar"
                            onChange={handleChangeInput}/>
                     <p style={{color: "red"}}>
@@ -258,10 +258,10 @@ const ProductCreate = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label for="status" class="form-label">Trạng thái sản phẩm:</label>
+                    <label for="status" class="form-label">Status:</label>
                     <select className="form-select" name="status" onChange={handleChangeInput} value={status}>
-                        <option value={0}> Hiển thị</option>
-                        <option value={1}> Ẩn</option>
+                        <option value={0}> Show</option>
+                        <option value={1}> Hide</option>
                     </select>
                     <p style={{color: "red"}}>
                         {errorsField && errorsField.status}
@@ -269,10 +269,10 @@ const ProductCreate = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label for="feature" class="form-label">Feature sản phẩm:</label>
+                    <label for="feature" class="form-label">Feature Product:</label>
                     <select className="form-select" name="feature" onChange={handleChangeInput} value={feature}>
-                        <option value={0}> Nổi bật</option>
-                        <option value={1}> Không nổi bật</option>
+                        <option value={0}> Featured</option>
+                        <option value={1}> Not Featured</option>
                     </select>
                     <p style={{color: "red"}}>
                         {errorsField && errorsField.feature}
@@ -335,7 +335,7 @@ const ProductCreate = () => {
                     </p>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="images" className="form-label">Chọn nhiều hình ảnh:</label>
+                    <label htmlFor="images" className="form-label">Selecte Images:</label>
                     <input className="form-control" type="file" id="image1" name="images[]"
                            onChange={handleChangeInput}/>
                     <input className="form-control" type="file" id="image2" name="images[]"
@@ -347,7 +347,7 @@ const ProductCreate = () => {
                 </div>
             </Box>
             <Box mt="40px">
-                <button type="submit" className="btn btn-primary" style={{background: "#0a58ca"}}>Thêm sản phẩm mới
+                <button type="submit" className="btn btn-primary" style={{background: "#0a58ca"}}>Add Product
                 </button>
             </Box>
         </form>

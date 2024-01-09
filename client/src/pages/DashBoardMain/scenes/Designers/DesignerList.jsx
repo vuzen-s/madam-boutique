@@ -36,10 +36,10 @@ const DesignerList = () => {
 
   const handleDeleteItem = (idDesigner) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa Nhà thiết kế này?",
+      title: "Are you sure you want to delete this Designer?",
       showDenyButton: false,
       showCancelButton: true,
-      confirmButtonText: "Xóa",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -54,12 +54,12 @@ const DesignerList = () => {
             console.log(data);
             console.log(idDesigner);
             // handle event
-            Swal.fire("Đã xóa!", "", "success");
+            Swal.fire("DELETED!", "", "success");
             window.location.reload();
           })
           .catch((error) => {
             console.log(error)
-            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+            Swal.fire("Cannot delete this value as it is a foreign key!", "", "error");
           });
       }
     });
@@ -72,7 +72,7 @@ const DesignerList = () => {
     { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Tên Bộ sưu tập",
+      headerName: "Name Designer",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
@@ -80,7 +80,7 @@ const DesignerList = () => {
     },
     {
         field: "address",
-        headerName: "Địa chỉ",
+        headerName: "Address",
         headerAlign: "center",
         align: "center",
         flex: 0.5,
@@ -93,10 +93,10 @@ const DesignerList = () => {
       renderCell: (params) => (
         <div style={{ display: 'flex', columnGap: '4px' }}>
           <button type="button" class="btn btn-warning" style={{ background: '#ffc107' }} onClick={() => handleEditItem(params.row.id)}>
-            Sửa
+            Edit
           </button>
           <button type="button" class="btn btn-danger" style={{ background: '#dc3545' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Xóa
+            Delete
           </button>
         </div>
       ),

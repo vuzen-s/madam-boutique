@@ -89,7 +89,7 @@ const Rates = ({idProduct}) => {
                     rating_content: contentRating,
                     user_id: userAuth.id,
                     product_id: idProduct
-                }), // Chuyển đổi FormData thành đối tượng JSON
+                }),
             })
                 .then((respon) => respon.json())
                 .then((data) => {
@@ -100,10 +100,10 @@ const Rates = ({idProduct}) => {
                 })
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                
                 console.log(error);
             } else {
-                // Xử lý lỗi khác nếu có
+            
                 console.error('Error:', error);
             }
         }
@@ -140,7 +140,7 @@ const Rates = ({idProduct}) => {
     }
 
     const showErrorRatings = () => {
-        Swal.fire("Chọn ít nhất 1 đánh giá sao.", "", "error");
+        Swal.fire("Select at least 1 star rating.", "", "error");
         setOpenModalStore(false);
     }
 
@@ -165,10 +165,10 @@ const Rates = ({idProduct}) => {
     // delete rating
     const handleDeleteItem = (idRating) => {
         Swal.fire({
-            title: "Bạn chắc chắn muốn xóa đánh giá này?",
+            title: "Are you sure you want to delete this review?",
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: "Xóa",
+            confirmButtonText: "Delete",
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -184,7 +184,7 @@ const Rates = ({idProduct}) => {
                         console.log(idRating);
                         // handle event
                         setRefreshListRating(new Date().getTime());
-                        Swal.fire("Đã xóa!", "", "success");
+                        Swal.fire("Deleted!", "", "success");
                     })
                     .catch((error) => {
                         console.log(error)
@@ -202,22 +202,22 @@ const Rates = ({idProduct}) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(ratingByID), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify(ratingByID),
             })
                 .then((respon) => respon.json())
                 .then((data) => {
                     console.log(ratingByID);
                     setRefreshListRating(new Date().getTime());
-                    // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                   
                     console.log(data.errors);
                     setErrorsField(data.errors);
                 })
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+              
                 console.log(error);
             } else {
-                // Xử lý lỗi khác nếu có
+              
                 console.error('Error:', error);
             }
         }
@@ -233,11 +233,11 @@ const Rates = ({idProduct}) => {
                 margin: '16px',
                 marginTop: '0px',
                 fontStyle: 'italic'
-            }}>{ratings.length === 0 ? 'Hãy là người đầu tiên đánh giá!' : ''}</p>
+            }}>{ratings.length === 0 ? 'Be the first to rate!' : ''}</p>
             <hr/>
             <div className='ratings'>
                 <div className='action-rating'>
-                    <h4>Đánh giá theo mức độ hài lòng</h4>
+                    <h4>Rate your satisfaction level</h4>
                     <div style={{display: 'flex', alignItems: 'center', marginBottom: '12px'}}>
                         <Rating
                             name="hover-feedback"
@@ -257,7 +257,7 @@ const Rates = ({idProduct}) => {
                         )}</span>
                     </div>
                     <button type="submit" class="btn btn-danger" style={{background: '#dc3545', color: "#fff"}}
-                            onClick={() => setOpenModalStore(true)}>Gửi đánh giá
+                            onClick={() => setOpenModalStore(true)}>Send
                     </button>
                 </div>
                 <div className='progress-rating'>
@@ -281,7 +281,7 @@ const Rates = ({idProduct}) => {
             {/* Modal Edit*/}
             <Modal show={openModalEdit} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chỉnh sửa bài đánh giá của bạn ?</Modal.Title>
+                    <Modal.Title>Edit your review </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <textarea
@@ -289,39 +289,39 @@ const Rates = ({idProduct}) => {
                         onChange={(e) => setRatingByID((prev) => ({...prev, 'rating_content': e.target.value}))}
                         name="rating_content"
                         className="Comments-box__input"
-                        placeholder="Nhập nội dung"
+                        placeholder="Enter content"
                     />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => handleClose()}>
-                        Thoát
+                        Out
                     </Button>
                     <Button variant="primary" onClick={() => handleRatingUpdate(ratingByID.id)}
                             style={{background: "red", borderColor: "red"}}>
-                        Lưu
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>
             {/* Modal Store*/}
             <Modal show={openModalStore} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Cảm ơn đã để lại đánh giá. Bạn có muốn gửi gì đó cho chúng tôi không ?</Modal.Title>
+                    <Modal.Title>Thank you for your review. Is there anything else you would like to share with us?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <textarea
                         onChange={(e) => setContentRating(e.target.value)}
                         name="content"
                         className="Comments-box__input"
-                        placeholder="Nhập nội dung (không bắt buộc)"
+                        placeholder="Enter content"
                     />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => handleClose()}>
-                        Thoát
+                        Out
                     </Button>
                     <Button variant="primary" onClick={() => sendSubmittRating()}
                             style={{background: "red", borderColor: "red"}}>
-                        Gửi đánh giá
+                        Send
                     </Button>
                 </Modal.Footer>
             </Modal>

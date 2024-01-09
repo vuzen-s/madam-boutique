@@ -31,11 +31,11 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Mục danh mục là bắt buộc. Vui lòng nhập lại.',
-            'name.unique' => 'Tên danh mục không được trùng nhau. Vui lòng nhập lại.',
-            'status.required' => 'Mục status là bắt buộc. Vui lòng nhập lại.',
-            'parent_id.required' => 'Mục parent_id là bắt buộc. Vui lòng nhập lại.',
-            'parent_id.numeric' => 'Mục parent_id phải là kiểu số. Vui lòng nhập lại.',
+            'name.required' => 'You must enter this field.',
+            'name.unique' => 'You must enter this field.Not allowed to have duplicate names!',
+            'status.required' => 'You must enter this field.',
+            'parent_id.required' => 'You must enter this field.',
+            'parent_id.numeric' => 'You must enter this field.',
         ];
     }
 }

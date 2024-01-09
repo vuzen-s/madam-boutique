@@ -69,7 +69,7 @@ const BlogCreate = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">
-                        Tên bài đăng:
+                       Post name
                     </label>
                     <input
                         type="text"
@@ -96,7 +96,7 @@ const BlogCreate = () => {
 
                 <div className="mb-3">
                     <label htmlFor="avatar" className="form-label">
-                        Ảnh đại diện
+                        Avatar
                     </label>
                     <input
                         className="form-control"
@@ -109,7 +109,7 @@ const BlogCreate = () => {
 
                 <div className="mb-3">
                     <label htmlFor="status" className="form-label">
-                        Trạng thái bài viết
+                        Status
                     </label>
                     <select
                         className="form-select"
@@ -117,8 +117,8 @@ const BlogCreate = () => {
                         onChange={(e) => setStatus(e.target.value)}
                         value={status}
                     >
-                        <option value={0}>Hiển thị</option>
-                        <option value={1}>Ẩn</option>
+                        <option value={0}>Show</option>
+                        <option value={1}>hide</option>
                     </select>
                 </div>
 
@@ -165,7 +165,7 @@ const BlogCreate = () => {
                         className="btn btn-primary"
                         style={{ background: "#0a58ca" }}
                     >
-                        Thêm bài viết mới
+                        Add Post
                     </button>
                 </div>
             </form>

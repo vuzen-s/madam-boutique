@@ -27,7 +27,7 @@ const DesignerCreate = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
     const showToastMessage = () => {
-        toast.success('Thêm bộ sưu tập thành công!', {
+        toast.success('Add Successfully!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -103,14 +103,14 @@ const DesignerCreate = () => {
                     <form onSubmit={handleSubmit}>
                         <Box>
                             <div class="mb-6">
-                                <label for="name" class="form-label">Tên Nhà thiết kế:</label>
+                                <label for="name" class="form-label">Name Designer:</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.name}
                                 </p>
                             </div>
                             <div class="mb-6">
-                                <label for="address" class="form-label">Địa chỉ:</label>
+                                <label for="address" class="form-label">Address:</label>
                                 <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.address}
@@ -118,7 +118,7 @@ const DesignerCreate = () => {
                             </div>
                         </Box>
                         <Box mt="10px">
-                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Thêm Nhà thiết kế mới</button>
+                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Add Designer: </button>
                         </Box>
                     </form>
                 )}

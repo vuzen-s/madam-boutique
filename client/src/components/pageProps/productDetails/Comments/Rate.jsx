@@ -13,19 +13,19 @@ const Rate = ({rating, value, handleDeleteItem, handleEditItem, userAuth}) => {
         const days = Math.floor(hours / 24);
 
         if (seconds < 60) {
-            return 'Vừa xong';
+            return 'done';
         } else if (minutes === 1) {
-            return '1 phút trước';
+            return 'One minute ago';
         } else if (minutes < 60) {
-            return `${minutes} phút trước`;
+            return `${minutes} minute ago`;
         } else if (hours === 1) {
-            return '1 giờ trước';
+            return '1 Hour';
         } else if (hours < 24) {
-            return `${hours} giờ trước`;
+            return `${hours} Hour ago`;
         } else if (days === 1) {
-            return '1 ngày trước';
+            return '1 day';
         } else if (days < 31) {
-            return `${days} ngày trước`;
+            return `${days} Day ago`;
         } else {
             return commentTime.toLocaleString('vi-VN');
         }
@@ -52,8 +52,8 @@ const Rate = ({rating, value, handleDeleteItem, handleEditItem, userAuth}) => {
             {
                 (userAuth && userAuth.id === rating.user.id)
                     ? <div className='Comment-actions'>
-                        <button onClick={handleEditItem}>Sửa</button>
-                        <button onClick={handleDeleteItem}>Xóa đánh giá</button>
+                        <button onClick={handleEditItem}>Edit</button>
+                        <button onClick={handleDeleteItem}>Delete</button>
                     </div>
                     : <span></span>
             }

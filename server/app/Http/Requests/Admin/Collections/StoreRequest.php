@@ -29,8 +29,8 @@ class StoreRequest extends FormRequest
     public function messages():array
     {
         return [
-            'name.required' => 'Mục tên bộ sưu tập là bắt buộc. Vui lòng nhập lại.',
-            'name.unique' => 'Tên bộ sưu tập không được trùng nhau. Vui lòng nhập lại.',
+            'name.required' => 'You must enter this field.',
+            'name.unique' => 'You must enter this field.Not allowed to have duplicate names',
         ];
     }
 }

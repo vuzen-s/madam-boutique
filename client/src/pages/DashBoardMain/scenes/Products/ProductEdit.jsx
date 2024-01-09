@@ -35,7 +35,7 @@ const ProductEdit = () => {
     const navigate = useNavigate();
 
     const showToastMessage = () => {
-        toast.success('Update sản phẩm thành công!', {
+        toast.success('Successfully updated the product!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -83,12 +83,12 @@ const ProductEdit = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(dataProductEdit), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify(dataProductEdit), 
             })
                 .then((respon) => respon.json())
                 .then((data) => {
                     console.log(dataProductEdit);
-                    // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                    
                     console.log(data.errors);
                     setErrorsField(data.errors);
                     // message
@@ -116,11 +116,7 @@ const ProductEdit = () => {
         console.log(event.target)
         const { name, value } = event.target;
         setDataProductEdit({ ...dataProductEdit, [name]: value });
-        // let avatar = event.target.files;
-        // if (avatar) {
-        //   dataProductEdit.avatar = avatar[0];
-        //   setDataProductEdit(dataProductEdit);
-        // }
+     
     };
 
     // back
@@ -171,7 +167,7 @@ const ProductEdit = () => {
                         >
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Tên sản phẩm:</label>
+                                <label for="name" class="form-label">Name Product:</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value={dataProductEdit.name} onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.name}
@@ -179,7 +175,7 @@ const ProductEdit = () => {
                             </div>
 
                             <div class="mb-3">
-                                <label for="desc" class="form-label">Dòng mô tả:</label>
+                                <label for="desc" class="form-label">Desc:</label>
                                 <input type="text" class="form-control" id="desc" placeholder="Enter desc" name="desc" value={dataProductEdit.desc} onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.desc}
@@ -187,7 +183,7 @@ const ProductEdit = () => {
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">Giá:</label>
+                                <label for="price" class="form-label">Price:</label>
                                 <input type="text" class="form-control" id="price" placeholder="Enter price" name="price" value={dataProductEdit.price} onChange={handleChangeInput} />
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.price}
@@ -195,7 +191,7 @@ const ProductEdit = () => {
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Ảnh hiện tại:</label>
+                                <label class="form-label">Hide:</label>
                                 <img src={dataProductEdit.avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + dataProductEdit.avatar} alt={dataProductEdit.name} width="50px" />
                             </div>
 
@@ -208,10 +204,10 @@ const ProductEdit = () => {
                             {/*</div>*/}
 
                             <div className="mb-3">
-                                <label for="status" class="form-label">Trạng thái sản phẩm:</label>
+                                <label for="status" class="form-label">Status:</label>
                                 <select className="form-select" name="status" value={dataProductEdit.status} onChange={handleChangeInput} >
-                                    <option value={0}> Hiển thị </option>
-                                    <option value={1}> Ẩn </option>
+                                    <option value={0}> Show </option>
+                                    <option value={1}> Hide</option>
                                 </select>
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.status}
@@ -219,10 +215,10 @@ const ProductEdit = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label for="feature" class="form-label">Feature sản phẩm:</label>
+                                <label for="feature" class="form-label">Feature :</label>
                                 <select className="form-select" name="feature" value={dataProductEdit.feature} onChange={handleChangeInput} >
-                                    <option value={0}> Nổi bật </option>
-                                    <option value={1}> Không nổi bật </option>
+                                    <option value={0}> Feature </option>
+                                    <option value={1}> Not Feature </option>
                                 </select>
                                 <p style={{ color: "red" }}>
                                     {errorsField && errorsField.feature}
@@ -294,8 +290,8 @@ const ProductEdit = () => {
                             </div>
                         </Box>
                         <Box mt="40px">
-                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Lưu thay đổi</button>
-                            <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Quay lại</button>
+                            <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Save</button>
+                            <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Back</button>
                         </Box>
                     </form>
                 )}

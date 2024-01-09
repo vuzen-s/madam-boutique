@@ -36,10 +36,10 @@ const BrandList = () => {
 
   const handleDeleteItem = (idBrand) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa thương hiệu này?",
+      title: "Are you sure you want to delete this brand?",
       showDenyButton: false,
       showCancelButton: true,
-      confirmButtonText: "Xóa",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -54,7 +54,7 @@ const BrandList = () => {
             console.log(data);
             console.log(idBrand);
             // handle event
-            Swal.fire("Đã xóa!", "", "success");
+            Swal.fire("Dleted!", "", "success");
             window.location.reload();
           })
           .catch((error) => {
@@ -72,7 +72,7 @@ const BrandList = () => {
     { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Tên Thương hiệu",
+      headerName: "Name Brand",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
@@ -85,10 +85,10 @@ const BrandList = () => {
       renderCell: (params) => (
         <div style={{ display: 'flex', columnGap: '4px' }}>
           <button type="button" class="btn btn-warning" style={{ background: '#ffc107' }} onClick={() => handleEditItem(params.row.id)}>
-            Sửa
+            Edit
           </button>
           <button type="button" class="btn btn-danger" style={{ background: '#dc3545' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Xóa
+            Delete
           </button>
         </div>
       ),

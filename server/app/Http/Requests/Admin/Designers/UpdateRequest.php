@@ -29,9 +29,9 @@ class UpdateRequest extends FormRequest
     public function messages():array
     {
         return [
-            'name.required' => 'Mục tên bộ sưu tập là bắt buộc. Vui lòng nhập lại.',
-            'name.unique' => 'Tên bộ sưu tập không được trùng nhau. Vui lòng nhập lại.',
-            'address.required' => 'Mục địa chỉ là bắt buộc. Vui lòng nhập lại.',
+            'name.required' => 'You must enter this field.',
+            'name.unique' => 'Not allowed to have duplicate names.',
+            'address.required' => 'You must enter this field.',
         ];
     }
 }

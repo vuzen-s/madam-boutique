@@ -31,7 +31,7 @@ class OrderMail extends Mailable
     {
         return new Envelope(
             from: new Address('boutiquemadam338@gmail.com', 'MADAM Boutique'),
-            subject: 'VỪA CÓ 1 ĐƠN HÀNG MỚI [ĐANG CHỜ DUYỆT]',
+            subject: 'JUST RECEIVED A NEW ORDER [PENDING APPROVAL]',
         );
     }
 

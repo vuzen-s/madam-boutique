@@ -37,10 +37,10 @@ const CommentByProduct = () => {
 
     const handleDeleteItem = (id) => {
         Swal.fire({
-            title: "Bạn chắc chắn muốn xóa toàn bộ bình luận sản phẩm này?",
+            title: "Are you sure you want to delete all comments for this product?",
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: "Xóa",
+            confirmButtonText: "Delete",
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -57,7 +57,7 @@ const CommentByProduct = () => {
                     })
                     .catch((error) => console.log(error));
                 // handle event
-                Swal.fire("Đã xóa!", "", "success");
+                Swal.fire("Deleted!", "", "success");
                 setRefreshListCommend(new Date().getTime())
             }
         });
@@ -85,7 +85,7 @@ const CommentByProduct = () => {
         {field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center",},
         {
             field: "name",
-            headerName: "Tên sản phẩm",
+            headerName: "Name Product",
             headerAlign: "center",
             align: "center",
             flex: 0.5,
@@ -93,7 +93,7 @@ const CommentByProduct = () => {
         },
         {
             field: "avatar",
-            headerName: "Ảnh sản phẩm",
+            headerName: "Avatar",
             headerAlign: "center",
             align: "center",
             renderCell: (params) => (
@@ -111,7 +111,7 @@ const CommentByProduct = () => {
                 <div style={{display: 'flex', columnGap: '4px'}}>
                     <button type="button" class="btn btn-primary" style={{background: '#ffc107', border: 'none'}}
                             onClick={() => handleDtailItem(params.row.id)}>
-                        Chi tiết
+                        Details
                     </button>
                 </div>
             ),

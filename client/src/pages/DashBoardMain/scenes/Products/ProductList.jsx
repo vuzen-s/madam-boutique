@@ -38,10 +38,10 @@ const ProductList = () => {
 
     const handleDeleteItem = (idProduct) => {
         Swal.fire({
-            title: "Bạn chắc chắn muốn xóa sản phẩm này?",
+            title: "Are you sure you want to delete all comments for this product?",
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: "Xóa",
+            confirmButtonText: "Delete",
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -58,7 +58,7 @@ const ProductList = () => {
                     })
                     .catch((error) => console.log(error));
                 // handle event
-                Swal.fire("Đã xóa!", "", "success");
+                Swal.fire("Deleted!", "", "success");
                 window.location.reload();
             }
         });
@@ -87,7 +87,7 @@ const ProductList = () => {
         {field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center",},
         {
             field: "name",
-            headerName: "Tên sản phẩm",
+            headerName: "Name Product",
             headerAlign: "center",
             align: "center",
             flex: 0.5,
@@ -95,14 +95,14 @@ const ProductList = () => {
         },
         {
             field: "desc",
-            headerName: "Dòng mô tả",
+            headerName: "Desc",
             headerAlign: "center",
             align: "center",
             flex: 0.5,
         },
         {
             field: "avatar",
-            headerName: "Ảnh sản phẩm",
+            headerName: "Avatar",
             headerAlign: "center",
             align: "center",
             renderCell: (params) => (
@@ -112,7 +112,7 @@ const ProductList = () => {
         },
         {
             field: "price",
-            headerName: "Giá",
+            headerName: "Price",
             headerAlign: "center",
             align: "center",
             renderCell: (params) => (
@@ -130,10 +130,10 @@ const ProductList = () => {
                     {
                         params.value === 0
                             ? <Tag bordered={false} color="success">
-                                Hiển thị
+                                Show
                             </Tag>
                             : <Tag bordered={false} color="error">
-                                Ẩn
+                                Hide
                             </Tag>
                     }
                 </div>
@@ -150,10 +150,10 @@ const ProductList = () => {
                     {
                         params.value === 0
                             ? <Tag bordered={false} color="cyan">
-                                Nổi bật
+                               Feature
                             </Tag>
                             : <Tag bordered={false} color="magenta">
-                                Không nổi bật
+                              Not Feature
                             </Tag>
                     }
                 </div>
@@ -208,11 +208,11 @@ const ProductList = () => {
                 <div style={{display: 'flex', columnGap: '4px'}}>
                     <button type="button" class="btn btn-warning" style={{background: '#ffc107'}}
                             onClick={() => handleEditItem(params.row.id)}>
-                        Sửa
+                        Edit
                     </button>
                     <button type="button" class="btn btn-danger" style={{background: '#dc3545'}}
                             onClick={() => handleDeleteItem(params.row.id)}>
-                        Xóa
+                        Delete
                     </button>
                 </div>
             ),

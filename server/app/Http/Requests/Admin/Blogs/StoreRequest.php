@@ -33,11 +33,11 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Mục tiêu đề bài viết là bắt buộc. Vui lòng nhập lại.',
-            'content.required' => 'Mục description là bắt buộc. Vui lòng nhập lại.',
-            'avatar_blog.mimes' => 'Mục avatar phải là tệp thuộc loại: jpg, png, jpeg. Vui lòng nhập lại.',
-            'status.required' => 'Mục status là bắt buộc. Vui lòng nhập lại.',
-            'topic_id.required' => 'Mục collection là bắt buộc. Vui lòng nhập lại.',
+            'title.required' => 'Please enter again',
+            'content.required' => 'Please enter again.',
+            'avatar_blog.mimes' => 'The avatar file must be of type: jpg, png, jpeg. Please re-enter.',
+            'status.required' => 'Please enter again.',
+            'topic_id.required' => 'Please enter again.',
         ];
     }
 }

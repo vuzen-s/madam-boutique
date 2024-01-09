@@ -23,7 +23,7 @@ const ProductInfo = ({productInfo}) => {
     }, []);
 
     function dialogMess() {
-        Swal.fire("Sản phẩm này không tồn tại!", "", "error");
+        Swal.fire("This product does not exist!", "", "error");
     }
 
     const dispatch = useDispatch();

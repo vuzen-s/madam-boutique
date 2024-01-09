@@ -67,15 +67,15 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
         ======================================================== */}
       <div className="flex items-center gap-2 md:gap-6 mt-4 md:mt-0">
         <div className="flex items-center gap-2 text-base text-[#767676] relative">
-          <label className="block">Sắp xếp theo:</label>
+          <label className="block">Sort by</label>
           <select
             onChange={(e) => handleShortChanged(e)}
             id="countries"
             className="w-32 md:w-52 border-[1px] border-gray-200 py-1 px-4 cursor-pointer text-primeColor text-base block dark:placeholder-gray-400 appearance-none focus-within:outline-none focus-visible:border-primeColor"
           >
-            <option value="products">Sản phẩm mới nhất</option>
-            <option value="products-asc">Giá thấp đến cao</option>
-            <option value="products-desc">Giá cao đến thấp</option>
+            <option value="products">New arrival</option>
+            <option value="products-asc">Low to High Price</option>
+            <option value="products-desc">High to Low Price</option>
           </select>
           <span className="absolute text-sm right-2 md:right-4 top-2.5">
             <GoTriangleDown />

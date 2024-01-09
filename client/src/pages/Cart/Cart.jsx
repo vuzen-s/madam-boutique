@@ -148,10 +148,10 @@ const Cart = () => {
                     <span className="font-semibold tracking-wide font-titleFont">${item.price * item.quantity}</span>
                   </p>
                 ))}
-                <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
+                {/* <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Total Quantity
                   <span className="font-semibold tracking-wide font-titleFont">{totalQuantity}</span>
-                </p>
+                </p> */}
                 <p className="flex items-center justify-between border-[1px] border-gray-400 py-1.5 text-lg px-4 font-medium">
                   Subtotal
                   <span className="font-semibold tracking-wide font-titleFont">${totalAmountPerProduct}</span>

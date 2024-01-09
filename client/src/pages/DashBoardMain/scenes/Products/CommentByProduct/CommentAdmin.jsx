@@ -20,19 +20,19 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
         const days = Math.floor(hours / 24);
 
         if (seconds < 60) {
-            return 'Vừa xong';
+            return 'done';
         } else if (minutes === 1) {
-            return '1 phút trước';
+            return '1 minute ago';
         } else if (minutes < 60) {
-            return `${minutes} phút trước`;
+            return `${minutes} minute ago`;
         } else if (hours === 1) {
-            return '1 giờ trước';
+            return '1 hours ago';
         } else if (hours < 24) {
-            return `${hours} giờ trước`;
+            return `${hours} hours ago`;
         } else if (days === 1) {
-            return '1 ngày trước';
+            return '1 Day ago';
         } else if (days < 31) {
-            return `${days} ngày trước`;
+            return `${days} Day ago`;
         } else {
             return commentTime.toLocaleString('vi-VN');
         }
@@ -63,7 +63,7 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
                     </div>
                     : <div style={{ fontSize: '15px', color: 'grey', fontStyle: 'italic' }}>
                         {comment.content}
-                        <span > - Trạng thái: Đang chờ duyệt.</span>
+                        <span > Status: Pending approval</span>
                         <Tag bordered={false} color="magenta">
                             Hidden
                         </Tag>
@@ -74,8 +74,8 @@ const CommentAdmin = ({ comment, handleDeleteItem, handleEditItem }) => {
             <div className='Comment-actions'>
                 {comment.status === 0
                     ? <div>
-                        <button onClick={handleEditItem} style={{ background: "green", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Duyệt</button>
-                        <button onClick={handleDeleteItem} style={{ background: "red", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Xóa vĩnh viễn</button>
+                        <button onClick={handleEditItem} style={{ background: "green", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Oke</button>
+                        <button onClick={handleDeleteItem} style={{ background: "red", color: "white", padding: '8px 16px', borderRadius: '4px' }}>Delete</button>
                     </div>
                     : ''
                 }

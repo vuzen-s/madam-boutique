@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-// import {
-//   banner1,
-//   banner2,
-//   banner3,
-// } from "../../../";
+
 import Image from "../designLayouts/Image";
 
 const Banner = () => {
@@ -104,17 +100,17 @@ const Banner = () => {
       <Slider {...settings}>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.jpg"} height="100px"/>
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.png"} height="100px"/>
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.jpg"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.png"} />
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.jpg"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.png"} />
           </div>
         </Link>
       </Slider>

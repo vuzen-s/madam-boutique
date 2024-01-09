@@ -32,19 +32,19 @@ const Details = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ content: content, status: 1 }), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify({ content: content, status: 1 }), 
             })
                 .then((respon) => respon.json())
                 .then((data) => {
                     console.log(data);
                     setRefreshListCommend(new Date().getTime());
-                    // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                    
                     console.log(data.errors);
                     setErrorsField(data.errors);
                 })
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                
                 console.log(error);
             } else {
                 // Xử lý lỗi khác nếu có
@@ -55,10 +55,10 @@ const Details = () => {
 
     const handleDeleteItem = (idComment) => {
         Swal.fire({
-            title: "Bạn chắc chắn muốn xóa vĩnh viễn bình luận này?",
+            title: "Are you sure you want to delete all comments ?",
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: "Xóa",
+            confirmButtonText: "Delete",
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -73,7 +73,7 @@ const Details = () => {
                         console.log(data);
                         console.log(idComment);
                         // handle event
-                        Swal.fire("Đã xóa!", "", "success");
+                        Swal.fire("Deleted!", "", "success");
                         setRefreshListCommend(new Date().getTime());
                     })
                     .catch((error) => {
@@ -85,10 +85,10 @@ const Details = () => {
 
     const handleAcceptAll = () => {
         Swal.fire({
-            title: "Bạn chắc chắn muốn hiển thị tất cả bình luận?",
+            title: "Show all comments ?",
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: "Hiển thị",
+            confirmButtonText: "Show",
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -122,7 +122,7 @@ const Details = () => {
                 </h3>
                 <div style={{ display: 'flex', columnGap: '12px' }}>
                     <button type="button" class="btn btn-success" style={{ background: '#2eb85c', color: '#fff', border: 'none' }} onClick={() => handleAcceptAll()}>
-                        Duyệt tất cả
+                    Approve all
                     </button>
                     <button onClick={() => handleBack()} style={{ background: "#b21414", color: "white", padding: '6px 16px', borderRadius: '8px' }}>Quay lại</button>
                 </div>

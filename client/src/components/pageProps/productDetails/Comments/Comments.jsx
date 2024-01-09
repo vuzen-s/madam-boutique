@@ -62,7 +62,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({content: content, user_id: userAuth.id, product_id: idProduct}), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify({content: content, user_id: userAuth.id, product_id: idProduct}), 
             })
                 .then((respon) => respon.json())
                 .then((data) => {
@@ -130,7 +130,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                     })
                     .catch((error) => {
                         console.log(error)
-                        // Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+                        // Swal.fire("Cannot delete this value as it is a foreign key!", "", "error");
                     });
             }
         });
@@ -166,22 +166,22 @@ const Comments = ({selectedUserId, idProduct}) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(commentByID), // Chuyển đổi FormData thành đối tượng JSON
+                body: JSON.stringify(commentByID),
             })
                 .then((respon) => respon.json())
                 .then((data) => {
                     console.log(commentByID);
                     setRefreshListCommend(new Date().getTime());
-                    // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                   //errors
                     console.log(data.errors);
                     setErrorsField(data.errors);
                 })
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+                
                 console.log(error);
             } else {
-                // Xử lý lỗi khác nếu có
+                
                 console.error('Error:', error);
             }
         }
@@ -199,7 +199,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                     marginTop: '0px',
                     fontStyle: 'italic',
                     color: '#000'
-                }}>{comments.length === 0 ? 'Hãy là người đầu tiên bình luận!' : ''}</p>
+                }}>{comments.length === 0 ? 'Be the first to comment!' : ''}</p>
 
                 <div className="Comments-list">
                     {comments.map((comment) => (
@@ -223,12 +223,12 @@ const Comments = ({selectedUserId, idProduct}) => {
                 onChange={(e) => setContent(e.target.value)}
                 name="content"
                 className="Comments-box__input"
-                placeholder="Nhập nội dung"
+                placeholder="Enter comment"
             />
                         <p style={{color: "red", fontSize: '15px'}}>
                             {errorsField && errorsField.content}
                         </p>
-                        <button type="submit" class="btn btn-dark">Đăng</button>
+                        <button type="submit" class="btn btn-dark">Post</button>
                     </form>
                     <p style={{paddingTop: '12px'}}>Your comments will be reviewed before posting.</p>
                 </div>
@@ -239,7 +239,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                 >
                     <Modal show={openModal} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Chỉnh sửa bình luận</Modal.Title>
+                            <Modal.Title>Edit</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
               <textarea
@@ -247,7 +247,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                   onChange={(e) => setCommentByID((prev) => ({...prev, 'content': e.target.value}))}
                   name="content"
                   className="Comments-box__input"
-                  placeholder="Nhập nội dung"
+                  placeholder="Enter comment"
               />
                         </Modal.Body>
                         <Modal.Footer>
@@ -256,7 +256,7 @@ const Comments = ({selectedUserId, idProduct}) => {
                             </Button>
                             <Button variant="primary" onClick={() => handleCommentUpdate(commentByID.id)}
                                     style={{background: "red", borderColor: "red"}}>
-                                Lưu thay đổi
+                                Save
                             </Button>
                         </Modal.Footer>
                     </Modal>

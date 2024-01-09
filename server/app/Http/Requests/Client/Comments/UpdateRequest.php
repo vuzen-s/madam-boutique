@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
     public function messages():array
     {
         return [
-            'content.required' => 'Nội dung là bắt buộc. Vui lòng nhập lại.',
+            'content.required' => 'You must enter this field.',
         ];
     }
 }

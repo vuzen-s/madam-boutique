@@ -25,8 +25,7 @@ const SlideLogo = () => {
                                      className="logo-item"/>
                                 <img src={process.env.PUBLIC_URL + '/home/logo_brand/brand7.png'} alt="brand7"
                                      className="logo-item"/>
-                                <img src={process.env.PUBLIC_URL + '/home/logo_brand/brand8.png'} alt="brand8"
-                                     className="logo-item"/>
+                                 {/* dư */}
                                 <img src={process.env.PUBLIC_URL + '/home/logo_brand/brand9.png'} alt="brand9"
                                      className="logo-item"/>
                                 <img src={process.env.PUBLIC_URL + '/home/logo_brand/brand10.png'} alt="brand10"

@@ -31,18 +31,14 @@ const Footer = () => {
     <div className="w-full bg-[#F5F5F3] py-20">
       <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
         <div className="col-span-2">
-          <FooterListTitle title=" Thông tin thêm về Madam Boutique" />
+          <FooterListTitle title="About Madam Boutique" />
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
-              Madam Boutique là nơi quy tụ những bộ sưu tập thời trang và phụ
-              kiện hàng đầu từ nhiều nhà thiết kế uy tín cả trong và ngoài nước.
-              Chúng tôi không chỉ chọn lựa những sản phẩm có chất lượng tốt nhất
-              mà còn tập trung vào việc tìm kiếm những điều độc đáo, cá nhân và
-              nghệ thuật để mang đến sự độc quyền cho khách hàng của mình.
+            Madam Boutique is a gathering place for top-notch fashion collections and accessories from reputable designers both domestically and internationally. We not only select products of the highest quality but also focus on finding unique, personal, and artistic elements to bring exclusivity to our customers.
             </p>
             <ul className="flex items-center gap-2">
               <a
-                href="https://www.youtube.com/@reactjsBD"
+                href="https://www.youtube.com/watch?v=TvCOZfGfU9k"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -51,7 +47,7 @@ const Footer = () => {
                 </li>
               </a>
               <a
-                href="https://github.com/noorjsdivs"
+                href="https://github.com/vuzen-s/madam-boutique"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -60,7 +56,7 @@ const Footer = () => {
                 </li>
               </a>
               <a
-                href="https://www.facebook.com/Noorlalu143/"
+                href="https://www.facebook.com/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -69,7 +65,7 @@ const Footer = () => {
                 </li>
               </a>
               <a
-                href="https://www.linkedin.com/in/noor-mohammad-ab2245193/"
+                href="https://www.linkedin.com/in/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -84,47 +80,38 @@ const Footer = () => {
           <FooterListTitle title="Shopping" />
           <ul className="flex flex-col gap-2">
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Phụ kiện
+             
+             <a href="http://localhost:3000/shop"> New Arrival</a>
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Quần áo
+            <a href="http://localhost:3000/shop?idCategory=1"> Category</a>
             </li>
-            {/* <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Electronics
-            </li> */}
-            {/* <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Home appliances
-            </li> */}
+           
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Sản phẩm mới
+             <a href="http://localhost:3000/shop?idBrand=1"> Brand</a>
             </li>
           </ul>
         </div>
         <div>
-          <FooterListTitle title="Tài khoản của bạn" />
+          <FooterListTitle title="Your account" />
           <ul className="flex flex-col gap-2">
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Hồ sơ
+             <a href="http://localhost:3000/profile">Profile</a>
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Đơn hàng
+               <a href="http://localhost:3000/cart">Your Cart</a>
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Địa chỉ
+               <a href="http://localhost:3000/paymentgateway">Address Delivery</a>
             </li>
-            {/* <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Account Details
-            </li> */}
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Phương thức thanh toán
-            </li>
+          
           </ul>
         </div>
         <div className="col-span-2 flex flex-col items-center w-full px-4">
-          <FooterListTitle title="Đăng ký bản tin của chúng tôi." />
+          <FooterListTitle title="Subscribe to Our Newsletter." />
           <div className="w-full">
             <p className="text-center mb-4">
-              Cập nhật những thông tin mới nhất về thời trang
+            Stay Updated with the Latest Fashion Information
             </p>
             {subscription ? (
               <motion.p
@@ -133,7 +120,7 @@ const Footer = () => {
                 transition={{ duration: 0.5 }}
                 className="w-full text-center text-base font-titleFont font-semibold text-green-600"
               >
-                Đăng ký thành công !
+                Registration Successful!
               </motion.p>
             ) : (
               <div className="w-full flex-col xl:flex-row flex justify-between items-center gap-4">
@@ -143,7 +130,7 @@ const Footer = () => {
                     value={emailInfo}
                     className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
                     type="text"
-                    placeholder="Nhập email của bạn ...*"
+                    placeholder="Enter Email ...*"
                   />
                   {errMsg && (
                     <p className="text-red-600 text-sm font-semibold font-titleFont text-center animate-bounce mt-2">
@@ -155,7 +142,7 @@ const Footer = () => {
                   onClick={handleSubscription}
                   className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
                 >
-                  Đăng ký
+                  Sign Up
                 </button>
               </div>
             )}

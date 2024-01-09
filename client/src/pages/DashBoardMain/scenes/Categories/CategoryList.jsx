@@ -37,10 +37,10 @@ const CategoryList = () => {
 
   const handleDeleteItem = (idCategory) => {
     Swal.fire({
-      title: "Bạn chắc chắn muốn xóa Danh mục này?",
+      title: "Are you sure you want to delete this category?",
       showDenyButton: false,
       showCancelButton: true,
-      confirmButtonText: "Xóa",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -55,12 +55,12 @@ const CategoryList = () => {
             console.log(data);
             console.log(idCategory);
             // handle event
-            Swal.fire("Đã xóa!", "", "success");
+            Swal.fire("Deleted!", "", "success");
             window.location.reload();
           })
           .catch((error) => {
             console.log(error)
-            Swal.fire("Không thể xóa value này vì nó đang là khóa ngoại!", "", "error");
+            Swal.fire("Cannot delete this value as it is a foreign key!", "", "error");
           });
       }
     });
@@ -73,7 +73,7 @@ const CategoryList = () => {
     { field: "id", headerName: "ID", headerAlign: "center", flex: 0.2, align: "center", },
     {
       field: "name",
-      headerName: "Tên Danh mục",
+      headerName: "Name Category",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
@@ -89,10 +89,10 @@ const CategoryList = () => {
           {
             params.value === 0
               ? <Tag bordered={false} color="success">
-                Hiển thị
+             Show
               </Tag>
               : <Tag bordered={false} color="error">
-                Ẩn
+                Hide
               </Tag>
           }
         </div>
@@ -101,7 +101,7 @@ const CategoryList = () => {
     },
     // {
     //   field: "parent_id",
-    //   headerName: "Danh mục cha",
+    //   headerName: "daddy",
     //   headerAlign: "center",
     //   align: "center",
     //   flex: 0.5,
@@ -114,10 +114,10 @@ const CategoryList = () => {
       renderCell: (params) => (
         <div style={{ display: 'flex', columnGap: '4px' }}>
           <button type="button" class="btn btn-warning" style={{ background: '#ffc107' }} onClick={() => handleEditItem(params.row.id)}>
-            Sửa
+            Edit
           </button>
           <button type="button" class="btn btn-danger" style={{ background: '#dc3545' }} onClick={() => handleDeleteItem(params.row.id)}>
-            Xóa
+            Delete
           </button>
         </div>
       ),

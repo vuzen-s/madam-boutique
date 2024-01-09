@@ -25,7 +25,7 @@ const CategoryEdit = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const showToastMessage = () => {
-    toast.success('Update danh mục thành công!', {
+    toast.success('Update successfully!!', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -70,7 +70,7 @@ const CategoryEdit = () => {
         .then((respon) => respon.json())
         .then((data) => {
           console.log(dataCategoryEdit);
-          // Nếu có lỗi validate từ Laravel, cập nhật trạng thái errors
+       
           console.log(data.errors);
           setErrorsField(data.errors);
           // message
@@ -129,17 +129,17 @@ const CategoryEdit = () => {
               }}
             >
               <div class="mb-4">
-                <label for="name" class="form-label">Tên danh mục:</label>
+                <label for="name" class="form-label">Name Category</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value={dataCategoryEdit.name} onChange={handleChangeInput} />
                 <p style={{ color: "red" }}>
                   {errorsField && errorsField.name}
                 </p>
               </div>
               <div className="mb-4">
-                <label for="status" class="form-label">Trạng thái danh mục:</label>
+                <label for="status" class="form-label">Status</label>
                 <select className="form-select" name="status" value={dataCategoryEdit.status} onChange={handleChangeInput} >
-                  <option value={0}> Hiển thị </option>
-                  <option value={1}> Ẩn </option>
+                  <option value={0}>Show </option>
+                  <option value={1}> Hide </option>
                 </select>
                 <p style={{ color: "red" }}>
                   {errorsField && errorsField.status}
@@ -154,8 +154,8 @@ const CategoryEdit = () => {
               {/*</div>*/}
             </Box>
             <Box mt="10px">
-              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Lưu thay đổi</button>
-              <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Quay lại</button>
+              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Save</button>
+              <button type="submit" class="btn btn-danger" style={{ background: "#dc3545", marginLeft: "12px" }} onClick={() => handleBack()}>Back</button>
             </Box>
           </form>
         )}

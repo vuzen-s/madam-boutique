@@ -26,7 +26,7 @@ const BrandCreate = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const showToastMessage = () => {
-    toast.success('Thêm thành công thương hiệu!', {
+    toast.success('Successfully added', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -59,7 +59,7 @@ const BrandCreate = () => {
           // message
           console.log(data.message);
           setMessage(data.message);
-          // Xử lý dữ liệu thành công nếu cần
+          
           if (data.errors === undefined) {
             navigate('/dashboard/brand/')
             showToastMessage();
@@ -102,7 +102,7 @@ const BrandCreate = () => {
           <form onSubmit={handleSubmit}>
             <Box>
               <div class="mb-8">
-                <label for="name" class="form-label">Tên thương hiệu:</label>
+                <label for="name" class="form-label">Name Brand</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" onChange={handleChangeInput} />
                 <p style={{ color: "red" }}>
                   {errorsField && errorsField.name}
@@ -111,7 +111,7 @@ const BrandCreate = () => {
 
             </Box>
             <Box mt="10px">
-              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Thêm thương hiệu mới</button>
+              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Add new brand</button>
             </Box>
           </form>
         )}

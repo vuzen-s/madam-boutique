@@ -26,7 +26,7 @@ const CollectionCreate = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const showToastMessage = () => {
-    toast.success('Thêm bộ sưu tập thành công!', {
+    toast.success('Successfully added', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -102,7 +102,7 @@ const CollectionCreate = () => {
           <form onSubmit={handleSubmit}>
             <Box>
               <div class="mb-8">
-                <label for="name" class="form-label">Tên bộ sưu tập:</label>
+                <label for="name" class="form-label">Name Collection</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" onChange={handleChangeInput} />
                 <p style={{ color: "red" }}>
                   {errorsField && errorsField.name}
@@ -111,7 +111,7 @@ const CollectionCreate = () => {
 
             </Box>
             <Box mt="10px">
-              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Thêm bộ sưu tập mới</button>
+              <button type="submit" class="btn btn-primary" style={{ background: "#0a58ca" }}>Add Collection</button>
             </Box>
           </form>
         )}

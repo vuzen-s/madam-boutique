@@ -86,7 +86,7 @@ const MainLayout = () => {
       <Layout>
         <Header className="w-full h-auto px-4 mx-auto mb-2 flex items-center justify-between bg-slate-100 cursor-pointer shadow-md" >
           <div>
-            <h1 className="font-bold text-xl">Hello, Trường Anh!</h1>
+            <h1 className="font-bold text-xl">Hello!</h1>
           </div>
           <Space wrap size={16}>
             <Avatar
