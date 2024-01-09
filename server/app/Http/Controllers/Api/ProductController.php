@@ -208,7 +208,7 @@ class ProductController extends Controller
         $categories = DB::table('categories')->get();
 
         return response()->json([
-            'product' => $product,
+            'products' => $product,
             'designers' => $designers,
             'brands' => $brands,
             'collections' => $collections,
@@ -218,7 +218,7 @@ class ProductController extends Controller
 
     public function update(UpdateRequest $request, $id)
     {
-        $dataCurrent = DB::table('products')->where('id', $id)->first();
+        $dataCurrent = DB::table('products')->where('id', $id);
 
         $data = new ProductModel();
 

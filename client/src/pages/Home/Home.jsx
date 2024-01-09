@@ -18,8 +18,8 @@ const Home = () => {
             <BannerBottom/>
             <div className="max-w-container mx-auto px-4">
                 <Sale/>
-                <NewArrivals/>
-                <BestSellers/>
+                {/*<NewArrivals/>*/}
+                {/*<BestSellers/>*/}
                 <YearProduct/>
                 <SlideLogo/>
                 <Statistics/>
