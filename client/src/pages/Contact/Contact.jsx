@@ -88,14 +88,14 @@ const Contact = () => {
 
   return (
     <div className="max-w-container mx-auto px-4">
-      <Breadcrumbs title="Liên hệ" prevLocation={prevLocation} />
+      <Breadcrumbs title="Contact" prevLocation={prevLocation} />
       {successMsg ? (
         <p className="pb-20 w-96 font-medium text-green-500">{successMsg}</p>
       ) : (
         <div className="contact-layout">
           <form className="pb-20">
             <h1 className="font-titleFont font-semibold text-3xl">
-              Điền thông tin vào form
+            Fill in Information on the Form
             </h1>
             <div className="w-[500px] h-auto py-6 flex flex-col gap-6">
               <div>
@@ -105,7 +105,7 @@ const Contact = () => {
                   value={clientName}
                   className="w-full py-1 border-b-2 px-2 text-base font-medium placeholder:font-normal placeholder:text-sm outline-none focus-within:border-primeColor"
                   type="text"
-                  placeholder="Nhập họ và tên của bạn"
+                  placeholder="Enter your full name"
                 />
                 {errClientName && (
                   <p className="text-red-500 text-sm font-titleFont font-semibold mt-1 px-2 flex items-center gap-1">
@@ -134,7 +134,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-base font-titleFont font-semibold px-2">
-                  Tin nhắn
+                Messages
                 </p>
                 <textarea
                   onChange={handleMessages}
@@ -143,7 +143,7 @@ const Contact = () => {
                   rows="3"
                   className="w-full py-1 border-b-2 px-2 text-base font-medium placeholder:font-normal placeholder:text-sm outline-none focus-within:border-primeColor resize-none"
                   type="text"
-                  placeholder="Nhập nội dung tin nhắn"
+                  placeholder="Enter the message content"
                 ></textarea>
                 {errMessages && (
                   <p className="text-red-500 text-sm font-titleFont font-semibold mt-1 px-2 flex items-center gap-1">
@@ -164,13 +164,13 @@ const Contact = () => {
                 onClick={handlePost}
                 className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
               >
-                Gửi
+                Send
               </button>
             </div>
           </form>
 
           <div>
-            <h2>Bản đồ của shop</h2>
+            <h2>Store Map </h2>
             <AddressMap />
           </div>
         </div>

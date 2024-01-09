@@ -104,17 +104,17 @@ const Banner = () => {
       <Slider {...settings}>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.gif"} height="100px"/>
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner1.jpg"} />
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.png"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner2.jpg"} />
           </div>
         </Link>
         <Link to="/">
           <div>
-            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.png"} />
+            <Image imgSrc={process.env.PUBLIC_URL + "/banner/banner3.jpg"} />
           </div>
         </Link>
       </Slider>
