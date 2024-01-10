@@ -9,6 +9,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {resetCart} from '../../redux/madamBoutiqueSlice';
 import Swal from 'sweetalert2'
 import {Box} from "@mui/material";
+// paypal mở comment
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 const {Step} = Steps;
 
@@ -614,9 +617,10 @@ const Payment = () => {
         const totalAmount = totalAmt + shippingCharge;
 
         useEffect(() => {
+            // const clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID; mở ra
             const script = document.createElement('script');
             script.src = 'https://www.paypal.com/sdk/js?client-id=Af17VKFbPaxzjq4BeurracfmK2uRzc4wfwgkFdhkaxvyCmUFNenmt4-JsbbHN3-7Ehmrzoa4QnL3_KWn';
-            script.async = true;
+            // script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`; mở ra
 
             script.onload = () => {
                 if (window.paypal) {
