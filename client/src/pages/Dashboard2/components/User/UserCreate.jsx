@@ -9,12 +9,17 @@ import "./AvtUserCreate.css";
 import ImgCrop from "antd-img-crop";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import useAuthContext from "../../../AuthContext/AuthContext";
 
 const { TextArea } = Input;
 
 const UserCreate = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const { usersAuthFetch } = useAuthContext();
+  const userLevel = usersAuthFetch.level;
+
   const [users, setUsers] = useState({
     fullname: "",
     email: "",
@@ -325,6 +330,8 @@ const UserCreate = () => {
                 </div>
               </div>
 
+
+
               {/* Level */}
               <div className="flex flex-col gap-.8">
                 <label
@@ -340,12 +347,28 @@ const UserCreate = () => {
                   onChange={handleInputValue}
                   className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 >
-                  <option value="1">Admin Master</option>
-                  <option value="2">Admin Manager</option>
-                  <option value="3">Admin Editor</option>
-                  <option value="4">Member</option>
+                  {userLevel === 1 && (
+                      <>
+                        <option value="Choose Level">Choose Level</option>
+                        <option value="1">Admin Master</option>
+                        <option value="2">Admin Manager</option>
+                        <option value="3">Admin Editor</option>
+                        <option value="4">Member</option>
+                      </>
+                  )}
+                  {userLevel === 2 && (
+                      <>
+                        <option value="Choose Level">Choose Level</option>
+                        <option value="3">Admin Editor</option>
+                        <option value="4">Member</option>
+                      </>
+                  )}
                 </select>
               </div>
+
+
+
+
               {errors && (
                 <span className=" text-sm text-red-500 font-titleFont px-2">
                   {errors.level}

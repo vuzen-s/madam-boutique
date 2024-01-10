@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required' . $this->id,
+            'title' => 'required',
             'content' => 'required',
             'avatar_blog' => 'mimes:jpg,png,jpeg',
             'status' => 'required',

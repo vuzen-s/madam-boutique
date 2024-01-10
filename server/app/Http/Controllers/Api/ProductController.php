@@ -216,7 +216,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id): \Illuminate\Http\JsonResponse
     {
         $dataCurrent = DB::table('products')->where('id', $id);
 
@@ -238,7 +238,7 @@ class ProductController extends Controller
         }
 
         // nếu người dùng có thay đổi avatar
-        if (isset($request->avatar)) {
+        if (isset($request->avatar_new)) {
             // xóa avatar hiện tại lưu trong thư mục public
             $avatarCurrent = $dataCurrent->avatar;
             $imgPath = public_path('uploads/products/' . $avatarCurrent);
@@ -246,7 +246,7 @@ class ProductController extends Controller
                 unlink($imgPath);
             }
             // thay thế nó bằng file avatar mới được cập nhật
-            $avatarNew = $request->avatar;
+            $avatarNew = $request->avatar_new;
             $data->avatar = time() . '_' . $avatarNew->getClientOriginalName();
             $avatarNew->move(public_path('uploads/products/'), $data->avatar);
         }
