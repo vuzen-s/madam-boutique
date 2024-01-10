@@ -238,7 +238,7 @@ class ProductController extends Controller
         }
 
         // nếu người dùng có thay đổi avatar
-        if (isset($request->avatar)) {
+        if ($request->avatar) {
             // xóa avatar hiện tại lưu trong thư mục public
             $avatarCurrent = $dataCurrent->avatar;
             $imgPath = public_path('uploads/products/' . $avatarCurrent);
