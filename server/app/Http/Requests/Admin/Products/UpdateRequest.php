@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required|unique:products,name,' . $this->id,
             'price' => 'required|numeric',
-            'desc' => 'required',
+//            'desc' => 'required',
 //            'avatar_new' => 'mimes:jpg,png,jpeg',
             'status' => 'required',
             'feature' => 'required',
@@ -42,7 +42,7 @@ class UpdateRequest extends FormRequest
             'name.unique' => 'Not allowed to have duplicate names.',
             'price.required' => 'You must enter this field..',
             'price.numeric' => 'Field value must be of numeric type..',
-            'desc.required' => 'You must enter this field..',
+//            'desc.required' => 'You must enter this field..',
 //             'avatar_new.mimes' => 'The avatar file must be of type: jpg, png, jpeg. Please re-enter',
             'status.required' => 'You must enter this field..',
             'feature.required' => 'You must enter this field.',

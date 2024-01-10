@@ -251,9 +251,21 @@ class ProductController extends Controller
             $avatarNew->move(public_path('uploads/products/'), $data->avatar);
         }
 
-        $data->save();
+//        $data->update();
 
-        DB::table('products')->where('id', $id)->update([$data]);
+        DB::table('products')->where('id', $id)->update([
+            [
+                'name' => $request->name,
+                'price' => $request->price,
+                'desc' => $request->desc,
+                'status' => $request->status,
+                'feature' => $request->feature,
+                'collection_id' => $request->collection_id,
+                'brand_id' => $request->brand_id,
+                'designer_id' => $request->designer_id,
+                'category_id' => $request->category_id,
+            ]
+        ]);
         return response()->json(['message_success' => 'Data updated successfully']);
     }
 

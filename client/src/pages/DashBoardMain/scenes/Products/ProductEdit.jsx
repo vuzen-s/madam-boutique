@@ -22,7 +22,7 @@ const ProductEdit = () => {
     const [desc, setDesc] = useState('');
     const [price, setPrice] = useState('');
     const [color, setColor] = useState('');
-    const [avatar, setAvatar] = useState('');
+    // const [avatar, setAvatar] = useState('');
     const [status, setStatus] = useState(0);
     const [feature, setFeature] = useState(0);
     const [collection_id, setCollection_id] = useState(0);
@@ -91,7 +91,7 @@ const ProductEdit = () => {
         formData.append('desc', desc);
         formData.append('price', price);
         formData.append('color', color);
-        formData.append('avatar', avatar);
+        // formData.append('avatar', avatar);
         formData.append('status', status);
         formData.append('feature', feature);
         formData.append('collection_id', collection_id);
@@ -142,7 +142,7 @@ const ProductEdit = () => {
                 setDesc(data.products.desc);
                 setPrice(data.products.price);
                 setColor(data.products.color);
-                setAvatar(data.products.avatar);
+                // setAvatar(data.products.avatar);
                 setStatus(data.products.status);
                 setFeature(data.products.feature);
                 setCollection_id(data.products.collection_id);
@@ -175,8 +175,8 @@ const ProductEdit = () => {
             case "color":
                 setColor(event.target.value);
                 break;
-            case "avatar":
-                setAvatar(event.target.files[0]);
+            // case "avatar":
+            //     setAvatar(event.target.files[0]);
                 break;
             case "status":
                 setStatus(event.target.value);
@@ -276,21 +276,21 @@ const ProductEdit = () => {
                                onChange={handleChangeInput} value={color}/>
                     </div>
 
-                    <div className="mb-3">
-                        <label className="form-label">Ảnh hiện tại:</label>
-                        <img
-                            src={avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + avatar}
-                            alt={name} width="200px" height="200px"/>
-                    </div>
+                    {/*<div className="mb-3">*/}
+                    {/*    <label className="form-label">Ảnh hiện tại:</label>*/}
+                    {/*    <img*/}
+                    {/*        src={avatar === "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" ? "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg" : publicPath + "/" + avatar}*/}
+                    {/*        alt={name} width="200px" height="200px"/>*/}
+                    {/*</div>*/}
 
-                    <div className="mb-3">
-                        <label for="avatar" className="form-label">Ảnh đại diện mới: (Nếu cần)</label>
-                        <input class="form-control" type="file" id="avatar" name="avatar"
-                               onChange={handleChangeInput}/>
-                        <p style={{color: "red"}}>
-                            {errorsField && errorsField.avatar}
-                        </p>
-                    </div>
+                    {/*<div className="mb-3">*/}
+                    {/*    <label for="avatar" className="form-label">Ảnh đại diện mới: (Nếu cần)</label>*/}
+                    {/*    <input class="form-control" type="file" id="avatar" name="avatar"*/}
+                    {/*           onChange={handleChangeInput}/>*/}
+                    {/*    <p style={{color: "red"}}>*/}
+                    {/*        {errorsField && errorsField.avatar}*/}
+                    {/*    </p>*/}
+                    {/*</div>*/}
 
                     <div className="mb-3">
                         <label for="status" className="form-label">Trạng thái sản phẩm:</label>
