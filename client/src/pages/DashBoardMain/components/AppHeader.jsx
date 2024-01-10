@@ -37,6 +37,14 @@ const AppHeader = () => {
         }
     };
 
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     // auth user
     useEffect(() => {
         api.get(`/api/auth/user-profile`).then((res) => {
@@ -129,7 +137,7 @@ const AppHeader = () => {
                         initial={{x: 50, opacity: 0}}
                         animate={{x: 0, opacity: 1}}
                         transition={{duration: 0.5}}
-                        className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
+                        className="absolute top-12 mt-2.5 right-6 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
                     >
 
                         {userAuth ? (

@@ -148,7 +148,6 @@ const UserEdit = () => {
           style={{ margin: "5px 0", fontSize: "20px", fontWeight: "500" }}
         >
           <Breadcrumb.Item className="text-2xl">Edit User</Breadcrumb.Item>
-          {/* <Breadcrumb.Item>User edit</Breadcrumb.Item> */}
         </Breadcrumb>
         <Button
           variant="contained"
@@ -161,49 +160,7 @@ const UserEdit = () => {
       </div>
       <form onSubmit={handleUpdateUser}>
         <div className="max-w-full h-full mt-2 mx-auto p-4 bg-white rounded-md shadow-lg relative md:mb-5">
-          {/* Update Avavtar */}
-          {/* <div>
-            <div className="flex flex-col justify-center gap-3">
-              <div className="border-3 border-slate-300 p-1 rounded-full flex mdl:flex-col justify-center mx-auto">
-                <Image
-                  width={160}
-                  style={{ borderRadius: "100%", objectFit: "cover" }}
-                  src={imageSrc}
-                />
-              </div>
-              <div className="flex mdl:flex-col justify-center mx-auto">
-                <ImgCrop rotationSlider className="z-50">
-                  <Upload
-                    onChange={(info) => {
-                      if (info.fileList.length > 0) {
-                        handleImageChange([info.file.originFileObj]);
-                      }
-                    }}
-                    showUploadList={false}
-                  >
-                    <div className="border-2 border-slate-300 rounded-md inline-block mb-3 ">
-                      <Button
-                        sx={{
-                          backgroundColor: "#D1D5DB",
-                          color: "#4B5563",
-                          boxShadow: "0 4px 6px rgba(0, 0, 0.1, 0.2)",
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                          height: "37px",
-                        }}
-                        icon={
-                          <UploadOutlined style={{ marginBottom: "8px" }} />
-                        }
-                      >
-                        Change Avatar
-                      </Button>
-                    </div>
-                  </Upload>
-                </ImgCrop>
-              </div>
-            </div>
-          </div> */}
-
+        
           {/* Cut handle */}
 
           <div className="w-full h-full flex flex-col md:flex-row justify-between px-5 gap-10 mt-4 mb-4">
@@ -314,29 +271,6 @@ const UserEdit = () => {
             {/* ---------- Layout cut ---------- */}
 
             <div className="flex-1 flex flex-col gap-2">
-              {/*<div className="flex flex-col gap-.8">*/}
-              {/*  <label*/}
-              {/*    htmlFor="status"*/}
-              {/*    className="font-titleFont text-base font-semibold text-gray-600"*/}
-              {/*  >*/}
-              {/*    Status*/}
-              {/*  </label>*/}
-              {/*  <input*/}
-              {/*    name="status"*/}
-              {/*    value={users === undefined ? "" : users?.status}*/}
-              {/*    onChange={handleInputValue}*/}
-              {/*    disabled*/}
-              {/*    className="w-full h-10 bg-gray-300 placeholder:text-sm placeholder:tracking-wide px-3 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"*/}
-              {/*    type="text"*/}
-              {/*    placeholder="Phone Number"*/}
-              {/*  />*/}
-              {/*  {errors && (*/}
-              {/*    <span className="mt-2 text-sm text-red-500 font-titleFont px-2">*/}
-              {/*      {errors.status}*/}
-              {/*    </span>*/}
-              {/*  )}*/}
-              {/*</div>*/}
-              {/* Gender && Level */}
 
               <div className="flex">
                 <div className="flex-1 flex-col  mr-1.5">

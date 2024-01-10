@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-// import useAuthContext from "../AuthContext/AuthContext";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import Swal from "sweetalert2";
@@ -41,11 +40,6 @@ const SignIn1 = () => {
       return;
     }
 
-    // if (!captchaValue) {
-    //     setErrorsLogin(["Please verify that you are not a robot."]);
-    //     return;
-    // }
-
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
@@ -53,7 +47,6 @@ const SignIn1 = () => {
       );
       const { access_token } = response.data;
 
-      // Store the tokens in sessionStorage or secure cookie for later use
       sessionStorage.setItem("token", access_token);
 
       console.log(response.data);
@@ -61,6 +54,7 @@ const SignIn1 = () => {
       navigate("/");
     } catch (e) {
       if (e.response.data.status === 401) {
+        console.log(e.response.data.status)
         sessionStorage.removeItem("token");
         navigate("/signin");
       }

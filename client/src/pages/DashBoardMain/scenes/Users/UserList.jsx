@@ -23,13 +23,12 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
     const {usersAuthFetch} = useAuthContext();
-    const userLevel = usersAuthFetch.level; // Lấy level của người dùng đăng nhập hiện tại
-    const userId = usersAuthFetch.id; // Lấy id của người dùng đăng nhập hiện tại
+    const userLevel = usersAuthFetch.level;
+    const userId = usersAuthFetch.id;
     console.log(usersAuthFetch);
-    const [isModalVisible, setIsModalVisible] = useState(false); // State để quản lý trạng thái modal
-    const [selectedUserDetails, setSelectedUserDetails] = useState(null); // State để lưu thông tin người dùng được chọn
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedUserDetails, setSelectedUserDetails] = useState(null);
 
-    // Get data orders payments history
     const handlePaymentHistory = async (userID) => {
         await fetch('http://127.0.0.1:8000/api/orders/' + userID, {
             method: "GET",
@@ -45,31 +44,15 @@ const UserList = () => {
             .catch((error) => console.log(error));
     }
 
-    // Xử lý khi click vào nút View
     const handleViewUser = async (user) => {
         await handlePaymentHistory(user.id);
-        setSelectedUserDetails(user); // Cập nhật thông tin người dùng được chọn
-        setIsModalVisible(true); // Mở modal
+        setSelectedUserDetails(user);
+        setIsModalVisible(true);
     };
 
     const handleCancel = () => {
         setIsModalVisible(false); // Đóng modal
     };
-
-    // Gồm 3 level:
-    // level Admin Master: userLevel = 1
-    // level Admin Manager: userLevel = 2
-    // level Admin Editor: userLevel = 3 {đã không cho thấy menu User rồi}
-    // level Member: userLevel = 4 {đã không cho vào trang dashboard rồi}
-
-    // Phân quyền delete gồm 2 level {userLevel = 1, userLevel = 2}:
-    // Tôi muốn xử lý trước phần xóa: Nếu userLevel = 1 thì không cho thấy nút delete và chặn delete vì cấp cao nhất sao đi xóa chính mình được và cho thấy nút Delete của các cấp dưới 2, 3, 4;
-    // Nếu userLevel = 2 cũng không cho thấy nút delete, và không thể delete cùng cấp userLevel = 2, càng không thể thấy nút delete của userLevel = 1, cho thấy nút delete của userLevel = 3 và userLevel = 4
-
-    // Phân quyền edit gồm 2 level {userLevel = 1, userLevel = 2}:
-    // Tôi muốn xử lý phần edit như sau: Nếu đăng nhập userLevel = 1 vẫn hiện edit có thể chỉnh sửa và có thể  thấy edit tất cả các userLevel = 2, userLevel = 3,  khác;
-    // Nếu đăng nhập với userLevel = 2 vẫn hiện edit cho chính mình, nhưng không thể nhìn thấy edit của userLevel = 2 khác tức là không thể chỉnh sửa với userlevel cùng cấp bậc là 2, càng không thể thấy edit và chỉnh sửa userLevel = 1 vì cấp 2 không thể sửa cấp 1, có thể thấy edit và sửa cho userLevel = 3 và userLevel = 4
-    console.log(userLevel);
 
     const handleCreateUser = () => {
         navigate("../user/create");
