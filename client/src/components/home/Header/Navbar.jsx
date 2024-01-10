@@ -212,7 +212,7 @@ const Navbar = () => {
                                             <p className="font-semibold text-lg">
                                                 {item.name}
                                             </p>
-                                            <p className="text-xs">{item.desc}</p>
+                                            {/*<p className="text-xs">{item.desc}</p>*/}
                                             <p className="text-sm">
                                                 Price:{" "}
                                                 <span className="text-primeColor font-semibold">
