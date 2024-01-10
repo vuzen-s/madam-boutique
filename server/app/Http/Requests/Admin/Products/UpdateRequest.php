@@ -41,7 +41,7 @@ class UpdateRequest extends FormRequest
             'name.required' => 'You must enter this field.',
             'name.unique' => 'Not allowed to have duplicate names.',
             'price.required' => 'You must enter this field..',
-            'price.numeric' => 'You must enter this field..',
+            'price.numeric' => 'Field value must be of numeric type..',
             'desc.required' => 'You must enter this field..',
             // 'avatar.mimes' => 'The avatar file must be of type: jpg, png, jpeg. Please re-enter',
             'status.required' => 'You must enter this field..',

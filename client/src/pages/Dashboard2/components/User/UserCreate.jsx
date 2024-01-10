@@ -333,6 +333,9 @@ const UserCreate = () => {
                 >
                   Level
                 </label>
+
+
+
                 <select
                   id="level"
                   name="level"
@@ -345,6 +348,9 @@ const UserCreate = () => {
                   <option value="3">Admin Editor</option>
                   <option value="4">Member</option>
                 </select>
+
+
+
               </div>
               {errors && (
                 <span className=" text-sm text-red-500 font-titleFont px-2">

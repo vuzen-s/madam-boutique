@@ -60,7 +60,7 @@ Route::post('products-store', [ProductController::class, 'store'])->name('produc
 Route::delete('products-destroy/{id}', [ProductController::class, 'destroy'])->name('products.product-destroy');
 // Update sản phẩm
 Route::get('products-edit/{id}', [ProductController::class, 'edit'])->name('products.product-edit');
-Route::patch('products-update/{id}', [ProductController::class, 'update'])->name('products.product-update');
+Route::post('products-update/{id}', [ProductController::class, 'update'])->name('products.product-update');
 
 // =================== PRODUCTS IMAGES ===================
 // Lấy thông tin product images theo iproduct_id
