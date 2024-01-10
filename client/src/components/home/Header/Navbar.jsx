@@ -73,8 +73,6 @@ const Navbar = () => {
         }
     }, [showSearch]);
 
-    // const {userAuth, logout } = useAuthContext();
-
     const handleEditUser = () => {
         navigate(`../profile`);
     }
@@ -117,8 +115,6 @@ const Navbar = () => {
             });
     }, []);
 
-    // const token = sessionStorage.getItem('token');
-
     const logout = async () => {
         try {
             const response = await api.post('api/auth/logout');
@@ -135,7 +131,6 @@ const Navbar = () => {
         }
     }
 
-    /// Get path to public in server
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/products-publicPath', {
             method: "GET", headers: {
@@ -192,7 +187,7 @@ const Navbar = () => {
 
                     {searchQuery && (
                         <div
-                            className={`mt-2.5 h-96 bg-white top-12 md:right-40 absolute z-50 overflow-y-scroll shadow-2xl scrollbar-show cursor-pointer`}
+                            className={`mt-2.5 h-96 bg-white top-12 md:right-[320px] absolute z-50 overflow-y-scroll shadow-2xl scrollbar-show cursor-pointer`}
                         >
                             {searchQuery &&
                                 filteredProducts.map((item) => (
@@ -246,7 +241,10 @@ const Navbar = () => {
                             initial={{x: 50, opacity: 0}}
                             animate={{x: 0, opacity: 1}}
                             transition={{duration: 0.5}}
-                            className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
+                            // className="absolute top-12 mt-2.5 right-5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md"
+                            className={`absolute top-12 mt-2.5 z-50 bg-gray-800 w-40 h-auto text-center rounded-md ${
+                                (userAuth && userAuth.fullname) ? "right-[3%]" : "right-5"
+                            }`}
                         >
 
                             {userAuth ? (

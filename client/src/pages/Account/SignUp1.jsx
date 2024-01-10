@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import useAuthContext from "../AuthContext/AuthContext1";
 import axios from "axios";
-// import Axios from "../AuthContext/Axios";
 import Swal from "sweetalert2";
 
 const SignUp1 = () => {
@@ -16,7 +14,6 @@ const SignUp1 = () => {
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
-//   const { csrf } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {

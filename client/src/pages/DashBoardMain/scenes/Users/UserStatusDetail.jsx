@@ -18,10 +18,6 @@ const UserStatusDetail = () => {
   const navigate = useNavigate();
 
 
-//   const handleEditUser = (id) => {
-//     navigate(`/dashboard/user/edit/${id}`);
-//   }
-
   useEffect(() => {
     axios.get(`http://localhost:8000/api/users/detail-delete`).then((res) => {
       console.log(res.data.users);
