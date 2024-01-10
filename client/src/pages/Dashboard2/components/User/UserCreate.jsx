@@ -290,7 +290,6 @@ const UserCreate = () => {
                     {userLevel === 1 && (
                         <>
                           <option value="Choose Level">Choose Level</option>
-                          <option value="1">Admin Master</option>
                           <option value="2">Admin Manager</option>
                           <option value="3">Admin Editor</option>
                           <option value="4">Member</option>
