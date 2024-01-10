@@ -158,7 +158,7 @@ const Navbar = () => {
                         to="/"
                         class="flex title-font font-medium items-center text-gray-900 md:mb-0"
                     >
-                        <span class="ml-3 text-xl bold">Madam's Boutique</span>
+                        <span class="ml-3 text-xl bold">Madam Boutique</span>
                     </Link>
                 )}
 
@@ -322,7 +322,7 @@ const Navbar = () => {
                             className="w-[80%] h-full relative"
                         >
                             <div className="w-full h-full bg-primeColor p-6">
-                                <span className="w-28 mb-10 font-bold">Madam's Boutique</span>
+                                <span className="w-28 mb-10 font-bold">Madam Boutique</span>
                                 <ul className="text-gray-200 flex flex-col gap-2">
                                     {navBarList.map((item) => (
                                         <li
